@@ -6,4 +6,5 @@ class Grid:
 
     def __init__(self, size: int) -> None:
         self.size = size
-        self.grid: list[list[House | Battery]] = []
+        # evt: 0 op lege plaats
+        self.grid: list[list[House | Battery | int]] = []
