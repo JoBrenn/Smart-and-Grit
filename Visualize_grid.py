@@ -16,7 +16,7 @@ for battery in data[1:]:
     bat_loc = battery['location'].split(",")
     plt.plot(int(bat_loc[0]), int(bat_loc[1]), marker="o", markersize=3, markeredgecolor="green", markerfacecolor="green")
     
-    # Loops over each house of each battery
+    # Loops over each house of the battery
     for house in battery['houses']:
         # Gets house location and displays it as a red mark
         house_loc = house['location'].split(",")
