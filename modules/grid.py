@@ -6,6 +6,7 @@ from battery import Battery
 
 class Grid:
 
+<<<<<<< HEAD
     def __init__(self) -> None:
         self.district: int = os.getcwd().split("/")[-1].split("_")[-1]
         self.costs_shared: int = costs-shared
