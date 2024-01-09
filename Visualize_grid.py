@@ -23,11 +23,7 @@ for battery in data[1:]:
         plt.plot(int(house_loc[0]), int(house_loc[1]), marker="o", markersize=3, markeredgecolor="red", markerfacecolor="red")
         
         # Loops over each cable segment of the house 
-        for cable in range(len(house['cables'])):
-            # Skips over final point
-            if cable == len(house['cables']) - 1:
-                break 
-                
+        for cable in range(len(house['cables']) - 1):               
             # Gets location of a cable point and its destination point
             cable1_loc = house['cables'][cable].split(",")
             cable2_loc = house['cables'][cable + 1].split(",")
