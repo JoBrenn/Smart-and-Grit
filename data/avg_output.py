@@ -2,7 +2,7 @@ avg = 0
 houses = 0
 total_output = 0
 
-with open("./data/district_1/district-1_houses.csv", "r") as f:
+with open("./data/district_3/district-3_houses.csv", "r") as f:
     for line in f:
         if houses == 0:
             houses += 1
