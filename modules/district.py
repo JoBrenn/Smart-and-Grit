@@ -47,5 +47,10 @@ class District:
                 self.output.append(battery.battery_dict)
 
     def return_output(self):
-        """ returns the output list in wanted format"""
+        """ returns the output list"""
+        return self.output
+    
+    def return_json_output(self):
+        """ returns json string output"""
         return json.dumps(self.output)
+        
