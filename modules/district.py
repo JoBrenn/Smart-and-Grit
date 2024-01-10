@@ -47,9 +47,8 @@ class District:
 
     def return_output(self):
         """ returns the output list in wanted format"""
-        return self.output 
+        return json.dumps(self.output)
         
 district = District(1)
 print(district.return_output())
-y = json.dumps(district.return_output())
-print(y)
+
