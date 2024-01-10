@@ -9,7 +9,7 @@ def load_JSON_output(filename: str) -> dict:
     with open(filename, "r") as f:
         return json.load(f)
 
-def plot_output(data: dict):
+def plot_output(data: list):
     """ Plots and shows a grid containing the houses, batteries and cables"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
@@ -17,6 +17,7 @@ def plot_output(data: dict):
     # Loops over each battery
     for battery in data[1:]:
         # Gets battery location and displays it as a green mark
+        print(battery)
         bat_loc = battery['location'].split(",")
         plt.plot(int(bat_loc[0]), int(bat_loc[1]), marker="o", markersize=3, markeredgecolor="green", markerfacecolor="green")
 
@@ -51,7 +52,7 @@ def plot_output(data: dict):
 
     plt.show()
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # Loads JSON whose path is specified as the first command line argument
-    json_data = load_JSON_output(sys.argv[1])
-    plot_output(json_data)
+    #json_data = load_JSON_output(sys.argv[1])
+    #plot_output(json_data)
