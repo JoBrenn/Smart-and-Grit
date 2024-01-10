@@ -6,7 +6,7 @@ import sys
 
 def load_JSON_output(filename: str) -> dict:
     """ Returns JSON data as a dictionary"""
-    with open(filename) as f:
+    with open(filename, "r") as f:
         return json.load(f)
 
 def plot_output(data: list):
@@ -55,7 +55,7 @@ def plot_output(data: list):
     plt.tight_layout()
     plt.show()
 
-#if __name__ == "__main__":
-    # Loads JSON whose path is specified as the first command line argument
-    #json_data = load_JSON_output(sys.argv[1])
-    #plot_output(json_data)
+if __name__ == "__main__":
+    #Loads JSON whose path is specified as the first command line argument
+    json_data = load_JSON_output(sys.argv[1])
+    plot_output(json_data)
