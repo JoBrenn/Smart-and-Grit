@@ -13,8 +13,8 @@ class Battery:
         self.battery_dict = {"location": self.get_coordinate(self.row, self.column), "capacity": self.capacity, "houses": self.houses}
     
     def get_coordinate(self, x: int, y: int) -> str:
-            """ returns string of coordinates"""
-            return str(x) + "," + str(y)   
+        """ returns string of coordinates"""
+        return str(x) + "," + str(y)   
             
     def add_house(self, house: House) -> None:
         """" adds a house to the collection of houses connected to the battery"""
