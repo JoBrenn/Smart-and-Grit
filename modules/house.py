@@ -7,7 +7,7 @@ class House:
         # list of cable connections
         self.cables = []
         # initialize house dictionary
-        self.house_dict = {"location": self.get_coordinate(self.row, self.column), "output": self.output, "cables": self.cables}
+        self.house_dict = {"location": self.get_coordinate(self.row, self.column), "output": float(self.output), "cables": self.cables}
         # keep track of the costs of the cables associated with a house
         self.cable_costs: int = 0
         

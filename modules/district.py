@@ -1,5 +1,6 @@
 from house import House
 from battery import Battery
+import json
 
 class District:
 
@@ -50,3 +51,5 @@ class District:
         
 district = District(1)
 print(district.return_output())
+y = json.dumps(district.return_output())
+print(y)
