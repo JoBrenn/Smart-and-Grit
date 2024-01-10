@@ -5,6 +5,9 @@ import json
 class District:
 
     def __init__(self, district: int, costs_type: str) -> None:
+        """" pre: indicate district number with integer 
+                  costs_type is either costs-shared or costs-owned
+                  indicating wether the house cables can be shared or not"""
         self.district = district
         self.costs_type = costs_type
         self.costs: int = 0
@@ -47,5 +50,5 @@ class District:
                 self.output.append(battery.battery_dict)
 
     def return_output(self):
-        """ returns the output list in wanted format"""
+        """ returns the output list in json format"""
         return json.dumps(self.output)
