@@ -4,9 +4,6 @@ import json
 import sys
 
 
-fig = plt.figure()
-ax = fig.add_subplot(1, 1, 1)
-
 def load_JSON_output(filename: str) -> dict:
     """ Returns JSON data as a dictionary"""
     with open(filename) as f:
@@ -14,24 +11,27 @@ def load_JSON_output(filename: str) -> dict:
 
 def plot_output(data: dict):
     """ Plots and shows a grid containing the houses, batteries and cables"""
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+
     # Loops over each battery
     for battery in data[1:]:
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
         plt.plot(int(bat_loc[0]), int(bat_loc[1]), marker="o", markersize=3, markeredgecolor="green", markerfacecolor="green")
-        
+
         # Loops over each house of the battery
         for house in battery['houses']:
             # Gets house location and displays it as a red mark
             house_loc = house['location'].split(",")
             plt.plot(int(house_loc[0]), int(house_loc[1]), marker="o", markersize=3, markeredgecolor="red", markerfacecolor="red")
-            
-            # Loops over each cable segment of the house 
-            for cable in range(len(house['cables']) - 1):               
+
+            # Loops over each cable segment of the house
+            for cable in range(len(house['cables']) - 1):
                 # Gets location of a cable point and its destination point
                 cable1_loc = house['cables'][cable].split(",")
                 cable2_loc = house['cables'][cable + 1].split(",")
-                
+
                 # Plots a line from the first cable point to its destination point
                 plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], [int(cable1_loc[1]),int(cable2_loc[1])], 'k-', lw=1)
 
