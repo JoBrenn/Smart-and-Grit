@@ -1,5 +1,5 @@
-from house import House
-from battery import Battery
+from modules.battery import Battery
+from modules.house import House
 import json
 
 class District:
@@ -12,11 +12,11 @@ class District:
         self.houses: list[House] = []
         self.district_dict = {"disctrict": self.district, f"{costs_type}": self.costs}
         self.output: list[dict] = [self.district_dict]
-        
+
         # load the houses and batteries
-        self.load_houses(f"../data/district_{district}/district-{district}_houses.csv")
-        self.load_batteries(f"../data/district_{district}/district-{district}_batteries.csv")
-    
+        self.load_houses(f"data/district_{district}/district-{district}_houses.csv")
+        self.load_batteries(f"data/district_{district}/district-{district}_batteries.csv")
+
     def load_houses(self, filename: str):
         """ loads the houses from csv file and adds them to list"""
 
@@ -27,11 +27,11 @@ class District:
                 house = House(house_data[0], house_data[1], house_data[2])
                 self.houses.append(house)
                 # add total house cable costs to total costs
-                self.costs += house.cable_costs             
+                self.costs += house.cable_costs
 
     def load_batteries(self, filename: str):
         """ loads the batteries from csv file and adds them to list"""
-                
+
         with open(filename) as f:
             next(f)
             for line in f:
@@ -49,7 +49,3 @@ class District:
     def return_output(self):
         """ returns the output list in wanted format"""
         return json.dumps(self.output)
-        
-district = District(1, "costs-own")
-print(district.return_output())
-
