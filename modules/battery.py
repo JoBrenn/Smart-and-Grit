@@ -6,6 +6,7 @@ class Battery:
         self.row = x
         self.column = y
         self.capacity: float  = capacity
+        self.left_over_capacity: float = capacity
         self.price = price
         # list of houses connected to battery
         self.houses = []
@@ -19,4 +20,6 @@ class Battery:
     def add_house(self, house: House) -> None:
         """" adds a house to the collection of houses connected to the battery"""
         self.houses.append(house.house_dict)
+        self.left_over_capacity -= house.max_output
+        
         
