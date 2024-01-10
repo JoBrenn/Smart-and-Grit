@@ -9,7 +9,7 @@ ax = fig.add_subplot(1, 1, 1)
 
 def load_JSON_output(filename: str) -> dict:
     """ Returns JSON data as a dictionary"""
-    with open(filename) as f:
+    with open(filename, "r") as f:
         return json.load(f)
 
 def plot_output(data: dict):
