@@ -13,11 +13,10 @@ def plot_output(data: list):
     """ Plots and shows a grid containing the houses, batteries and cables"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-
+    
     # Loops over each battery
     for battery in data[1:]:
         # Gets battery location and displays it as a green mark
-        print(battery)
         bat_loc = battery['location'].split(",")
         plt.plot(int(bat_loc[0]), int(bat_loc[1]), marker="o", markersize=3, markeredgecolor="green", markerfacecolor="green")
 
