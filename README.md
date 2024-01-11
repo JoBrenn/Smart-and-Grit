@@ -15,3 +15,4 @@ Optioneel
 Docs:
 - https://en.wikipedia.org/wiki/Steiner_tree_problem
     Rectilinear Steiner tree
+    https://en.wikipedia.org/wiki/Rectilinear_Steiner_tree
