@@ -95,3 +95,8 @@ class District:
         """ Convert and return output to json string."""
 
         return json.dumps(self.output)
+
+    def add_cable(self, x_house: int, y_house: int, x_battery: int,\
+                  y_battery: int) -> None:
+        return 
+
