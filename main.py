@@ -29,11 +29,17 @@ def main():
         plot_output(data)
     # Shows output of one district between 1 - 3
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
-        district = District(int(sys.argv[1]), "costs-own")
+        district = District(int(sys.argv[1]), "costs-own")    
+        district.random_algorithm()
         plot_output(district.return_output())
     else:
         print("Invalid input.")
-
-
+    
+    
+    
+    
+    
+    
+    
 if __name__ == "__main__":
     main()
