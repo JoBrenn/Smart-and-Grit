@@ -16,7 +16,7 @@ def get_cable_corner(battery: tuple[int], house: tuple[int]) -> tuple[int]:
 
 def get_cable_segments(corner_points: tuple[int]) -> tuple[int]:
     """ Returns the entire path between all corner points
-        pre: corner points is a tuple in 
+        pre: corner points is a tuple of coordinate tuples
         post: returns a tuple of tuples of the cable coordinates"""
     # Adds first point of the list
     segment_points = [corner_points[0]]
