@@ -32,7 +32,7 @@ class House:
         return str(x) + "," + str(y)
 
     def add_cable_segment(self, x_begin: int, y_begin: int,\
-                  x_end: int, y_end: int) -> None:
+                          x_end: int, y_end: int) -> None:
         """ Add a cable segment and its cost to cable connection of house.
             pre: integer coordinates of the begin and the end of cable segment
             post: return None"""
