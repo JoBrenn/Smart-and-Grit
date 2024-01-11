@@ -1,4 +1,4 @@
-""" Model of Battery class
+""" Module of Battery class
 
 File: battery.py
 
