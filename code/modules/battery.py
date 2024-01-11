@@ -12,7 +12,7 @@ Description:    This Battery class can be used to initialize a Battery object.
 
 Usage:  from models.battery import Battery
 """
-from modules.house import House
+from code.modules.house import House
 
 
 class Battery:

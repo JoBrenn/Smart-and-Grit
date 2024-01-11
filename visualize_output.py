@@ -14,7 +14,7 @@ def load_JSON_output(filename: str) -> list:
 def plot_output(data: list):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
-             contain battery dictinaries containing a list of house dictionaries, which in turn
+             contains battery dictinaries containing a list of house dictionaries, which in turn
              have a list of cable coordinates
         post: draws a figure on screen through matplotlib where they markers represent houses
               and batteries while the cables are shown as solid lines"""
@@ -66,7 +66,8 @@ def plot_output(data: list):
     ax.grid(which='minor', alpha=0.2)
     ax.grid(which='major', alpha=0.5)
 
-    plt.legend([battery_marker], ["Battery"], bbox_to_anchor=(1.05, 1.0), loc='upper left')
+    plt.legend([battery_marker], ["Battery"], bbox_to_anchor=(1.05, 1.0), \
+               loc='upper left')
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
     plt.show()

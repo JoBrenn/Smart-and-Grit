@@ -29,10 +29,9 @@ class House:
         """ Return string configuration of coordinates.
             pre: x and y integer coordinates
             post: returns string of coordinates seperated by comma"""
-
         return str(x) + "," + str(y)
 
-    def add_cable(self, x_begin: int, y_begin: int,\
+    def add_cable_segment(self, x_begin: int, y_begin: int,\
                   x_end: int, y_end: int) -> None:
         """ Add a cable segment and its cost to cable connection of house.
             pre: integer coordinates of the begin and the end of cable segment
