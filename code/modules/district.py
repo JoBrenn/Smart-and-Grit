@@ -74,7 +74,3 @@ class District:
         """ Convert and return output to json string."""
 
         return json.dumps(self.output)
-<<<<<<< HEAD
-=======
-
->>>>>>> 2dd0b541e0be6a3d7539cb5f8e63ed3926a4046b
