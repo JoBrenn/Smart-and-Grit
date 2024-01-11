@@ -1,5 +1,20 @@
+""" Module of District class.
+
+File: district.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 09/01/24 (11/01/24)
+
+Description:    This District class can be used to initialize a District object.
+
+Usage:  from modules.district import District
+"""
 from code.modules.battery import Battery
 from code.modules.house import House
+
 import json
 
 class District:
@@ -18,7 +33,7 @@ class District:
         self.load_batteries(f"data/district_{district}/district-{district}_batteries.csv")
 
     def load_houses(self, filename: str) -> None:
-        """ Load the houses from csv file. Creates house objects 
+        """ Load the houses from csv file. Creates house objects
             and adds them to list.
             pre: filename"""
 
@@ -32,7 +47,7 @@ class District:
                 self.costs += house.cable_costs
 
     def load_batteries(self, filename: str) -> None:
-        """ Load the houses from csv file. Creates house objects 
+        """ Load the houses from csv file. Creates house objects
             and adds them to list.
             pre: filename"""
 
@@ -52,14 +67,15 @@ class District:
 
     def return_output(self) -> list:
         """ Return the desired output in list form."""
-        
+
         return self.output
-    
+
     def return_json_output(self) -> str:
         """ Convert and return output to json string."""
-        
+
         return json.dumps(self.output)
-    
+
     def add_cable(self, x_house: int, y_house: int, x_battery: int,\
                   y_battery: int) -> None:
         return 
+
