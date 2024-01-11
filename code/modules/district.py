@@ -106,6 +106,11 @@ class District:
 
         return json.dumps(self.output)
 
+    def return_cost(self) -> int:
+        """ Return the distric costs"""
+        
+        return self.costs
+    
     def random_algorithm(self):
         """ code for application of random_algorithm"""
         # Dictionary with connections
