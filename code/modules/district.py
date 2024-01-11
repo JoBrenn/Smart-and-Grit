@@ -18,8 +18,22 @@ from code.modules.house import House
 import json
 
 class District:
+    """ District class.
+
+    Methods:
+        load_houses():          Loads houses from data/
+        load_batteries():       Loads batteries from data/
+        return_output():        Returns data in object in list format
+        return_json_output():   Returns data in object in string format
+    """
 
     def __init__(self, district: int, costs_type: str) -> None:
+        """ Initialize District object.
+
+        Params:
+            district    (int): Number of district (between 1 and 3)
+            costs_type  (str): Type of costs (either "costs-own" or "costs-shared")
+        """
         self.district = district
         self.costs_type = costs_type
         self.costs: int = 0
@@ -33,9 +47,16 @@ class District:
         self.load_batteries(f"data/district_{district}/district-{district}_batteries.csv")
 
     def load_houses(self, filename: str) -> None:
-        """ Load the houses from csv file. Creates house objects
-            and adds them to list.
-            pre: filename"""
+        """ Load the houses from csv file.
+
+        Creates house objects and adds them to list.
+
+        Params:
+            filename    (str): Takes form of data/district_<district-number>/district-<district-number>_houses.csv
+
+        Returns:
+            none
+        """
 
         with open(filename) as f:
             next(f)
