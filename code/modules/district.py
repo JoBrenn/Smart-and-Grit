@@ -1,5 +1,5 @@
-from modules.battery import Battery
-from modules.house import House
+from code.modules.battery import Battery
+from code.modules.house import House
 import json
 
 class District:
@@ -59,4 +59,4 @@ class District:
         """ Convert and return output to json string."""
         
         return json.dumps(self.output)
-        
+    
