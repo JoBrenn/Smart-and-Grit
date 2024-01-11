@@ -56,6 +56,7 @@ class District:
 
         Returns:
             none
+            list of house objects is initialized
         """
 
         with open(filename) as f:
@@ -68,9 +69,17 @@ class District:
                 self.costs += house.cable_costs
 
     def load_batteries(self, filename: str) -> None:
-        """ Load the houses from csv file. Creates house objects
-            and adds them to list.
-            pre: filename"""
+        """ Load the batteries from csv file.
+
+        Creates battery objects and adds them to list.
+
+        Params:
+            filename    (str): Takes form of data/district_<district-number>/district-<district-number>_batteries.csv
+
+        Returns:
+            none
+            list of battery objects is initialized
+        """
 
         with open(filename) as f:
             next(f)
@@ -98,5 +107,4 @@ class District:
 
     def add_cable(self, x_house: int, y_house: int, x_battery: int,\
                   y_battery: int) -> None:
-        return 
-
+        return

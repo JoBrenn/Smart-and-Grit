@@ -10,15 +10,15 @@ def get_cable_points(battery: tuple[int], house: tuple[int]) -> tuple[int]:
 def get_cable_segments(cable_points: tuple[int]) -> tuple[int]:
     segment_points = [cable_points[0]]
 
-    
+
     for main_point in range(len(cable_points) - 1):
         diff_x = segment_points[main_point][0] - cable_points[main_point + 1][0]
         diff_y = segment_points[main_point][1] - cable_points[main_point + 1][1]
-        
-        
+
+
         for point in range(diff_x + diff_y):
             last = segment_points[-1]
-            
+
             if diff_x == 0:
                 dist = last[1] - main_point[1]
                 points.append(last[0], last[1] + (dist/abs(dist)))
