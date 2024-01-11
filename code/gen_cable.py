@@ -16,7 +16,7 @@ def get_cable_corner(battery: tuple[int], house: tuple[int]) -> tuple[int]:
 
 def get_cable_segments(corner_points: tuple[int]) -> tuple[int]:
     """ Returns the entire path between all corner points
-        pre: corner points is a tuple of coordinate tuples
+        pre: corner_points is a tuple of coordinate tuples
         post: returns a tuple of tuples of the cable coordinates"""
     # Adds first point of the list
     segment_points = [corner_points[0]]
@@ -24,8 +24,8 @@ def get_cable_segments(corner_points: tuple[int]) -> tuple[int]:
     # Loops over each corner point
     for corner in range(len(corner_points) - 1):
         # Gets the distance between the last added point and the next corner
-        diff_x = corner_points[corner + 1][0] - segment_points[-1][0]
-        diff_y = corner_points[corner + 1][1] - segment_points[-1][1]              
+        diff_x = abs(corner_points[corner + 1][0] - segment_points[-1][0])
+        diff_y = abs(corner_points[corner + 1][1] - segment_points[-1][1])           
         
         # Loop for each segment point that should be added
         for point in range(diff_x + diff_y):
@@ -48,7 +48,7 @@ def get_cable_segments(corner_points: tuple[int]) -> tuple[int]:
 
 if __name__ == "__main__":
     # Test case
-    test = get_cable_corner((50,128),(33,7))
+    test = get_cable_corner((33,7), (128,50))
     test2 = get_cable_segments(test)
 
     print(test2)
