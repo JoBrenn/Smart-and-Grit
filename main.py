@@ -13,6 +13,7 @@ def main():
     # Shows output of one district between 1 - 3 
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
         district = District(int(sys.argv[1]), "costs-own")
+        print(district.return_json_output())
         plot_output(district.return_output())
     else:
         print("Invalid input.")
