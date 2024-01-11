@@ -1,4 +1,19 @@
+""" Model of Battery class
+
+File: battery.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 09/01/24 (11/01/24)
+
+Description:    This Battery class can be used to initialize a Battery object.
+
+Usage:  from models.battery import Battery
+"""
 from modules.house import House
+
 
 class Battery:
 
