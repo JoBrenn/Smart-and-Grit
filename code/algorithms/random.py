@@ -33,7 +33,7 @@ def get_surrounding_points(self, coordinates: tuple[int], grid_size: int) -> lis
         
     
 def random_walk(self, x_house: int, y_house: int, x_battery: int, y_battery: int, grid_size: int) -> list:
-    """ takes a random walk from the house, stops when battery is reached
+    """ Takes a random walk from the house, stops when battery is reached
         adds all visited points to list
         TO-DO: add cable-segments along the random walk"""
     

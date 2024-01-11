@@ -14,8 +14,9 @@ Usage:  python3 main.py [argument 1]
         argument 1:     - format:   returns output-format.json vizualization
                         - 1-3:      returns specified district vizualization
 """
-from visualize_output import *
+from code.visualisation.visualize_output import *
 from code.modules.district import *
+from code.algorithms.random import *
 
 def main():
 
