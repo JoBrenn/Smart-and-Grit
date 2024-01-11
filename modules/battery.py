@@ -18,9 +18,14 @@ class Battery:
         """ Return string configuration of coordinates.
             pre: x and y integer coordinates
             post: returns string of coordinates seperated by comma"""
+            
         return str(x) + "," + str(y)
 
     def add_house(self, house: House) -> None:
-        """" Adds a house to the collection of houses connected to the battery."""
+        """" Adds a house to the collection of houses connected to the battery.
+             pre: house Object
+             post: return None"""
+             
         self.houses.append(house.house_dict)
+        # Reduce the leftover capacity of the battery
         self.left_over_capacity -= house.max_output

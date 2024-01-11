@@ -17,8 +17,10 @@ class District:
         self.load_houses(f"data/district_{district}/district-{district}_houses.csv")
         self.load_batteries(f"data/district_{district}/district-{district}_batteries.csv")
 
-    def load_houses(self, filename: str):
-        """ Loads the houses from csv file and adds them to list."""
+    def load_houses(self, filename: str) -> None:
+        """ Load the houses from csv file. Creates house objects 
+            and adds them to list.
+            pre: filename"""
 
         with open(filename) as f:
             next(f)
@@ -29,8 +31,10 @@ class District:
                 # Add total house cable costs to total costs
                 self.costs += house.cable_costs
 
-    def load_batteries(self, filename: str):
-        """ Loads the batteries from csv file and adds them to list."""
+    def load_batteries(self, filename: str) -> None:
+        """ Load the houses from csv file. Creates house objects 
+            and adds them to list.
+            pre: filename"""
 
         with open(filename) as f:
             next(f)
@@ -46,11 +50,13 @@ class District:
                 # Add battery dictionary to the output list
                 self.output.append(battery.battery_dict)
 
-    def return_output(self):
-        """ Returns the output list."""
+    def return_output(self) -> list:
+        """ Return the desired output in list form."""
+        
         return self.output
     
-    def return_json_output(self):
-        """ Returns json string output."""
+    def return_json_output(self) -> str:
+        """ Convert and return output to json string."""
+        
         return json.dumps(self.output)
         
