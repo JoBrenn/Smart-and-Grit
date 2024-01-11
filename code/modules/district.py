@@ -117,3 +117,14 @@ class District:
             for i in range(len(points_walked)):
                 house.add_cable_segment(self, points_walked[i][0], points_walked[i][1],\
                                   points_walked[i + 1][0], points_walked[i + 1][1])
+
+    def random_one_house(self):
+        """ code for application of one house random_algorithm"""
+        # Dictionary with connections
+        house_one = self.houses[0]
+        battery = self.batteries[random.randint(0, len(self.batteries) - 1)]
+        points_walked = random_walk(self, int(house_one.row), int(house_one.column), int(battery.row), int(battery.column), 50)
+        # Add a cable segment between all the points visited in the random walk
+        for i in range(len(points_walked)):
+            house_one.add_cable_segment(self, points_walked[i][0], points_walked[i][1],\
+                                    points_walked[i + 1][0], points_walked[i + 1][1])
