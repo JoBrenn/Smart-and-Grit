@@ -4,13 +4,20 @@ import json
 import sys
 
 
-def load_JSON_output(filename: str) -> dict:
-    """ Returns JSON data as a dictionary"""
+def load_JSON_output(filename: str) -> list:
+    """ Returns JSON data as a list
+        pre: takes a filename argument as a string
+        post: returns a list containing JSON objects as dictionaries"""
     with open(filename, "r") as f:
         return json.load(f)
 
 def plot_output(data: list):
-    """ Plots and shows a grid containing the houses, batteries and cables"""
+    """ Plots and shows a grid containing the houses, batteries and cables
+        pre: takes an output list as an argument that, from the second element onwards,
+             contain battery dictinaries containing a list of house dictionaries, which in turn
+             have a list of cable coordinates
+        post: draws a figure on screen through matplotlib where they markers represent houses
+              and batteries while the cables are shown as solid lines"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     
@@ -18,14 +25,20 @@ def plot_output(data: list):
     for battery in data[1:]:
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
-        battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]), marker="o", markersize=3, markeredgecolor="green", markerfacecolor="green")
+        battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
+                                   marker="o", markersize=3, \
+                                   markeredgecolor="green", \
+                                   markerfacecolor="green")
 
         # Loops over each house of the battery
         if len(battery['houses']) != 0:
             for house in battery['houses']:
                 # Gets house location and displays it as a red mark
                 house_loc = house['location'].split(",")
-                house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]), marker="o", markersize=3, markeredgecolor="red", markerfacecolor="red")
+                house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]),\
+                                         marker="o", markersize=3, \
+                                         markeredgecolor="red", \
+                                         markerfacecolor="red")
 
                 # Loops over each cable segment of the house
                 for cable in range(len(house['cables']) - 1):
@@ -34,9 +47,12 @@ def plot_output(data: list):
                     cable2_loc = house['cables'][cable + 1].split(",")
 
                     # Plots a line from the first cable point to its destination point
-                    plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], [int(cable1_loc[1]),int(cable2_loc[1])], 'k-', lw=1)
+                    plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
+                             [int(cable1_loc[1]),int(cable2_loc[1])], 'k-', lw=1)
 
-    # Grid code snippet obtained from https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
+    # Grid code snippet obtained from:
+    # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
+                    
     # Major ticks every 20, minor ticks every 5
     major_ticks = np.arange(0, 51, 10)
     minor_ticks = np.arange(0, 51, 1)
