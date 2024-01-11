@@ -1,7 +1,8 @@
 
 
 def get_cable_points(battery: tuple[int], house: tuple[int]) -> tuple[int]:
-    """Generates the points from house to cable"""
+    """Generates the points from house to cable
+       From house first up or down then left or right"""
     points = [house, (house[0], battery[1]), battery]
 
     return tuple(points)
