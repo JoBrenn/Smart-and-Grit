@@ -7,7 +7,7 @@ def random_assignment(self, batteries: list, houses: list) -> dict:
         
     connection_dict = {}
     for house in houses:
-        connection_dict[house] = batteries[randint(0, len(batteries) - 1)]
+        connection_dict[house] = batteries[random.randint(0, len(batteries) - 1)]
     
     return connection_dict
 

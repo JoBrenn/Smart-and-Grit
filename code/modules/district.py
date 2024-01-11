@@ -14,6 +14,7 @@ Usage:  from modules.district import District
 """
 from code.modules.battery import Battery
 from code.modules.house import House
+from code.algorithms.random import *
 
 import json
 
@@ -100,3 +101,14 @@ class District:
                   y_battery: int) -> None:
         return 
 
+    def random_algorithm(self):
+        """ code for application of random_algorithm"""
+        # Dictionary with connections
+        connections = random_assignment(self, self.batteries, self.houses)
+        for house in connections:
+            battery = connections[house]
+            points_walked = random_walk(self, int(house.row), int(house.column), int(battery.row), int(battery.column), 50)
+            # Add a cable segment between all the points visited in the random walk
+            for i in range(len(points_walked)):
+                add_cable_segment(self, points_walked[i][0], points_walked[i][1],\
+                                  points_walked[i + 1][0], points_walked[i + 1][1])
