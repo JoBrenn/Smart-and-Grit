@@ -15,7 +15,7 @@ Usage:  python3 main.py [argument 1]
                         - 1-3:      returns specified district vizualization
 """
 from visualize_output import *
-from code.modules import *
+from code.modules.district import *
 
 def main():
 
