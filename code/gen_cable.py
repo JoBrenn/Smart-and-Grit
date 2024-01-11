@@ -4,8 +4,9 @@ def get_cable_points(battery: tuple[int], house: tuple[int]) -> tuple[int]:
     """Generates the points from house to cable
        From house first up or down then left or right"""
     points = [house, (house[0], battery[1]), battery]
-
+    print(points)
     return tuple(points)
+
 
 
 def get_cable_segments(cable_points: tuple[int]) -> tuple[int]:
@@ -13,23 +14,34 @@ def get_cable_segments(cable_points: tuple[int]) -> tuple[int]:
 
     
     for main_point in range(len(cable_points) - 1):
-        diff_x = segment_points[main_point][0] - cable_points[main_point + 1][0]
-        diff_y = segment_points[main_point][1] - cable_points[main_point + 1][1]
+        diff_x = cable_points[main_point + 1][0] - segment_points[main_point][0]
+        diff_y = cable_points[main_point + 1][1] - segment_points[main_point][1]
+        print(diff_y)
         
         
         for point in range(diff_x + diff_y):
             last = segment_points[-1]
+            if last == cable_points[-1]:
+                break
+
+            print(f"Old {segment_points[-1]}")
             
             if diff_x == 0:
-                dist = last[1] - main_point[1]
-                points.append(last[0], last[1] + (dist/abs(dist)))
+                dist = cable_points[main_point + 1][1] - last[1]
+                print(f"Dist {dist}")
+                segment_points.append((last[0], last[1] + int(dist/abs(dist))))
             else:
-                dist = last[0] - main_point[0]
-                points.append(last[0] + dist/abs(dist), last[1] )
+                dist = cable_points[main_point + 1][0] - last[0]
+                print(f"Dist {dist}")
+                segment_points.append((last[0] + int(dist/abs(dist)), last[1]))
+            #print(f"New {segment_points[-1]}")
+            
+
+            print(f"Add {int(dist/abs(dist))}")
 
 
     # Append the final point, the battery
-    segment_points.append(cable_points[-1])
+    #segment_points.append(cable_points[-1])
 
     return tuple(segment_points)
 
