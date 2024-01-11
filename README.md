@@ -10,3 +10,8 @@ Optioneel
 - Technisch goed en efficiënt geïmplementeerd
 - Presentatie bevat uitleg over verschil algoritmen en heuristieken in ons project
 - Documentatie zijn zo goed dat deze direct gebruikt kan worden
+
+
+Docs:
+- https://en.wikipedia.org/wiki/Steiner_tree_problem
+    Rectilinear Steiner tree
