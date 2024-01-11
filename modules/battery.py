@@ -5,19 +5,22 @@ class Battery:
     def __init__(self, x: int, y: int, capacity: float, price: int) -> None:
         self.row = x
         self.column = y
-        self.capacity: float  = capacity
-        self.left_over_capacity: float = capacity
+        self.capacity = capacity
+        self.left_over_capacity = capacity
         self.price = price
-        # list of houses connected to battery
+        # List of houses connected to battery
         self.houses = []
-        # initialize battery dictionary
-        self.battery_dict = {"location": self.get_coordinate(self.row, self.column), "capacity": float(self.capacity), "houses": self.houses}
+        # Initialize battery dictionary
+        self.battery_dict = {"location": self.get_coordinate(self.row, self.column), 
+                             "capacity": float(self.capacity), "houses": self.houses}
 
     def get_coordinate(self, x: int, y: int) -> str:
-        """ returns string of coordinates"""
+        """ Return string configuration of coordinates.
+            pre: x and y integer coordinates
+            post: returns string of coordinates seperated by comma"""
         return str(x) + "," + str(y)
 
     def add_house(self, house: House) -> None:
-        """" adds a house to the collection of houses connected to the battery"""
+        """" Adds a house to the collection of houses connected to the battery."""
         self.houses.append(house.house_dict)
         self.left_over_capacity -= house.max_output
