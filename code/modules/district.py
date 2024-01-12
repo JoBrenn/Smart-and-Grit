@@ -119,7 +119,7 @@ class District:
         points = [house, (house[0], battery[1]), battery]
         return tuple(points)
     
-    def create_cable(self, house: House, battery: Battery):
+    def create_cable(self, house: House, battery: Battery) -> None:
         """ Creates entire cable connection between house and battery
             following shortest manhatten distance. 
             Again following from house first up or donw then left or right"""
