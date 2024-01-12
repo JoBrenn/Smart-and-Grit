@@ -21,7 +21,7 @@ class Battery:
         self.row = x
         self.column = y
         self.capacity = capacity
-        self.left_over_capacity = capacity
+        self.left_over_capacity: float = capacity
         self.price = price
         # List of houses connected to battery
         self.houses = []
@@ -43,4 +43,4 @@ class Battery:
              
         self.houses.append(house.house_dict)
         # Reduce the leftover capacity of the battery
-        self.left_over_capacity -= house.max_output
+        self.left_over_capacity -= house.output

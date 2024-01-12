@@ -17,9 +17,9 @@ Usage:  python3 main.py [argument 1]
 from code.visualisation.visualize_output import *
 from code.modules.district import *
 from code.algorithms.random import *
-
-def main():
-
+ 
+   
+if __name__ == "__main__":
     # At least 1 argument
     if len(sys.argv) < 2:
         print("Usage: python3 main.py [desired district]")
@@ -30,16 +30,27 @@ def main():
     # Shows output of one district between 1 - 3
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
         district = District(int(sys.argv[1]), "costs-own")    
-        district.random_one_house()
+        
+        """
+            Here we apply a random assignment of houses to batteries,
+            not taking the capacity into account. Furthermore is a 
+            random walk used for the connections between house and
+            batttery.
+        """
+        connections = random_assignment(district.batteries, district.houses)
+        for house in connections:
+            battery = connections[house]
+            # Add the house to the battery connection (such that dictionary is added)
+            battery.add_house(house)
+            points_walked = random_walk(int(house.row), int(house.column), int(battery.row), int(battery.column), 50)
+            # Add a cable segment between all the points visited in the random walk
+            for i in range(len(points_walked) - 1):
+                house.add_cable_segment(points_walked[i][0], points_walked[i][1],\
+                                  points_walked[i + 1][0], points_walked[i + 1][1])
         plot_output(district.return_output())
+
     else:
         print("Invalid input.")
+
+
     
-    
-    
-    
-    
-    
-    
-if __name__ == "__main__":
-    main()
