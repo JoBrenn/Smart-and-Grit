@@ -62,9 +62,9 @@ class District:
 
         with open(filename) as f:
             next(f)
-            for line in f:
+            for n, line in enumerate(f):
                 house_data = line.strip().split(",")
-                house = House(int(house_data[0]), int(house_data[1]), float(house_data[2]))
+                house = House(n, int(house_data[0]), int(house_data[1]), float(house_data[2]))
                 self.houses.append(house)
                 # Add total house cable costs to total costs
                 self.costs += house.cable_costs

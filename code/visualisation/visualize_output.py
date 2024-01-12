@@ -74,5 +74,8 @@ def plot_output(data: list):
 
 if __name__ == "__main__":
     #Loads JSON whose path is specified as the first command line argument
-    json_data = load_JSON_output(sys.argv[1])
-    plot_output(json_data)
+    if len(sys.argv) == 2:
+        json_data = load_JSON_output(sys.argv[1])
+        plot_output(json_data)
+    else: 
+        print("Usage: python3 visualize_output.py filename.json")

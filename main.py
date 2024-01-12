@@ -17,6 +17,8 @@ Usage:  python3 main.py [argument 1]
 from code.visualisation.visualize_output import *
 from code.modules.district import *
 from code.algorithms.random import *
+from code.algorithms.greedy import *
+from code.gen_cable import *
  
    
 if __name__ == "__main__":
@@ -30,14 +32,15 @@ if __name__ == "__main__":
     # Shows output of one district between 1 - 3
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
         district = District(int(sys.argv[1]), "costs-own")    
-        
+
         """
             Here we apply a random assignment of houses to batteries,
             not taking the capacity into account. Furthermore is a 
             random walk used for the connections between house and
             batttery.
         """
-        connections = random_assignment(district.batteries, district.houses)
+        """connections = random_assignment(district.batteries, district.houses)
+        print(connections)
         for house in connections:
             battery = connections[house]
             # Add the house to the battery connection (such that dictionary is added)
@@ -48,6 +51,26 @@ if __name__ == "__main__":
                 house.add_cable_segment(points_walked[i][0], points_walked[i][1],\
                                   points_walked[i + 1][0], points_walked[i + 1][1])
         plot_output(district.return_output())
+        """
+
+        # Testing greedy algorithm
+        greedy_assignment(district)
+        house_num = 0
+        for bat_num, battery in enumerate(district.batteries):
+            for house in battery.houses:
+                print("House {:3} Battery {:}".format(house_num + 1, bat_num + 1))
+                house_num += 1
+
+                corners = get_cable_corner()
+                segments = get_cable_segments(corners)
+
+                
+
+                
+
+        plot_output(district.return_output())
+
+
 
     else:
         print("Invalid input.")
