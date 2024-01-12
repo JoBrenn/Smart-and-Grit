@@ -32,16 +32,16 @@ def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     return border_points
         
     
-def random_walk(x_house: int, y_house: int, x_battery: int, y_battery: int, grid_size: int) -> list:
+def random_walk(house: tuple[int], battery: tuple[int], grid_size: int) -> list:
     """ Takes a random walk from the house, stops when battery is reached
         adds all visited points to list
         TO-DO: add cable-segments along the random walk"""
     
     # Initialize current location at the house
-    current_location = (x_house, y_house)
+    current_location = house
     points_visited = [current_location]
     
-    while current_location != (x_battery, y_battery):
+    while current_location != battery:
         new_point = random.choice(get_surrounding_points(current_location, grid_size))
         current_location = new_point
         points_visited.append(current_location)
