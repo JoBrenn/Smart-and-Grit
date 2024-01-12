@@ -58,11 +58,12 @@ add_house(house: House) -&gt; None</panel_attributes>
       <x>450</x>
       <y>240</y>
       <w>330</w>
-      <h>200</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>House
-(x: int, y: int, max_output: float)
+(house_id: int, x: int, y: int, max_output: float)
 --
+house_id: int
 row: int
 column: int
 output: float

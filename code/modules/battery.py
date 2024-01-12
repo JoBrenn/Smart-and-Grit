@@ -27,7 +27,7 @@ class Battery:
         self.houses = []
         # Initialize battery dictionary
         self.battery_dict = {"location": self.get_coordinate(self.row, self.column), 
-                             "capacity": float(self.capacity), "houses": self.houses}
+                             "capacity": float(self.capacity), "houses": []}
 
     def get_coordinate(self, x: int, y: int) -> str:
         """ Return string configuration of coordinates.
@@ -41,6 +41,8 @@ class Battery:
              pre: house Object
              post: return None"""
              
-        self.houses.append(house.house_dict)
+        #self.houses.append(house.house_dict)
+        self.houses.append(house)
+        self.battery_dict["houses"].append(house.house_dict)
         # Reduce the leftover capacity of the battery
         self.left_over_capacity -= house.output

@@ -11,7 +11,7 @@ def load_JSON_output(filename: str) -> list:
     with open(filename, "r") as f:
         return json.load(f)
 
-def plot_output(data: list):
+def plot_output(data: list, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
              contains battery dictinaries containing a list of house dictionaries, which in turn
@@ -20,6 +20,7 @@ def plot_output(data: list):
               and batteries while the cables are shown as solid lines"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    plt.title(plot_title)
     colors = ["b", "k", "c", "m", "g"] 
     
     # Loops over each battery

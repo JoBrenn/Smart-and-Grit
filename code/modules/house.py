@@ -14,8 +14,8 @@ Usage:  from modules.house import House
 """
 class House:
 
-    def __init__(self, id: int, x: int, y: int, max_output: float) -> None:
-        self.id = id
+    def __init__(self, house_id: int, x: int, y: int, max_output: float) -> None:
+        self.house_id = house_id
         self.row = x
         self.column = y
         self.output = max_output

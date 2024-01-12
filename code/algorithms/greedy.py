@@ -5,13 +5,15 @@ def greedy_assignment(district):
     
     for house in district.houses:
         # Determines battery with most capacity
+        max_battery = None
+
         for battery in district.batteries:
-            #print(battery.left_over_capacity)
             if battery.left_over_capacity > max_capacity and \
                battery.left_over_capacity >= house.output:
-                #print("True")
                 max_capacity = battery.left_over_capacity
                 max_battery = battery
                 max_capacity = 0
 
-        max_battery.add_house(house)
+        # Quickfix for now
+        if max_battery != None:
+            max_battery.add_house(house)
