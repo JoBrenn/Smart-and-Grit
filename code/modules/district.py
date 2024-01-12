@@ -66,8 +66,6 @@ class District:
                 house_data = line.strip().split(",")
                 house = House(int(house_data[0]), int(house_data[1]), float(house_data[2]))
                 self.houses.append(house)
-                # Add total house cable costs to total costs
-                self.costs += house.cable_costs
 
     def load_batteries(self, filename: str) -> None:
         """ Load the batteries from csv file.
@@ -106,9 +104,13 @@ class District:
 
         return json.dumps(self.output)
 
-    def return_cost(self) -> int:
-        """ Return the distric costs"""
-        
+    def return_cost(self, houses: list[House]) -> int:
+        """ Return the distric costs, given list of houses
+            pre: list of house objects, needed since
+                 cables are added after"""
+        for house in houses:
+            # Add total house cable costs to total costs
+            self.costs += house.cable_costs
         return self.costs
     
     def get_cable_points(self, house: tuple[int], battery: tuple[int]) -> tuple[int]:
