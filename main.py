@@ -38,7 +38,7 @@ if __name__ == "__main__":
                                 "Creates cable path through randomly taking random steps until destination is reached")
             print("--randmanh: Randomly assigns houses to batteries. " +  \
                     "Creates the cable path through the Manhattan distance from house to battery")
-            print("--greedmanh: Uses greedy algorithm to assign houses and batteries. " + \
+            print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
     # Shows output of one district between 1 - 3
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
@@ -85,10 +85,10 @@ if __name__ == "__main__":
                 # Add the house to the battery connection (such that dictionary is added)
                 battery.add_house(house)
                 district_random_shortest.create_cable(house, battery)
-            plot_output(district_random_shortest.return_output(), "Random + Manhattan")
-            
+             
             print(f"The cost for random assignment and shortest Manhattan distance in district {district.district} is {district_random_shortest.return_cost()}.")
-            
+            plot_output(district_random_shortest.return_output(), "Random + Manhattan")
+
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery
@@ -96,16 +96,18 @@ if __name__ == "__main__":
                 the Manhattan distance from the house towards the battery
             """
             district = District(int(sys.argv[1]), "costs-own")
-
+            # Uses greedy algorithm to assign houses to batteries
             greedy_assignment(district)
             
+            # Loops over each house in each battery to create cable paths
             for battery in district.batteries:
                 for house in battery.houses: 
                     district.create_cable(house, battery)
+
+            print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
             plot_output(district.return_output(), "Greedy + Manhattan")
 
-            print(f"The cost for random assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
-
+            
     else:
         print("Invalid input.")
 
