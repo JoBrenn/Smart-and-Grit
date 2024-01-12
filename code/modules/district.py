@@ -66,8 +66,6 @@ class District:
                 house_data = line.strip().split(",")
                 house = House(n, int(house_data[0]), int(house_data[1]), float(house_data[2]))
                 self.houses.append(house)
-                # Add total house cable costs to total costs
-                self.costs += house.cable_costs
 
     def load_batteries(self, filename: str) -> None:
         """ Load the batteries from csv file.
@@ -107,8 +105,58 @@ class District:
         return json.dumps(self.output)
 
     def return_cost(self) -> int:
-        """ Return the distric costs"""
-        
+        """ Return the distric costs, given list of houses
+            pre: list of house objects, needed since
+                 cables are added after"""
+        for house in self.houses:
+            # Add total house cable costs to total costs
+            self.costs += house.cable_costs
         return self.costs
     
+    def get_cable_points(self, house: tuple[int], battery: tuple[int]) -> tuple[int]:
+        """ Generates the points between which a cable must be layed from house
+            to battery, following the shortest Manhatten distance 
+            From house first up or down then left or right"""
+           
+        points = [house, (house[0], battery[1]), battery]
+        return tuple(points)
     
+    def create_cable(self, house: House, battery: Battery) -> None:
+        """ Creates entire cable connection between house and battery
+            following shortest manhatten distance. 
+            Again following from house first up or donw then left or right"""
+        
+        cable_points = self.get_cable_points((house.row, house.column), (battery.row, battery.column))
+        
+        # House y minus in between y
+        y_distance = cable_points[0][1] - cable_points[1][1]
+        # In between x minus battery x
+        x_distance = cable_points[1][0] - cable_points[2][0]
+        
+        # Start at the house
+        x_current = house.row
+        y_current = house.column
+        
+        # Check whether we need to go up or down
+        if y_distance > 0:
+            # Down
+            for step in range(y_distance):
+                house.add_cable_segment((x_current, y_current), (x_current, y_current - 1))
+                y_current -= 1
+        elif y_distance < 0:
+            # Up
+            for step in range(abs(y_distance)):
+                house.add_cable_segment((x_current, y_current + 1), (x_current, y_current))
+                y_current += 1
+       
+       # Check whether we need to go left or right
+        if x_distance > 0:
+            # Left
+            for step in range(x_distance):
+                house.add_cable_segment((x_current, y_current), (x_current - 1, y_current))
+                x_current -= 1
+        elif x_distance < 0:
+            # Right
+            for step in range(abs(x_distance)):
+                house.add_cable_segment((x_current, y_current), (x_current + 1, y_current))
+                x_current += 1

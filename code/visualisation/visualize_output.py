@@ -20,13 +20,16 @@ def plot_output(data: list):
               and batteries while the cables are shown as solid lines"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    colors = ["b", "k", "c", "m", "g"] 
     
     # Loops over each battery
     for battery in data[1:]:
+        index = data.index(battery)
+        color = colors[index - 1]
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
         battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
-                                   marker="o", markersize=3, \
+                                   marker="o", markersize=8, \
                                    markeredgecolor="green", \
                                    markerfacecolor="green")
 
@@ -36,7 +39,7 @@ def plot_output(data: list):
                 # Gets house location and displays it as a red mark
                 house_loc = house['location'].split(",")
                 house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]),\
-                                         marker="o", markersize=3, \
+                                         marker="o", markersize=4, \
                                          markeredgecolor="red", \
                                          markerfacecolor="red")
 
@@ -48,7 +51,7 @@ def plot_output(data: list):
 
                     # Plots a line from the first cable point to its destination point
                     plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
-                             [int(cable1_loc[1]),int(cable2_loc[1])], 'k-', lw=1)
+                             [int(cable1_loc[1]),int(cable2_loc[1])], color + '-', lw=1)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
@@ -66,7 +69,7 @@ def plot_output(data: list):
     ax.grid(which='minor', alpha=0.2)
     ax.grid(which='major', alpha=0.5)
 
-    plt.legend([battery_marker], ["Battery"], bbox_to_anchor=(1.05, 1.0), \
+    plt.legend([battery_marker, house_marker], ["Battery", "House"], bbox_to_anchor=(1.05, 1.0), \
                loc='upper left')
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()

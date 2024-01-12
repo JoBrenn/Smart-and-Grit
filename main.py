@@ -38,40 +38,36 @@ if __name__ == "__main__":
             not taking the capacity into account. Furthermore is a 
             random walk used for the connections between house and
             batttery.
+            Takes quite some time and is really messy in visualisation, 
+            so we only take the first house into account.
         """
-        """connections = random_assignment(district.batteries, district.houses)
-        print(connections)
+        """"district_random_walk = District(int(sys.argv[1]), "costs-own")    
+        connections = random_assignment(district_random_walk.batteries, district_random_walk.houses)
+        house_1 = list(connections.keys())[0]
+        battery = connections[house_1]
+        battery.add_house(house_1)
+        points_walked = random_walk((int(house_1.row), int(house_1.column)), (int(battery.row), int(battery.column)), 50)
+        # Add a cable segment between all the points visited in the random walk
+        for i in range(len(points_walked) - 1):
+            house_1.add_cable_segment((points_walked[i][0], points_walked[i][1]),\
+                              (points_walked[i + 1][0], points_walked[i + 1][1]))
+        plot_output(district_random_walk.return_output())"""
+        
+        """
+            Here we again apply a random assignment of houses to batteries,
+            not taking the capacity into account. Instead of a random walk,
+            we now implement the shortest Manhattan distance.
+        """
+        
+        district_random_shortest = District(int(sys.argv[1]), "costs-own")
+        connections = random_assignment(district_random_shortest.batteries, district_random_shortest.houses)
         for house in connections:
             battery = connections[house]
             # Add the house to the battery connection (such that dictionary is added)
             battery.add_house(house)
-            points_walked = random_walk(int(house.row), int(house.column), int(battery.row), int(battery.column), 50)
-            # Add a cable segment between all the points visited in the random walk
-            for i in range(len(points_walked) - 1):
-                house.add_cable_segment(points_walked[i][0], points_walked[i][1],\
-                                  points_walked[i + 1][0], points_walked[i + 1][1])
-        plot_output(district.return_output())
-        """
-
-        # Testing greedy algorithm
-        greedy_assignment(district)
-        house_num = 0
-        for bat_num, battery in enumerate(district.batteries):
-            for house in battery.houses:
-                print("House {:3} Battery {:}".format(house_num + 1, bat_num + 1))
-                house_num += 1
-
-                corners = get_cable_corner()
-                segments = get_cable_segments(corners)
-
-                
-
-                
-
-        plot_output(district.return_output())
-
-
-
+            district_random_shortest.create_cable(house, battery)
+        plot_output(district_random_shortest.return_output())
+        print(f"The cost for random assignment and shortest Manhatten distance in district {district.district} is {district_random_shortest.return_cost()}.")
     else:
         print("Invalid input.")
 
