@@ -32,10 +32,10 @@ if __name__ == "__main__":
     # Shows the user a manual
     elif sys.argv[1] == "--help":
             print("Usage: python3 main.py [desired district] --[desired method]")
-            print("Options:")
+            print("Methods:")
             print("--help: display help manual")
-            print("--randrwalk:  Randomly assigns houses to batteries." + \
-                                "Creates cable path thorugh randomly taking random steps until destination is reached")
+            print("--randrwalk:  Randomly assigns houses to batteries. " + \
+                                "Creates cable path through randomly taking random steps until destination is reached")
             print("--randmanh: Randomly assigns houses to batteries. " +  \
                     "Creates the cable path through the Manhattan distance from house to battery")
             print("--greedmanh: Uses greedy algorithm to assign houses and batteries. " + \
