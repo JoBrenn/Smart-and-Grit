@@ -65,7 +65,7 @@ if __name__ == "__main__":
             battery.add_house(house)
             district_random_shortest.create_cable(house, battery)
         plot_output(district_random_shortest.return_output())
-        print(f"The cost for random assignment and shortest Manhatten distance is {district_random_shortest.return_cost(district_random_shortest.houses)}.")
+        print(f"The cost for random assignment and shortest Manhatten distance is {district_random_shortest.return_cost()}.")
     else:
         print("Invalid input.")
 

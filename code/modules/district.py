@@ -104,11 +104,11 @@ class District:
 
         return json.dumps(self.output)
 
-    def return_cost(self, houses: list[House]) -> int:
+    def return_cost(self) -> int:
         """ Return the distric costs, given list of houses
             pre: list of house objects, needed since
                  cables are added after"""
-        for house in houses:
+        for house in self.houses:
             # Add total house cable costs to total costs
             self.costs += house.cable_costs
         return self.costs
