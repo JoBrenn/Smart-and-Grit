@@ -7,7 +7,7 @@
       <x>20</x>
       <y>240</y>
       <w>250</w>
-      <h>330</h>
+      <h>300</h>
     </coordinates>
     <panel_attributes>
 District
@@ -27,9 +27,7 @@ load_houses(filename: str) -&gt; None
 load_batteries(filename: str) -&gt; None
 return_output() -&gt; list
 return_json_output() -&gt; str
-return_cost() -&gt; int
-random_algorithm() -&gt; None
-random_one_house -&gt; None</panel_attributes>
+return_cost() -&gt; int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
