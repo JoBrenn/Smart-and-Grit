@@ -26,7 +26,7 @@ def plot_output(data: list):
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
         battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
-                                   marker="o", markersize=3, \
+                                   marker="o", markersize=8, \
                                    markeredgecolor="green", \
                                    markerfacecolor="green")
 
@@ -66,7 +66,7 @@ def plot_output(data: list):
     ax.grid(which='minor', alpha=0.2)
     ax.grid(which='major', alpha=0.5)
 
-    plt.legend([battery_marker], ["Battery"], bbox_to_anchor=(1.05, 1.0), \
+    plt.legend([battery_marker, house_marker], ["Battery", "House"], bbox_to_anchor=(1.05, 1.0), \
                loc='upper left')
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()

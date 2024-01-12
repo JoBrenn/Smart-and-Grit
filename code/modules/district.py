@@ -137,13 +137,11 @@ class District:
         
         # Check whether we need to go up or down
         if y_distance > 0:
-            print("groter")
             # Down
             for step in range(y_distance):
                 house.add_cable_segment((x_current, y_current), (x_current, y_current - 1))
                 y_current -= 1
         elif y_distance < 0:
-            print("kleiner")
             # Up
             for step in range(abs(y_distance)):
                 house.add_cable_segment((x_current, y_current + 1), (x_current, y_current))
