@@ -13,6 +13,25 @@ def random_assignment(batteries: list, houses: list) -> dict:
 
     return connection_dict
 
+def random_assignment_capacity(batteries: list, houses: list) -> dict:
+    """ Randomly assigns houses to batteries, taking capacity into account
+        Adds this to dictionary with house as key and battery as value
+        post: returns dictionary"""
+
+    connection_dict = {}
+    for house in houses:
+        # Randomize the batteries list for every house
+        random.shuffle(batteries)
+        # Walk through elements of list an check capacity
+        for battery in batteries:
+            if battery.left_over_capacity - house.output >= 0:
+                battery.add_house(house)
+                connection_dict[house] = battery
+                # Stop when we have found a battery with enough capacity
+                break
+
+    return connection_dict
+
 def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     """ returns list of the surrounding points given x and y coordinates of a point"""
 

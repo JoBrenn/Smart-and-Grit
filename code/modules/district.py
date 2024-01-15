@@ -81,12 +81,12 @@ class District:
 
         with open(filename) as f:
             next(f)
-            for line in f:
+            for i, line in enumerate(f):
                 battery_data = line.strip().split(",")
                 # Remove " character that comes with csv
                 battery_data[0] = battery_data[0].translate({ord('"'): None})
                 battery_data[1] = battery_data[1].translate({ord('"'): None})
-                battery = Battery(int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
+                battery = Battery(i, int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
                 self.batteries.append(battery)
                 # Add costs of battery to total costs
                 self.district_dict[f"{self.costs_type}"] += battery.price

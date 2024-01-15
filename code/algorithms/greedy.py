@@ -1,6 +1,37 @@
-from random import randint
+from random import randint, shuffle
 from code.visualisation.visualize import *
 
+"""
+def greedy_assignment(district, starting_house: int = 0) -> None:
+    """""" Adds each house to the battery with the most capacity left
+        pre: an instance of the District class and an optional starting
+        house position can be passed as an int""""""
+    max_capacity = 0
+    houses_amount = len(district.houses)
+    
+    
+    house_order = [*range(0, houses_amount, 1)]
+    shuffle(house_order)
+    print(house_order)
+    
+    for i in house_order:
+        # Determines battery with most capacity
+        max_battery = None
+        max_capacity = 0 
+        
+        house_num = (i + starting_house) % houses_amount
+        
+        for battery in district.batteries:
+            if battery.left_over_capacity > max_capacity and \
+               battery.left_over_capacity >= district.houses[i].output:
+                max_capacity = battery.left_over_capacity
+                max_battery = battery
+        
+        # If a compatible battery has been found, the house will be added
+        if max_battery != None:
+            max_battery.add_house(district.houses[i])
+        else:
+            print("WARNING: one or more houses have not been assigned to a battery")   """
 
 def greedy_assignment(district, starting_house: int = 0) -> None:
     """ Adds each house to the battery with the most capacity left
@@ -22,11 +53,16 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
                 max_capacity = battery.left_over_capacity
                 max_battery = battery
         
-        # If a compatible battery has been found, the house will be added
+        # If a compatible battery has been found,  will be added
         if max_battery != None:
             max_battery.add_house(district.houses[house_num])
+            print(f"House {i} -> Battery {max_battery.battery_id}")
         else:
-            print("WARNING: one or more houses have not been assigned to a battery")          
+            print("WARNING: one or more houses have not been assigned to a battery")
+            print(f"House {i}: {district.houses[house_num].output}")       
+
+    for n, battery in enumerate(district.batteries):
+        print(f"Battery {n + 1}: {battery.left_over_capacity}")    
         
             
 def run_greedy_assignment_shortest_walk(district) -> list:
