@@ -44,6 +44,7 @@ if __name__ == "__main__":
                     "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
         if len(sys.argv) > 2 and sys.argv[2].isnumeric() and 1 <= int(sys.argv[2]) <= 3:
+            # Default values
             runs = 10
             alg_method = "--randmanh"
 
