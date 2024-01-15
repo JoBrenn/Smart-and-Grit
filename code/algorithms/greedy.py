@@ -58,11 +58,14 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
             max_battery.add_house(district.houses[house_num])
             print(f"House {i} -> Battery {max_battery.battery_id}")
         else:
-            print("WARNING: one or more houses have not been assigned to a battery")
-            print(f"House {i}: {district.houses[house_num].output}")       
+            print("-------------------------------------------------")
+            print("WARNING: house has not been assigned to a battery")
+            print(f"House {i}: {district.houses[house_num].output}, "+ \
+                f"x: {district.houses[house_num].row}, y: {district.houses[house_num].column}")  
+            print("-------------------------------------------------")     
 
-    for n, battery in enumerate(district.batteries):
-        print(f"Battery {n + 1}: {battery.left_over_capacity}")    
+    for battery in district.batteries:
+        print(f"Battery {battery.battery_id}: {battery.left_over_capacity}")    
         
             
 def run_greedy_assignment_shortest_walk(district) -> list:
