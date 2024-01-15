@@ -63,6 +63,7 @@ if __name__ == "__main__":
             
             run_random_assignment_random_walk(district)
             method = "Random + random walk"
+            
         elif alg_method == "--randmanh":
             """
                 Here we again apply a random assignment of houses to batteries,
@@ -72,6 +73,7 @@ if __name__ == "__main__":
             
             run_random_assignment_shortest_distance(district)
             method = "Random + Manhattan"
+            
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery
@@ -88,6 +90,8 @@ if __name__ == "__main__":
                     district.create_cable(house, battery)
             print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
             plot_output(district.return_output(), "Greedy + Manhattan")
+       
+       # Plot the output
        plot_output(district.return_output(), method)
             
     else:
