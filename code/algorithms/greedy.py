@@ -26,14 +26,13 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
             max_battery.add_house(district.houses[house_num])          
         
             
-def run_greedy_assignment_shortest_walk(district) -> None:
+def run_greedy_assignment_shortest_walk(district) -> list:
     """ Creates cables between houses and batteries that have 
         been assigned using the greedy algorithm and plots this.
         Starts at a random house.
-        pre: a District object is passed as an argument"""
-
+        post: returns output list"""
+        
     start = randint(0, len(district.houses) - 1)
-
     # Uses greedy algorithm to assign houses to batteries
     greedy_assignment(district, start)
     
@@ -42,4 +41,7 @@ def run_greedy_assignment_shortest_walk(district) -> None:
         for house in battery.houses: 
             district.create_cable(house, battery)
     print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
-    plot_output(district.return_output(), "Greedy + Manhattan")
+    
+    output = district.return_output()
+    
+    return output

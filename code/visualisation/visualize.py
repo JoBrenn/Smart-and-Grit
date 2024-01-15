@@ -56,8 +56,7 @@ def plot_output(data: list, plot_title: str = "Graph"):
                     plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
                              [int(cable1_loc[1]),int(cable2_loc[1])], \
                              color + '-', lw=1, \
-                             zorder=1)#, \
-                             #highlight=True)
+                             zorder=1)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
