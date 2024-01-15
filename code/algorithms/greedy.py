@@ -132,10 +132,14 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
             print("WARNING: house has not been assigned to a battery")
             print(f"House {i}: {district.houses[house_num].output}, "+ \
                 f"x: {district.houses[house_num].row}, y: {district.houses[house_num].column}")  
-            print("-------------------------------------------------")     
+            print("-------------------------------------------------")
+
+            return False   
 
     for battery in district.batteries:
-        print(f"Battery {battery.battery_id}: {battery.left_over_capacity}") 
+        print(f"Battery {battery.battery_id}: {battery.left_over_capacity}")
+
+    return True
   
         
             
@@ -147,7 +151,7 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
         
     start = randint(0, len(district.houses) - 1)
     # Uses greedy algorithm to assign houses to batteries
-    greedy_assignment_2(district)
+    result = greedy_assignment_2(district)
     
     # Loops over each house in each battery to create cable paths
     for battery in district.batteries:
@@ -156,6 +160,7 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
 
     print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
     
-    output = district.return_output()
+    return result
+    #output = district.return_output()
     
-    return output
+    #return output
