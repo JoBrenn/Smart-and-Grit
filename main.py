@@ -101,6 +101,16 @@ if __name__ == "__main__":
             output = run_random_assignment_shortest_distance(district)
             method = "Random + Manhattan"
 
+        elif alg_method == "--randmanhcap":
+            """
+                Here we again apply a random assignement of houses to batteries,
+                but now we do take the capacity into account. Thus only batteries
+                with enough capacity left are options to be chosen.
+                We again use the shortest Manhattan distance.
+            """
+            output = run_random_assignment_shortest_distance_with_capacity(district)
+            method = "Random + Manhatten + Capacity"
+
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery,
@@ -114,5 +124,7 @@ if __name__ == "__main__":
 
         # Plot the output
         plot_output(output, method)
+        
+
     else:
         print("Invalid input.")
