@@ -1,8 +1,6 @@
 import random
 from code.modules.house import House
 from code.modules.battery import Battery
-from code.visualisation.visualize import *
-from code.modules.district import *
 
 def get_cable_points(house: tuple[int], battery: tuple[int]) -> tuple[int]:
         """ Generates the points between which a cable must be layed from house
@@ -161,10 +159,7 @@ def run_random_assignment_shortest_distance(district, costs_type) -> list:
      
     print(f"The cost for random assignment and shortest Manhattan distance in district {district.district}\
  is {district.return_cost()}.")
-        district.create_cable(house, battery)
 
- #    print(f"The cost for random assignment and shortest Manhattan distance in district {district.district}\
- # is {district.return_cost()}.")
     output = district.return_output()
 
     return output
