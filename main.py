@@ -74,13 +74,13 @@ if __name__ == "__main__":
 
         elif alg_method == "--greedmanh":
             """
-                Here we apply a greedy algorithm. A house is assigned to the battery
-                with the most capacity left. The path of the cable is created using 
-                the shortest Manhattan distance from the house towards the battery
+                Here we apply a greedy algorithm. A house is assigned to the battery,
+                starting at a random house, with the most capacity left. 
+                The path of the cable is created using the shortest Manhattan distance 
+                from the house towards the battery
             """
             run_greedy_assignment_shortest_walk(district)
-
-            
+          
     else:
         print("Invalid input.")
 
