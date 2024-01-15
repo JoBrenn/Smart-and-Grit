@@ -72,7 +72,7 @@ if __name__ == "__main__":
             alg_method = "--randmanh"
 
         district = District(int(sys.argv[1]), "costs-own")
-        method = "costs-own"
+        #method = ""
         # Run different methods based on user input
         if alg_method == "--randrwalk":
             """
@@ -94,19 +94,9 @@ if __name__ == "__main__":
                 we now implement the shortest Manhattan distance.
             """
 
-            output = run_random_assignment_shortest_distance(district, method)
+            output = run_random_assignment_shortest_distance(district)
             method = "Random + Manhattan"
-        
-        elif alg_method == "--randmanhcap":
-            """
-                Here we again apply a random assignment of houses to batteries,
-                not taking the capacity into account. Instead of a random walk,
-                we now implement the shortest Manhattan distance.
-            """
 
-            output = run_random_assignment_shortest_distance(district, method)
-            method = "Random + Manhattan"
-            
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery,
@@ -115,7 +105,8 @@ if __name__ == "__main__":
                 from the house towards the battery
             """
 
-            output = run_greedy_assignment_shortest_walk(district, method)
+            output = run_greedy_assignment_shortest_walk(district)
+            # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
             method = "Greedy + Manhattan"
 
         # Plot the output

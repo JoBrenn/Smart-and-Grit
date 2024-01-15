@@ -70,3 +70,41 @@ def run_random_assignment_shortest_distance_with_capacity(district, costs_type) 
     output = district.return_output()
 
     return output
+
+def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
+    """ Creates cables between houses and batteries that have
+        been assigned using the greedy algorithm and plots this.
+        Starts at a random house.
+        post: returns output list"""
+
+    start = randint(0, len(district.houses) - 1)
+    # Uses greedy algorithm to assign houses to batteries
+    greedy_assignment(district, start)
+
+    # Loops over each house in each battery to create cable paths
+    for battery in district.batteries:
+        for house in battery.houses:
+            district.district_dict[costs_type] += create_cable(house, battery)
+
+    output = district.return_output()
+
+    return output
+
+def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
+    """ Creates cables between houses and batteries that have
+        been assigned using the greedy algorithm and plots this.
+        Starts at a random house.
+        post: returns output list"""
+
+    start = randint(0, len(district.houses) - 1)
+    # Uses greedy algorithm to assign houses to batteries
+    greedy_assignment(district, start)
+
+    # Loops over each house in each battery to create cable paths
+    for battery in district.batteries:
+        for house in battery.houses:
+            district.district_dict[costs_type] += create_cable(house, battery)
+
+    output = district.return_output()
+
+    return output
