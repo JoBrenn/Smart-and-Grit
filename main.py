@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
             outputs = []
 
-            
+
 
 
             plot_output_histogram(outputs)
@@ -104,16 +104,8 @@ if __name__ == "__main__":
                 with the most capacity left. The path of the cable is created using
                 the shortest Manhattan distance from the house towards the battery
             """
-            district = District(int(sys.argv[1]), "costs-own")
-            # Uses greedy algorithm to assign houses to batteries
-            greedy_assignment(district)
 
-            # Loops over each house in each battery to create cable paths
-            for battery in district.batteries:
-                for house in battery.houses:
-                    district.create_cable(house, battery)
-            print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
-            plot_output(district.return_output(), "Greedy + Manhattan")
+            run_greedy_assignment_shortest_walk(district)
 
 
     else:
