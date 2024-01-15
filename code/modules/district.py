@@ -112,10 +112,15 @@ class District:
     
     def is_valid(self) -> bool:
         """ Checks wether we have found a valid solution"""
-        for battery in self.district_dict[1:]:
+        
+        number_houses = 0
+        for battery in self.return_output()[1:]:
             for house in battery["houses"]:
                 # When House connection is empty returns false
+                number_houses += 1
                 if len(house["cables"]) == 0:
                     return False
-        
+        if number_houses != 150:
+            return False
+            
         return True

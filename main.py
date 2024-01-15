@@ -104,8 +104,9 @@ if __name__ == "__main__":
                 we now implement the shortest Manhattan distance.
             """
 
-            output = run_random_assignment_shortest_distance(district, method)
-            method = "Random + Manhattan"
+            output = run_random_assignment_shortest_distance_with_capacity(district, method)
+            method = "Random + Manhattan + Capacity"
+            print(district.is_valid())
 
         elif alg_method == "--greedmanh":
             """
