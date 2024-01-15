@@ -41,7 +41,7 @@ if __name__ == "__main__":
             print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["h", "histo", "histogram"]:
-        if sys.argv[2].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
+        if len(sys.argv) > 2 and sys.argv[2].isnumeric() and 1 <= int(sys.argv[2]) <= 3:
             if len(sys.argv) == 3:
                 runs = 10
                 alg_method = "--randmanh"
@@ -56,9 +56,12 @@ if __name__ == "__main__":
 
             outputs = []
 
+            for run in range(runs):
+                district = District(int(sys.argv[2]), "costs-own")
+                output = run_random_assignment_shortest_distance(district)
+                outputs.append(output[0]["costs-own"])
 
-
-
+            print(outputs)
             plot_output_histogram(outputs)
 
 
@@ -104,11 +107,11 @@ if __name__ == "__main__":
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery,
-                starting at a random house, with the most capacity left. 
-                The path of the cable is created using the shortest Manhattan distance 
+                starting at a random house, with the most capacity left.
+                The path of the cable is created using the shortest Manhattan distance
                 from the house towards the battery
             """
-            
+
             output = run_greedy_assignment_shortest_walk(district)
             method = "Greedy + Manhattan"
 
