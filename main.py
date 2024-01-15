@@ -128,7 +128,6 @@ if __name__ == "__main__":
             method = "Greedy + Manhattan"
 
         # Plot the output
-        print(district.return_json_output())
-        #plot_output(output, method)
+        plot_output(output, method)
     else:
         print("Invalid input.")
