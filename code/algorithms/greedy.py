@@ -40,7 +40,6 @@ def greedy_assignment_2(district) -> None:
         house position can be passed as an int"""
     max_capacity = 0
     houses_amount = len(district.houses)   
->>>>>>> ef3809818d2f4b239502f6dfe88216761cc1f0b8
     
     #house_order = [*range(0, houses_amount, 1)]
     #shuffle(house_order)
