@@ -69,3 +69,4 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
         print(f"Battery {battery.battery_id}: {battery.left_over_capacity}")
 
     return True
+    #test
