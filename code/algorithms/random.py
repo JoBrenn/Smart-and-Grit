@@ -1,5 +1,5 @@
 import random
-from code.visualisation.visualize_output import *
+from code.visualisation.visualize import *
 
 def random_assignment(batteries: list, houses: list) -> dict:
     """ Randomly assigns houses to batteries, not taking capacity into account
