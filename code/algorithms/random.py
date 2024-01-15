@@ -49,6 +49,10 @@ def random_walk(house: tuple[int], battery: tuple[int], grid_size: int) -> list:
     return points_visited
 
 def run_random_assingment_random_walk(district):
+    """ Randomly assigns the first house in a district to a battery and 
+        lays a connection along the shortest Manhattan distance. 
+        Plots the grid"""
+        
     connections = random_assignment(district.batteries, district.houses)
     house_1 = list(connections.keys())[0]
     battery = connections[house_1]
@@ -61,6 +65,10 @@ def run_random_assingment_random_walk(district):
     plot_output(district.return_output(), "Random + random walk")
     
 def run_random_assignment_shortest_distance(district):
+    """ Randomly assigns the houses in a district to batteries and 
+        lays connections along the shortest Manhattan distance. 
+        Plots the grid"""
+        
     connections = random_assignment(district.batteries, district.houses)
     for house in connections:
         battery = connections[house]
