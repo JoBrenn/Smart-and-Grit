@@ -23,7 +23,7 @@ from code.algorithms.greedy import *
 
 if __name__ == "__main__":
     # At least 1 argument
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
+    if len(sys.argv) < 2 or len(sys.argv) > 4:
         print("Usage: python3 main.py <district> --[method]")
     # Shows format output
     elif sys.argv[1] == "format":
@@ -42,28 +42,17 @@ if __name__ == "__main__":
                     "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["h", "histo", "histogram"]:
         if len(sys.argv) > 2 and sys.argv[2].isnumeric() and 1 <= int(sys.argv[2]) <= 3:
-            if len(sys.argv) == 3:
-                runs = 10
+            runs = 10
+            alg_method = "--randmanh"
+
+            if len(sys.argv) == 4 and sys.argv[3].isnumeric():
+                runs = int(sys.argv[3])
                 alg_method = "--randmanh"
-            elif len(sys.arg) == 4 and sys.argv[3].isnumeric():
-                runs == sys.argv[3]
-                alg_method = "--randmanh"
-            elif len(sys.arg) == 5 and sys.argv[3][:1] == "--" and sys.argv[4].isnumeric():
-                runs == sys.argv[4]
-                alg_method = sys.argv[3]
             else:
-                print("python3 main.py histogram <distrinct> --[method] [runs]")
+                print("python3 main.py histogram <distrinct> [runs]")
 
-            outputs = []
-
-            for run in range(runs):
-                district = District(int(sys.argv[2]), "costs-own")
-                output = run_random_assignment_shortest_distance(district)
-                outputs.append(output[0]["costs-own"])
-
-            print(outputs)
+            outputs = runs_random_assignment_shortest_distance(int(sys.argv[2]), runs)
             plot_output_histogram(outputs)
-
 
         else:
             print("Please specify distrinct.")
