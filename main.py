@@ -40,7 +40,7 @@ if __name__ == "__main__":
                     "Creates the cable path through the Manhattan distance from house to battery")
             print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
-    elif sys.argv[1] == "histo":
+    elif sys.argv[1] in ["h", "histo", "histogram"]:
         if sys.argv[2].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
             if len(sys.argv) == 3:
                 runs = 10
