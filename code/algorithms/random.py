@@ -1,4 +1,5 @@
 import random
+from code.visualisation.visualize_output import *
 
 def random_assignment(batteries: list, houses: list) -> dict:
     """ Randomly assigns houses to batteries, not taking capacity into account
@@ -34,8 +35,7 @@ def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     
 def random_walk(house: tuple[int], battery: tuple[int], grid_size: int) -> list:
     """ Takes a random walk from the house, stops when battery is reached
-        adds all visited points to list
-        TO-DO: add cable-segments along the random walk"""
+        adds all visited points to list"""
     
     # Initialize current location at the house
     current_location = house
@@ -47,4 +47,28 @@ def random_walk(house: tuple[int], battery: tuple[int], grid_size: int) -> list:
         points_visited.append(current_location)
     
     return points_visited
+
+def run_random_assingment_random_walk(district):
+    connections = random_assignment(district.batteries, district.houses)
+    house_1 = list(connections.keys())[0]
+    battery = connections[house_1]
+    battery.add_house(house_1)
+    points_walked = random_walk((int(house_1.row), int(house_1.column)), (int(battery.row), int(battery.column)), 50)
+    # Add a cable segment between all the points visited in the random walk
+    for i in range(len(points_walked) - 1):
+        house_1.add_cable_segment((points_walked[i][0], points_walked[i][1]),\
+                        (points_walked[i + 1][0], points_walked[i + 1][1]))
+    plot_output(district.return_output(), "Random + random walk")
+    
+def run_random_assignment_shortest_distance(district):
+    connections = random_assignment(district.batteries, district.houses)
+    for house in connections:
+        battery = connections[house]
+        # Add the house to the battery connection (such that dictionary is added)
+        battery.add_house(house)
+        district.create_cable(house, battery)
+     
+    print(f"The cost for random assignment and shortest Manhattan distance in district {district.district}\
+            is {district.return_cost()}.")
+    plot_output(district.return_output(), "Random + Manhattan")
     
