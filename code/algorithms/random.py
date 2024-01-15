@@ -81,7 +81,7 @@ def run_random_assignment_shortest_distance(district) -> list:
         district.create_cable(house, battery)
      
     print(f"The cost for random assignment and shortest Manhattan distance in district {district.district}\
-            is {district.return_cost()}.")
+ is {district.return_cost()}.")
             
     output = district.return_output()
     

@@ -37,10 +37,9 @@ class District:
         """
         self.district = district
         self.costs_type = costs_type
-        self.costs: int = 0
         self.batteries: list[Battery] = []
         self.houses: list[House] = []
-        self.district_dict = {"district": self.district, f"{costs_type}": self.costs}
+        self.district_dict = {"district": self.district, f"{costs_type}": 0}
         self.output: list[dict] = [self.district_dict]
 
         # Load the houses and batteries
@@ -90,7 +89,7 @@ class District:
                 battery = Battery(int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
                 self.batteries.append(battery)
                 # Add costs of battery to total costs
-                self.costs += battery.price
+                self.district_dict[f"{self.costs_type}"] += battery.price
                 # Add battery dictionary to the output list
                 self.output.append(battery.battery_dict)
 
@@ -108,10 +107,8 @@ class District:
         """ Return the distric costs, given list of houses
             pre: list of house objects, needed since
                  cables are added after"""
-        for house in self.houses:
-            # Add total house cable costs to total costs
-            self.costs += house.cable_costs
-        return self.costs
+
+        return self.district_dict[f"{self.costs_type}"]
     
     def get_cable_points(self, house: tuple[int], battery: tuple[int]) -> tuple[int]:
         """ Generates the points between which a cable must be layed from house
@@ -142,11 +139,14 @@ class District:
             # Down
             for step in range(y_distance):
                 house.add_cable_segment((x_current, y_current), (x_current, y_current - 1))
+                # Add the costs of the cable 
+                self.district_dict[f"{self.costs_type}"] += 9
                 y_current -= 1
         elif y_distance < 0:
             # Up
             for step in range(abs(y_distance)):
                 house.add_cable_segment((x_current, y_current + 1), (x_current, y_current))
+                self.district_dict[f"{self.costs_type}"] += 9
                 y_current += 1
        
        # Check whether we need to go left or right
@@ -154,9 +154,11 @@ class District:
             # Left
             for step in range(x_distance):
                 house.add_cable_segment((x_current, y_current), (x_current - 1, y_current))
+                self.district_dict[f"{self.costs_type}"] += 9
                 x_current -= 1
         elif x_distance < 0:
             # Right
             for step in range(abs(x_distance)):
                 house.add_cable_segment((x_current, y_current), (x_current + 1, y_current))
+                self.district_dict[f"{self.costs_type}"] += 9
                 x_current += 1

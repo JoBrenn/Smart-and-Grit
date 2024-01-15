@@ -113,6 +113,7 @@ if __name__ == "__main__":
 
         # Plot the output
         plot_output(output, method)
-       
+        print(district.return_cost())
+        print(district.return_output()[0])
     else:
         print("Invalid input.")
