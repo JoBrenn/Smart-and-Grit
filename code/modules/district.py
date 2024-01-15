@@ -110,3 +110,12 @@ class District:
 
         return self.district_dict[f"{self.costs_type}"]
     
+    def is_valid(self) -> bool:
+        """ Checks wether we have found a valid solution"""
+        for battery in self.district_dict[1:]:
+            for house in battery["houses"]:
+                # When House connection is empty returns false
+                if len(house["cables"]) == 0:
+                    return False
+        
+        return True
