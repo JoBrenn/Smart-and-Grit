@@ -21,9 +21,12 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
                battery.left_over_capacity >= district.houses[house_num].output:
                 max_capacity = battery.left_over_capacity
                 max_battery = battery
-        # Quickfix for now
+        
+        # If a compatible battery has been found, the house will be added
         if max_battery != None:
-            max_battery.add_house(district.houses[house_num])          
+            max_battery.add_house(district.houses[house_num])
+        else:
+            print("WARNING: one or more houses have not been assigned to a battery")          
         
             
 def run_greedy_assignment_shortest_walk(district) -> list:
