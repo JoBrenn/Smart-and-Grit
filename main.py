@@ -52,7 +52,7 @@ if __name__ == "__main__":
                 runs == sys.argv[4]
                 alg_method = sys.argv[3]
             else:
-                print("python3 main.py histo <distrinct> --[method] [runs]")
+                print("python3 main.py histogram <distrinct> --[method] [runs]")
 
             outputs = []
 
@@ -86,11 +86,11 @@ if __name__ == "__main__":
                 batttery.
                 Takes quite some time and is really messy in visualisation,
                 so we only take the first house into account.
-            """ 
-            
+            """
+
             output = run_random_assignment_random_walk(district)
             method = "Random + random walk"
-            
+
         elif alg_method == "--randmanh":
             """
                 Here we again apply a random assignment of houses to batteries,
@@ -100,12 +100,13 @@ if __name__ == "__main__":
 
             output = run_random_assignment_shortest_distance(district)
             method = "Random + Manhattan"
-            
+
         elif alg_method == "--greedmanh":
             """
-                Here we apply a greedy algorithm. A house is assigned to the battery
-                with the most capacity left. The path of the cable is created using
-                the shortest Manhattan distance from the house towards the battery
+                Here we apply a greedy algorithm. A house is assigned to the battery,
+                starting at a random house, with the most capacity left. 
+                The path of the cable is created using the shortest Manhattan distance 
+                from the house towards the battery
             """
             
             output = run_greedy_assignment_shortest_walk(district)
@@ -113,7 +114,5 @@ if __name__ == "__main__":
 
         # Plot the output
         plot_output(output, method)
-        print(district.return_cost())
-        print(district.return_output()[0])
     else:
         print("Invalid input.")
