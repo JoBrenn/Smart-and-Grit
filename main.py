@@ -23,10 +23,10 @@ from code.algorithms.greedy import *
 
 if __name__ == "__main__":
     # At least 1 argument
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
+    if len(sys.argv) < 2 or len(sys.argv) > 4:
         print("Usage: python3 main.py <district> --[method]")
     # Shows format output
-    elif sys.argv[1] == "format":
+    elif sys.argv[1] == "--format":
         data = load_JSON_output("output/output-format.json")
         plot_output(data)
     # Shows the user a manual
@@ -34,36 +34,27 @@ if __name__ == "__main__":
             print("Usage: python3 main.py <district> --[method]")
             print("Methods:")
             print("--help: display help manual")
+            print("--format: display formatted output")
+            print("--h[isto[gram]]: Get histogram of N runs of random assignment Manhattan distance algorithm.")
             print("--randrwalk:  Randomly assigns houses to batteries. " + \
                                 "Creates cable path through randomly taking random steps until destination is reached")
             print("--randmanh: Randomly assigns houses to batteries. " +  \
                     "Creates the cable path through the Manhattan distance from house to battery")
             print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
-    elif sys.argv[1] in ["h", "histo", "histogram"]:
+    elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
         if len(sys.argv) > 2 and sys.argv[2].isnumeric() and 1 <= int(sys.argv[2]) <= 3:
-            if len(sys.argv) == 3:
-                runs = 10
+            runs = 10
+            alg_method = "--randmanh"
+
+            if len(sys.argv) == 4 and sys.argv[3].isnumeric():
+                runs = int(sys.argv[3])
                 alg_method = "--randmanh"
-            elif len(sys.arg) == 4 and sys.argv[3].isnumeric():
-                runs == sys.argv[3]
-                alg_method = "--randmanh"
-            elif len(sys.arg) == 5 and sys.argv[3][:1] == "--" and sys.argv[4].isnumeric():
-                runs == sys.argv[4]
-                alg_method = sys.argv[3]
             else:
-                print("python3 main.py histogram <distrinct> --[method] [runs]")
+                print("python3 main.py histogram <distrinct> [runs]")
 
-            outputs = []
-
-            for run in range(runs):
-                district = District(int(sys.argv[2]), "costs-own")
-                output = run_random_assignment_shortest_distance(district)
-                outputs.append(output[0]["costs-own"])
-
-            print(outputs)
+            outputs = runs_random_assignment_shortest_distance(int(sys.argv[2]), runs)
             plot_output_histogram(outputs)
-
 
         else:
             print("Please specify distrinct.")
@@ -128,7 +119,5 @@ if __name__ == "__main__":
 
         # Plot the output
         plot_output(output, method)
-        
-
     else:
         print("Invalid input.")
