@@ -11,7 +11,7 @@ def load_JSON_output(filename: str) -> list:
     with open(filename, "r") as f:
         return json.load(f)
 
-def plot_output(data: list):
+def plot_output(data: list, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
              contains battery dictinaries containing a list of house dictionaries, which in turn
@@ -20,8 +20,9 @@ def plot_output(data: list):
               and batteries while the cables are shown as solid lines"""
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    colors = ["b", "k", "c", "m", "g"] 
-    
+    plt.title(plot_title)
+    colors = ["b", "k", "c", "m", "g"]
+
     # Loops over each battery
     for battery in data[1:]:
         index = data.index(battery)
@@ -31,7 +32,8 @@ def plot_output(data: list):
         battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
                                    marker="o", markersize=8, \
                                    markeredgecolor="green", \
-                                   markerfacecolor="green")
+                                   markerfacecolor="green", \
+                                   zorder=2)
 
         # Loops over each house of the battery
         if len(battery['houses']) != 0:
@@ -41,7 +43,8 @@ def plot_output(data: list):
                 house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]),\
                                          marker="o", markersize=4, \
                                          markeredgecolor="red", \
-                                         markerfacecolor="red")
+                                         markerfacecolor="red", \
+                                         zorder=2)
 
                 # Loops over each cable segment of the house
                 for cable in range(len(house['cables']) - 1):
@@ -51,11 +54,14 @@ def plot_output(data: list):
 
                     # Plots a line from the first cable point to its destination point
                     plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
-                             [int(cable1_loc[1]),int(cable2_loc[1])], color + '-', lw=1)
+                             [int(cable1_loc[1]),int(cable2_loc[1])], \
+                             color + '-', lw=1, \
+                             zorder=1, \
+                             highlight=True)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
-                    
+
     # Major ticks every 20, minor ticks every 5
     major_ticks = np.arange(0, 51, 10)
     minor_ticks = np.arange(0, 51, 1)
@@ -73,6 +79,9 @@ def plot_output(data: list):
                loc='upper left')
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
+
+
+
     plt.show()
 
 if __name__ == "__main__":
@@ -80,5 +89,5 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         json_data = load_JSON_output(sys.argv[1])
         plot_output(json_data)
-    else: 
+    else:
         print("Usage: python3 visualize_output.py filename.json")
