@@ -76,6 +76,7 @@ if __name__ == "__main__":
             alg_method = "--randmanh"
 
         district = District(int(sys.argv[1]), "costs-own")
+        #method = ""
         # Run different methods based on user input
         if alg_method == "--randrwalk":
             """
@@ -87,7 +88,7 @@ if __name__ == "__main__":
                 so we only take the first house into account.
             """ 
             
-            run_random_assignment_random_walk(district)
+            output = run_random_assignment_random_walk(district)
             method = "Random + random walk"
             
         elif alg_method == "--randmanh":
@@ -97,7 +98,7 @@ if __name__ == "__main__":
                 we now implement the shortest Manhattan distance.
             """
 
-            run_random_assignment_shortest_distance(district)
+            output = run_random_assignment_shortest_distance(district)
             method = "Random + Manhattan"
             
         elif alg_method == "--greedmanh":
@@ -107,11 +108,11 @@ if __name__ == "__main__":
                 the shortest Manhattan distance from the house towards the battery
             """
             
-            run_greedy_assignment_shortest_walk(district)
+            output = run_greedy_assignment_shortest_walk(district)
             method = "Greedy + Manhattan"
 
-       # Plot the output
-       plot_output(district.return_output(), method)
+        # Plot the output
+        plot_output(output, method)
        
     else:
         print("Invalid input.")
