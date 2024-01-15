@@ -80,9 +80,20 @@ def plot_output(data: list, plot_title: str = "Graph"):
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
-
-
     plt.show()
+
+def plot_output_histogram(outputs: list[int]) -> None:
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    plt.title("Histogram")
+    n_bins = 20
+
+    plt.tight_layout()
+
+    plt.hist(outputs, bins=n_bins)
+    plt.show()
+
 
 if __name__ == "__main__":
     #Loads JSON whose path is specified as the first command line argument
