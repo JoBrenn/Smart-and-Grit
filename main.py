@@ -71,6 +71,7 @@ if __name__ == "__main__":
 
     # Shows output of one district between 1 - 3
     elif sys.argv[1].isnumeric() and 1 <= int(sys.argv[1]) <= 3:
+        costs_type = "costs-own"
         district = District(int(sys.argv[1]), "costs-own")
         # Defaults to first method if none are selected
         if len(sys.argv) == 3:
@@ -91,7 +92,7 @@ if __name__ == "__main__":
                 so we only take the first house into account.
             """
 
-            output = run_random_assignment_random_walk(district)
+            output = run_random_assignment_random_walk(district, costs_type)
             method = "Random + random walk"
 
         elif alg_method == "--randmanh":
@@ -101,7 +102,7 @@ if __name__ == "__main__":
                 we now implement the shortest Manhattan distance.
             """
 
-            output = run_random_assignment_shortest_distance(district)
+            output = run_random_assignment_shortest_distance(district, costs_type)
             method = "Random + Manhattan"
 
         elif alg_method == "--randmanhcap":
@@ -111,7 +112,7 @@ if __name__ == "__main__":
                 with enough capacity left are options to be chosen.
                 We again use the shortest Manhattan distance.
             """
-            output = run_random_assignment_shortest_distance_with_capacity(district)
+            output = run_random_assignment_shortest_distance_with_capacity(district, costs_type)
             method = "Random + Manhatten + Capacity"
 
         elif alg_method == "--greedmanh":
@@ -122,7 +123,7 @@ if __name__ == "__main__":
                 from the house towards the battery
             """
 
-            output = run_greedy_assignment_shortest_walk(district)
+            output = run_greedy_assignment_shortest_walk(district, costs_type)
             method = "Greedy + Manhattan"
 
         # Plot the output

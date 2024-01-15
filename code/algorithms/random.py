@@ -1,6 +1,65 @@
 import random
+from code.modules.house import House
+from code.modules.battery import Battery
 from code.visualisation.visualize import *
 
+def get_cable_points(house: tuple[int], battery: tuple[int]) -> tuple[int]:
+        """ Generates the points between which a cable must be layed from house
+            to battery, following the shortest Manhatten distance 
+            From house first up or down then left or right"""
+           
+        points = [house, (house[0], battery[1]), battery]
+        return tuple(points)
+        
+def create_cable(house: House, battery: Battery) -> int:
+    """ Creates entire cable connection between house and battery
+        following shortest manhatten distance. 
+        Again following from house first up or donw then left or right
+        post: returns the cost of the cable"""
+    
+    cable_points = get_cable_points((house.row, house.column), (battery.row, battery.column))
+    cable_cost = 0
+    
+    # House y minus in between y
+    y_distance = cable_points[0][1] - cable_points[1][1]
+    # In between x minus battery x
+    x_distance = cable_points[1][0] - cable_points[2][0]
+    
+    # Start at the house
+    x_current = house.row
+    y_current = house.column
+    
+    # Check whether we need to go up or down
+    if y_distance > 0:
+        # Down
+        for step in range(y_distance):
+            house.add_cable_segment((x_current, y_current), (x_current, y_current - 1))
+            # Add the costs of the cable 
+            cable_cost += 9
+            y_current -= 1
+    elif y_distance < 0:
+        # Up
+        for step in range(abs(y_distance)):
+            house.add_cable_segment((x_current, y_current + 1), (x_current, y_current))
+            cable_cost += 9
+            y_current += 1
+   
+   # Check whether we need to go left or right
+    if x_distance > 0:
+        # Left
+        for step in range(x_distance):
+            house.add_cable_segment((x_current, y_current), (x_current - 1, y_current))
+            cable_cost += 9
+            x_current -= 1
+    elif x_distance < 0:
+        # Right
+        for step in range(abs(x_distance)):
+            house.add_cable_segment((x_current, y_current), (x_current + 1, y_current))
+            cable_cost += 9
+            x_current += 1
+            
+    return cable_cost
+    
 def random_assignment(batteries: list, houses: list) -> dict:
     """ Randomly assigns houses to batteries, not taking capacity into account
         Adds this to dictionary with house as key and battery as value
@@ -86,7 +145,7 @@ def run_random_assignment_random_walk(district) -> list:
     output = district.return_output()
     return output
     
-def run_random_assignment_shortest_distance(district) -> list:
+def run_random_assignment_shortest_distance(district, costs_type) -> list:
     """ Randomly assigns the houses in a district to batteries and 
         lays connections along the shortest Manhattan distance. 
         Plots the grid
@@ -97,7 +156,7 @@ def run_random_assignment_shortest_distance(district) -> list:
         battery = connections[house]
         # Add the house to the battery connection (such that dictionary is added)
         battery.add_house(house)
-        district.create_cable(house, battery)
+        district.district_dict[costs_type] += create_cable(house, battery)
      
     print(f"The cost for random assignment and shortest Manhattan distance in district {district.district}\
  is {district.return_cost()}.")
@@ -106,7 +165,7 @@ def run_random_assignment_shortest_distance(district) -> list:
     
     return output
     
-def run_random_assignment_shortest_distance_with_capacity(district) -> list:
+def run_random_assignment_shortest_distance_with_capacity(district, costs_type) -> list:
     """ Randomly assigns the houses in a district to batteries with enough
         capacity and lays connections along the shortest Manhattan distance. 
         Plots the grid
@@ -115,7 +174,7 @@ def run_random_assignment_shortest_distance_with_capacity(district) -> list:
     connections = random_assignment_capacity(district.batteries, district.houses)
     for house in connections:
         battery = connections[house]
-        district.create_cable(house, battery)
+        district.district_dict[costs_type] += create_cable(house, battery)
      
     print(f"The cost for random assignment with enough capacity\
  and shortest Manhattan distance in district {district.district}\
