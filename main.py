@@ -123,3 +123,4 @@ if __name__ == "__main__":
         plot_output(output, method)
     else:
         print("Invalid input.")
+    # Test
