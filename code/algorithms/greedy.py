@@ -47,19 +47,16 @@ def greedy_assignment(district, starting_house: int = 0) -> None:
 
         house_num = (i + starting_house) % houses_amount
 
-        bat_num = 0
-
-        for n, battery in enumerate(district.batteries):
+        for battery in district.batteries:
             if battery.left_over_capacity > max_capacity and \
                battery.left_over_capacity >= district.houses[house_num].output:
                 max_capacity = battery.left_over_capacity
                 max_battery = battery
-                bat_num = n + 1
         
         # If a compatible battery has been found,  will be added
         if max_battery != None:
             max_battery.add_house(district.houses[house_num])
-            print(f"House {i} -> Battery {bat_num}")
+            print(f"House {i} -> Battery {max_battery.battery_id}")
         else:
             print("WARNING: one or more houses have not been assigned to a battery")
             print(f"House {i}: {district.houses[house_num].output}")       

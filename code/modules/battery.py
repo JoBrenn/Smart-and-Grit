@@ -17,7 +17,7 @@ from code.modules.house import House
 
 class Battery:
 
-    def __init__(self, batery_id: int, x: int, y: int, capacity: float, price: int) -> None:
+    def __init__(self, battery_id: int, x: int, y: int, capacity: float, price: int) -> None:
         self.battery_id = battery_id
         self.row = x
         self.column = y
