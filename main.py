@@ -28,7 +28,7 @@ if __name__ == "__main__":
         print("Usage: python3 main.py <district> --[method]")
     # Shows format output
     elif sys.argv[1] == "--format":
-        data = load_JSON_output("output/output-format.json")
+        data = load_JSON_output("data/output-format.json")
         plot_output(data)
     # Shows the user a manual
     elif sys.argv[1] == "--help":
