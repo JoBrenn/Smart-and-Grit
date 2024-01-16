@@ -43,6 +43,8 @@ if __name__ == "__main__":
                     "Creates the cable path through the Manhattan distance from house to battery")
             print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
+            print("--greedmanhcap: Uses greedy algorithm to assign houses to batteries. " + \
+                    "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
         if len(sys.argv) > 2 and sys.argv[2].isnumeric() and 1 <= int(sys.argv[2]) <= 3:
             # Default values

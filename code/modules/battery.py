@@ -26,6 +26,7 @@ class Battery:
         self.price = price
         # List of houses connected to battery
         self.houses = []
+        self.cables = set()
         # Initialize battery dictionary
         self.battery_dict = {"location": self.get_coordinate(self.row, self.column), 
                              "capacity": float(self.capacity), "houses": []}
