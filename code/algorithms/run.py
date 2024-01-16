@@ -48,7 +48,7 @@ def run_random_assignment_shortest_distance(district, costs_type) -> list:
         battery = connections[house]
         # Add the house to the battery connection (such that dictionary is added)
         battery.add_house(house)
-        create_cable(house, battery)
+        create_cable(house, (battery.row, battery.column))
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
 
     output = district.return_output()
@@ -65,7 +65,7 @@ def run_random_assignment_shortest_distance_with_capacity(district, costs_type) 
     connections = random_assignment_capacity(district.batteries, district.houses)
     for house in connections:
         battery = connections[house]
-        create_cable(house, battery)
+        create_cable(house, (battery.row, battery.column))
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()
 
@@ -83,7 +83,7 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
     # Loops over each house in each battery to create cable paths
     for battery in district.batteries:
         for house in battery.houses:
-            create_cable(house, battery)
+            create_cable(house, (battery.row, battery.column))
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()
 
