@@ -30,8 +30,7 @@ def run_random_assignment_random_walk(district) -> list:
     points_walked = random_walk((int(house_1.row), int(house_1.column)), (int(battery.row), int(battery.column)), 50)
     # Add a cable segment between all the points visited in the random walk
     for i in range(len(points_walked) - 1):
-        house_1.add_cable_segment((points_walked[i][0], points_walked[i][1]),\
-                        (points_walked[i + 1][0], points_walked[i + 1][1]))
+        create_cable(house_1, battery)
 
     output = district.return_output()
     return output

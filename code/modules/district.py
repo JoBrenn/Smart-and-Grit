@@ -67,13 +67,10 @@ class District:
                 self.houses.append(house)
 
     def load_batteries(self, filename: str) -> None:
-        """ Load the batteries from csv file.
-
+        """ Load the batteries from csv file
         Creates battery objects and adds them to list.
-
         Params:
             filename    (str): Takes form of data/district_<district-number>/district-<district-number>_batteries.csv
-
         Returns:
             none
             list of battery objects is initialized

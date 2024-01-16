@@ -48,3 +48,10 @@ class Battery:
         self.battery_dict["houses"].append(house.house_dict)
         # Reduce the leftover capacity of the battery
         self.left_over_capacity -= house.output
+
+    def add_house_cables(self, house) -> None:
+        """ Adds the cable points of a House instance to the Battery instance
+        
+        """
+        for cable in house.cables:
+            self.cables.add(cable)
