@@ -36,6 +36,15 @@ class House:
         """ Add a cable segment and its cost to cable connection of house.
             pre: integer coordinates of the begin and the end of cable segment
             post: return None"""
+        
+        # TODO
+        #
+        """ Fout zit denk ik hier. Kabelpunten worden altijd 2x toegevoegd ongeacht of het
+        beginpunt het vorige eindpunt is waardoor de output JSON er vreemd uit komt te zien.
+        Waarscshijnlijk restant van oude gen_cable.py voor het omschrijven
+        """ 
+        #
+        #
 
         self.cables.append(self.get_coordinate(begin[0], begin[1]))
         self.cables.append(self.get_coordinate(end[0], end[1]))
