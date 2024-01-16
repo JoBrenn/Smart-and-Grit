@@ -54,4 +54,4 @@ class House:
         """ Determines the length of the cable associated to the house
             post: integer of the length of cable"""
             
-        return len(self.cables)
+        return len(self.cables) - 1
