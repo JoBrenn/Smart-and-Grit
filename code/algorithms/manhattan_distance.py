@@ -55,7 +55,3 @@ def create_cable(house: House, end: tuple[int]) -> None:
         for step in range(abs(x_distance)):
             x_current += 1
             house.add_cable_segment((x_current, y_current))
-<<<<<<< HEAD:code/algorithms/shortest_manhattan_distance_cables.py
-            
-=======
->>>>>>> 466d0229e034040671ec19168b4fcb2420316fdb:code/algorithms/manhattan_distance.py
