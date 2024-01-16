@@ -28,23 +28,20 @@ if __name__ == "__main__":
         print("Usage: python3 main.py <district> --<method> [options]")
     # Shows format output
     elif sys.argv[1] == "--format":
-        data = load_JSON_output("data/output-format.json")
+        data = load_JSON_output("output/output-format.json")
         plot_output(data)
     # Shows the user a manual
     elif sys.argv[1] == "--help":
             print("Usage: python3 main.py <district> --[method]")
             print("Methods:")
-            print("--help: display help manual")
-            print("--format: display formatted output")
-            print("--h[isto[gram]]: Get histogram of N runs of random assignment Manhattan distance algorithm.")
-            print("--randrwalk:  Randomly assigns houses to batteries. " + \
-                                "Creates cable path through randomly taking random steps until destination is reached")
-            print("--randmanh: Randomly assigns houses to batteries. " +  \
-                    "Creates the cable path through the Manhattan distance from house to battery")
-            print("--greedmanh: Uses greedy algorithm to assign houses to batteries. " + \
-                    "Creates the cable path through the Manhattan distance from house to battery")
-            print("--greedmanhcap: Uses greedy algorithm to assign houses to batteries. " + \
-                    "Creates the cable path through the Manhattan distance from house to battery")
+            print("  --help:\t\t Display help manual")
+            print("  --format:\t\t Display formatted output")
+            print("  --h[isto[gram]]:\t Get histogram of N runs of random assignment Manhattan distance algorithm.")
+            print("  --randrwalk:\t\t Randomly assigns houses to batteries. " + \
+                                "Creates cable path through randomly taking random steps until destination is reached.")
+            print("  --randmanh:\t\t Randomly assigns houses to batteries. \t\t\t\t(Manhattan Distance)")
+            print("  --greedmanh:\t\t Uses greedy algorithm to assign houses to batteries. \t\t(Manhattan Distance)")
+            print("  --greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
     elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
         if len(sys.argv) < 4 or sys.argv[2] == "--help" or \
          not sys.argv[3].isnumeric() or not 1 <= int(sys.argv[3]) <= 3:

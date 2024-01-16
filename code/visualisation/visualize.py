@@ -12,7 +12,7 @@ def load_JSON_output(filename: str) -> list:
     with open(filename, "r") as f:
         return json.load(f)
 
-def plot_output(data: list, alg_method: str, district_number: int, plot_title: str = "Graph"):
+def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
              contains battery dictinaries containing a list of house dictionaries, which in turn
@@ -80,9 +80,9 @@ def plot_output(data: list, alg_method: str, district_number: int, plot_title: s
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
-    file_path = f"output/figures/{alg_method[2:]}-district_{district_number}.png"
-
-    plt.savefig(file_path, bbox_inches='tight')
+    if district_number:
+        file_path = f"output/figures/{alg_method[2:]}-district_{district_number}.png"
+        plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
 
