@@ -86,13 +86,17 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
                 create_cable(house, (battery.row, battery.column))
                 
             else:
-                shortest = (50000, 50000)
+                shortest = tuple([battery.row, battery.column])
+                shortest_dist = (abs(shortest[0] - house.row) + abs(shortest[1] - house.column))
                 for cable in battery.cables:
-                    distance = cable[0] + cable[1]
+                    distance = (abs(cable[0] - house.row) + abs(cable[1] - house.column))
                     #print(f"Shortest {shortest}")
-                    if shortest == (None, None) or distance < int(shortest[0]) + int(shortest[1]):
-                        shortest = (cable[0], cable[1])
+                    if distance < shortest_dist:
+                        shortest = tuple([cable[0], cable[1]])
+                        
+
                 create_cable(house, shortest)
+
                 for o, cable_2 in enumerate(house.cables):
                     if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
                         print("-----------ERROR-----------")
