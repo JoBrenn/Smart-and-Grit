@@ -2,7 +2,8 @@ from code.modules.district import *
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 
-def runs_algorithms_to_costs(district_number, runs, alg_method) -> list[int]:
+def runs_algorithms_to_costs(district_number: int, runs: int, alg_method: str) -> list[int]:
+    """ Create list of outputs, used for mpl histogram."""
     outputs = []
 
     for run in range(runs):
