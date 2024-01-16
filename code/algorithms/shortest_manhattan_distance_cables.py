@@ -35,16 +35,13 @@ def create_cable(house: House, end: tuple[int]) -> None:
         for step in range(y_distance):
             y_current -= 1
             house.add_cable_segment((x_current, y_current))
-            # Add the costs of the cable 
-            #cable_cost += 9
+
 
     elif y_distance < 0:
         # Up
         for step in range(abs(y_distance)):
             y_current += 1
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
-    #elif y_distance == 0:
         
    # Check whether we need to go left or right
     if x_distance > 0:
@@ -52,16 +49,10 @@ def create_cable(house: House, end: tuple[int]) -> None:
         for step in range(x_distance):
             x_current -= 1
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
             
     elif x_distance < 0:
         # Right
         for step in range(abs(x_distance)):
             x_current += 1
-<<<<<<< HEAD
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
-=======
-            house.add_cable_segment((x_current, y_current))  
->>>>>>> e53b5d5acd93a3dcba3ef5f20aa5fbeb22cc2ce7
             
