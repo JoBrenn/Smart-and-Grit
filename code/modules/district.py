@@ -59,7 +59,7 @@ class District:
             next(f)
             for n, line in enumerate(f):
                 house_data = line.strip().split(",")
-                house = House(n, int(house_data[0]), int(house_data[1]), float(house_data[2]))
+                house = House(n, (int(house_data[0]), int(house_data[1])), float(house_data[2]))
                 self.houses.append(house)
 
     def load_batteries(self, filename: str) -> None:

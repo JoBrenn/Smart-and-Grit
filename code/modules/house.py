@@ -57,7 +57,7 @@ class House:
             adds coordinate to cables list of house
         """
 
-        self.cables.append(self.get_coordinate(coordinate[0], coordinate[1]))
+        self.cables.append(self.get_coordinate((coordinate[0], coordinate[1])))
 
     def return_cable_length(self) -> int:
         """ Return length of cable associated with house
