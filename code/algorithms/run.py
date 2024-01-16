@@ -88,17 +88,14 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
             else:
                 shortest = (50000, 50000)
                 for cable in battery.cables:
-                    cable_2 = cable.split(",")
-                    cable_2 = tuple(cable_2)
-                    distance = int(cable_2[0]) + int(cable_2[1])
-                    print(f"Shortest {shortest}")
+                    distance = cable[0] + cable[1]
+                    #print(f"Shortest {shortest}")
                     if shortest == (None, None) or distance < int(shortest[0]) + int(shortest[1]):
-                        shortest = (int(cable_2[0]), int(cable_2[1]))
-                
+                        shortest = (cable[0], cable[1])
                 create_cable(house, shortest)
 
             battery.add_house_cables(house)
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()
-
+    
     return output

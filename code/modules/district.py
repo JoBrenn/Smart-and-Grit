@@ -103,7 +103,28 @@ class District:
         Returns:
             (list) output
         """
-        
+
+        """
+        for battery in self.batteries:
+            new_bat = {}
+            new_bat["location"] = f"{battery.row},{battery.column}"
+            new_bat["capacity"] = battery.capacity
+            new_bat["houses"] = []
+
+            for house in battery.houses:
+                new_house = {}
+                new_house["location"] = f"{house.row},{house.column}"
+                new_house["output"] = house.output
+                new_house["cables"] = []
+
+                for cable in house.cables:
+                    new_cable = f"{cable[0]},{cable[1]}"
+                    new_house["cables"].append(new_cable) 
+
+                new_bat["houses"].append(new_house)
+
+            self.output.append(new_bat)"""
+
         return self.output
 
     def return_json_output(self) -> str:

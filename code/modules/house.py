@@ -33,9 +33,10 @@ class House:
         self.column = coordinate[1]
         self.output = max_output
         self.cables = []
+        self.str_cables = []
         # Initialize house dictionary
         self.house_dict = {"location": self.get_coordinate((self.row, self.column)),
-                           "output": float(self.output), "cables": self.cables}
+                           "output": float(self.output), "cables": self.str_cables}
 
     def get_coordinate(self, coordinate: tuple[int]) -> str:
         """ Return string form of given coordinate
@@ -57,7 +58,8 @@ class House:
             adds coordinate to cables list of house
         """
 
-        self.cables.append(self.get_coordinate((coordinate[0], coordinate[1])))
+        self.str_cables.append(self.get_coordinate((coordinate[0], coordinate[1])))
+        self.cables.append(coordinate)
 
     def return_cable_length(self) -> int:
         """ Return length of cable associated with house

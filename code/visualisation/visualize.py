@@ -80,9 +80,9 @@ def plot_output(data: list, plot_title: str = "Graph"):
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
-    file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
+    #file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
 
-    plt.savefig(file_path, bbox_inches='tight')
+    #plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
 
