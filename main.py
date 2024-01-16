@@ -114,7 +114,8 @@ if __name__ == "__main__":
             output = run_random_assignment_shortest_distance_with_capacity(district, method)
             method = "Random + Manhattan + Capacity"
             print(district.is_valid())
-
+            print(district.return_cost())
+            #print(district.return_output())
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery,

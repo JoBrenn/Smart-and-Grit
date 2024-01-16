@@ -89,13 +89,26 @@ class District:
                 battery = Battery(i, int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
                 self.batteries.append(battery)
                 # Add costs of battery to total costs
-                self.district_dict[f"{self.costs_type}"] += battery.price
+                #self.district_dict[f"{self.costs_type}"] += battery.price
                 # Add battery dictionary to the output list
                 self.output.append(battery.battery_dict)
-
+    
+    def return_cost(self) -> int:
+        """ Return the distric costs, given list of houses
+            pre: list of house objects, needed since
+                 cables are added after"""
+        
+        cost = 0
+        for house in self.houses:
+            cost += house.return_cable_length() * 9
+        for battery in self.batteries:
+            cost += battery.price
+        return cost
+    
     def return_output(self) -> list:
         """ Return the desired output in list form."""
-
+       
+        
         return self.output
 
     def return_json_output(self) -> str:
@@ -103,13 +116,6 @@ class District:
 
         return json.dumps(self.output)
 
-    def return_cost(self) -> int:
-        """ Return the distric costs, given list of houses
-            pre: list of house objects, needed since
-                 cables are added after"""
-
-        return self.district_dict[f"{self.costs_type}"]
-    
     def is_valid(self) -> bool:
         """ Checks wether we have found a valid solution"""
         
