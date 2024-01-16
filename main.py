@@ -113,8 +113,8 @@ if __name__ == "__main__":
 
             output = run_random_assignment_shortest_distance_with_capacity(district, method)
             method = "Random + Manhattan + Capacity"
-            print(district.is_valid())
-            print(district.return_cost())
+            #print(district.is_valid())
+            #print(district.return_cost())
             #print(district.return_output())
         elif alg_method == "--greedmanh":
             """
@@ -129,6 +129,7 @@ if __name__ == "__main__":
             method = "Greedy + Manhattan"
 
         # Plot the output
-        plot_output(output, method)
+        print(district.return_json_output())
+        #plot_output(output, method)
     else:
         print("Invalid input.")
