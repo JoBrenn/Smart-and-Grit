@@ -11,6 +11,8 @@ Optioneel
 - Presentatie bevat uitleg over verschil algoritmen en heuristieken in ons project
 - Documentatie zijn zo goed dat deze direct gebruikt kan worden
 
+Algoritmen
+- Minimum spanning tree algorithm
 
 Docs:
 - https://en.wikipedia.org/wiki/Steiner_tree_problem
