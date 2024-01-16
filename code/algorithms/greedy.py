@@ -1,6 +1,6 @@
 from random import randint, shuffle
 from code.visualisation.visualize import *
-from code.algorithms.shortest_manhattan_distance_cables import get_cable_points, create_cable
+from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
 def greedy_assignment(district) -> None:
     """ Adds each house to the battery with the most capacity left
