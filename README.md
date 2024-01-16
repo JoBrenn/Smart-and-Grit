@@ -17,3 +17,15 @@ Docs:
     Rectilinear Steiner tree
     https://en.wikipedia.org/wiki/Rectilinear_Steiner_tree
 - https://www.geeksforgeeks.org/steiner-tree/
+
+Mogelijke algoritmes:
+- Viterbi algoritme:
+[Wikipedia](https://en.wikipedia.org/wiki/Viterbi_algorithm)
+
+- Prim's algoritme:
+[Wikipedia](https://en.wikipedia.org/wiki/Prim%27s_algorithm)
+[GeeksforGeeks](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/)
+
+- Kruskal algoritme:
+[Wikipedia](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm)
+[GeeksforGeeks](https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/)
