@@ -16,33 +16,52 @@ from code.modules.house import House
 
 
 class Battery:
+    """ Battery class
 
-    def __init__(self, battery_id: int, x: int, y: int, capacity: float, price: int) -> None:
+    Methods:
+        get_coordinate():       return string of coordinates
+        add_house():            add house to list of connected houses to battery
+    """
+    
+    def __init__(self, battery_id: int, coordinate: tuple[int], capacity: float, price: int) -> None:
+        """ Initialize Battery object
+        Params:
+            battery_id    (int):        Assigned number of battery
+            coordinate    (tuple[int]): Coordinates of the battery
+            capacity      (float):      Capacity of the battery
+            price         (int):        Price of the battery
+        """
         self.battery_id = battery_id
-        self.row = x
-        self.column = y
+        self.row = coordinate[0]
+        self.column = coordinate[1]
         self.capacity = capacity
         self.left_over_capacity: float = capacity
         self.price = price
         # List of houses connected to battery
         self.houses = []
         # Initialize battery dictionary
-        self.battery_dict = {"location": self.get_coordinate(self.row, self.column), 
+        self.battery_dict = {"location": self.get_coordinate((self.row, self.column)), 
                              "capacity": float(self.capacity), "houses": []}
 
-    def get_coordinate(self, x: int, y: int) -> str:
-        """ Return string configuration of coordinates.
-            pre: x and y integer coordinates
-            post: returns string of coordinates seperated by comma"""
+    def get_coordinate(self, coordinate: tuple[int]) -> str:
+        """ Return string form of given coordinate
+        Params:
+            coordinate    (tuple[int]): given coordinate
+        Returns:
+            (str) coordinate in form "x,y"
+        """
             
-        return str(x) + "," + str(y)
+        return str(coordinate[0]) + "," + str(coordinate[1])
 
     def add_house(self, house: House) -> None:
-        """" Adds a house to the collection of houses connected to the battery.
-             pre: house Object
-             post: return None"""
-             
-        #self.houses.append(house.house_dict)
+        """ Add house to list of houses connected to battery
+        Params:
+            house    (House): House class object
+        Returns:
+            none
+            adds house object to houses list
+        """
+       
         self.houses.append(house)
         self.battery_dict["houses"].append(house.house_dict)
         # Reduce the leftover capacity of the battery

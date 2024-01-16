@@ -19,7 +19,7 @@ from code.algorithms.random import *
 import json
 
 class District:
-    """ District class.
+    """ District class
 
     Methods:
         load_houses():          Loads houses from data/
@@ -29,8 +29,7 @@ class District:
     """
 
     def __init__(self, district: int, costs_type: str) -> None:
-        """ Initialize District object.
-
+        """ Initialize District object
         Params:
             district    (int): Number of district (between 1 and 3)
             costs_type  (str): Type of costs (either "costs-own" or "costs-shared")
@@ -48,12 +47,9 @@ class District:
 
     def load_houses(self, filename: str) -> None:
         """ Load the houses from csv file.
-
         Creates house objects and adds them to list.
-
         Params:
             filename    (str): Takes form of data/district_<district-number>/district-<district-number>_houses.csv
-
         Returns:
             none
             list of house objects is initialized
@@ -68,12 +64,9 @@ class District:
 
     def load_batteries(self, filename: str) -> None:
         """ Load the batteries from csv file.
-
         Creates battery objects and adds them to list.
-
         Params:
             filename    (str): Takes form of data/district_<district-number>/district-<district-number>_batteries.csv
-
         Returns:
             none
             list of battery objects is initialized
@@ -86,15 +79,17 @@ class District:
                 # Remove " character that comes with csv
                 battery_data[0] = battery_data[0].translate({ord('"'): None})
                 battery_data[1] = battery_data[1].translate({ord('"'): None})
-                battery = Battery(i, int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
+                battery = Battery(i, (int(battery_data[0]), int(battery_data[1])), float(battery_data[2]), 5000)
                 self.batteries.append(battery)
                 # Add battery dictionary to the output list
                 self.output.append(battery.battery_dict)
     
     def return_cost(self) -> int:
-        """ Return the distric costs, given list of houses
-            pre: list of house objects, needed since
-                 cables are added after"""
+        """ Determine total cost of the district
+        Both determines the cable costs associated to every house and the battery costs
+        Returns:
+            (int) total cost of district
+        """
         
         cost = 0
         for house in self.houses:
@@ -104,17 +99,28 @@ class District:
         return cost
     
     def return_output(self) -> list:
-        """ Return the desired output in list form."""  
+        """ Return output in list format
+        Returns:
+            (list) output
+        """
         
         return self.output
 
     def return_json_output(self) -> str:
-        """ Convert and return output to json string."""
+        """ Return output in json format
+        Returns:
+            (str) json of output
+        """
 
         return json.dumps(self.output)
 
     def is_valid(self) -> bool:
-        """ Checks wether we have found a valid solution"""
+        """ Check whether solution is valid
+        Checks if all houses have cable connections and 
+        if all 150 houses are connected.
+        Returns:
+            (bool) true when solution is valid
+        """
         
         number_houses = 0
         for battery in self.return_output()[1:]:
