@@ -18,7 +18,6 @@ def create_cable(house: House, end: tuple[int]) -> None:
     cable_points = get_cable_points((house.row, house.column), (end[0], end[1]))
 
     # begin y minus in between y
-    print(cable_points)
     y_distance = cable_points[0][1] - cable_points[1][1]
     # In between x minus end x
     x_distance = cable_points[1][0] - cable_points[2][0]

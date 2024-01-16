@@ -138,7 +138,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int) -> Non
     plt.tight_layout()
 
     # File path is used to save the plot to output/histogram
-    file_path = f"output/histograms/{alg_method[2:]}-histogram.png"
+    file_path = f"output/histograms/{alg_method[2:]}_{runs}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot
