@@ -16,8 +16,7 @@ def create_cable(house: House, battery: Battery) -> None:
         post: returns the cost of the cable"""
     
     cable_points = get_cable_points((house.row, house.column), (battery.row, battery.column))
-    #cable_cost = 0
-    
+
     # House y minus in between y
     y_distance = cable_points[0][1] - cable_points[1][1]
     # In between x minus battery x
@@ -36,16 +35,12 @@ def create_cable(house: House, battery: Battery) -> None:
         for step in range(y_distance):
             y_current -= 1
             house.add_cable_segment((x_current, y_current))
-            # Add the costs of the cable 
-            #cable_cost += 9
 
     elif y_distance < 0:
         # Up
         for step in range(abs(y_distance)):
             y_current += 1
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
-    #elif y_distance == 0:
         
    # Check whether we need to go left or right
     if x_distance > 0:
@@ -53,12 +48,11 @@ def create_cable(house: House, battery: Battery) -> None:
         for step in range(x_distance):
             x_current -= 1
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
             
     elif x_distance < 0:
         # Right
         for step in range(abs(x_distance)):
             x_current += 1
             house.add_cable_segment((x_current, y_current))
-            #cable_cost += 9
+
             
