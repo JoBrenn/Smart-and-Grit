@@ -1,5 +1,5 @@
 import random
-from code.algorithms.shortest_manhattan_distance_cables import get_cable_points, create_cable
+from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
 
 def random_assignment(batteries: list, houses: list) -> dict:

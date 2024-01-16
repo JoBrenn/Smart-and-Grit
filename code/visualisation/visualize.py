@@ -12,7 +12,7 @@ def load_JSON_output(filename: str) -> list:
     with open(filename, "r") as f:
         return json.load(f)
 
-def plot_output(data: list, plot_title: str = "Graph"):
+def plot_output(data: list, alg_method: str, district_number: int, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
              contains battery dictinaries containing a list of house dictionaries, which in turn
@@ -80,7 +80,7 @@ def plot_output(data: list, plot_title: str = "Graph"):
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
-    #file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
+    file_path = f"output/figures/{alg_method[2:]}-district{district_number}.png"
 
     #plt.savefig(file_path, bbox_inches='tight')
 
@@ -138,7 +138,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int) -> Non
     plt.tight_layout()
 
     # File path is used to save the plot to output/histogram
-    file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
+    file_path = f"output/histograms/{alg_method[2:]}_{runs}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot
