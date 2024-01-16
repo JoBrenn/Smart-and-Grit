@@ -77,8 +77,35 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
         post: returns output list"""
 
     # Uses greedy algorithm to assign houses to batteries
-    greedy_assignment(district)
+    connections = greedy_assignment(district)
+    
 
+    for n, house in enumerate(connections):
+        battery = connections[house]
+        if n == 0:
+            print(house)
+            create_cable(house, (battery.row, battery.column))
+            
+        else:
+            shortest = tuple([battery.row, battery.column])
+            shortest_dist = (abs(shortest[0] - house.row) + abs(shortest[1] - house.column))
+            for cable in battery.cables:
+                distance = (abs(cable[0] - house.row) + abs(cable[1] - house.column))
+                #print(f"Shortest {shortest}")
+                if distance < shortest_dist:
+                    shortest = tuple([cable[0], cable[1]])
+                    
+
+            create_cable(house, shortest)
+
+            for o, cable_2 in enumerate(house.cables):
+                if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
+                    print("-----------ERROR-----------")
+                    print(f"House: {n}, Cable {o}, Coord: {cable_2}")
+
+
+        battery.add_house_cables(house)
+    """
     # Loops over each house in each battery to create cable paths
     for battery in district.batteries:
         for n, house in enumerate(battery.houses):
@@ -103,7 +130,15 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
                         print(f"House: {n}, Cable {o}, Coord: {cable_2}")
 
 
-            battery.add_house_cables(house)
+            battery.add_house_cables(house)"""
+    district.district_dict[f"{district.costs_type}"] = district.return_cost()
+    output = district.return_output()
+    
+    return output
+
+def run_combine(district, costs_type, alg_method, assign_method):
+    
+
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()
     
