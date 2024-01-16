@@ -70,7 +70,8 @@ if __name__ == "__main__":
             print("Usage: python3 main.py --<method> <district>")
         else:
             alg_method = sys.argv[1]
-            district = District(int(sys.argv[2]), "costs-own")
+            district_number = int(sys.argv[2])
+            district = District(district_number, "costs-own")
             method = "costs-own"
 
             # Run different methods based on user input
@@ -121,12 +122,12 @@ if __name__ == "__main__":
                 method = "Greedy + Manhattan"
 
             # Write output to JSON file
-            write_output_to_JSON(output, alg_method[2:])
+            write_output_to_JSON(output, alg_method[2:], district_number)
 
             # Plot the output
-            plot_output(output, alg_method, district, method)
+            plot_output(output, alg_method, district_number, method)
 
-            
+
 
     else:
         print("Invalid input.")
