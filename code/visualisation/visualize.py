@@ -80,23 +80,44 @@ def plot_output(data: list, plot_title: str = "Graph"):
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
+    file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
+
+    plt.savefig(file_path, bbox_inches='tight')
+
     plt.show()
 
-def plot_output_histogram(outputs: list[int]) -> None:
-
+def plot_output_histogram(outputs: list[int], alg_method: str, runs: int) -> None:
+    """Plot histogram.
+    Given the list of outputs, function creates histogram plot and shows it.
+    Additionally, a .png file is of the plot is created in output/histogram.
+    Params:
+        outputs     (list[int]): List with costs of algorithm runs.
+        alg_method  (str): Used algorithm for outputs.
+        runs        (int): Amount of runs done.
+    Returns:
+        None
+        .png in output/histogram
+        plot shown
+    """
+    #
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    plt.title("Histogram")
+
+    # Title includes the method and the number of runs.
+    plt.title(f"Histogram: {alg_method[2:]} (n={runs})")
     binwidth = 500
+    # The numbers of bins is a range from the mininum value to the maximum value
+    # and the step is the binwidth
     n_bins = range(min(outputs), max(outputs) + binwidth, binwidth)
 
     # Source (l. 95-107): https://matplotlib.org/stable/gallery/statistics/hist.html
+    # Empty histogram plot is created
     N, bins, patches = plt.hist(outputs, bins=n_bins)
 
     # We'll color code by height, but you could use any scalar
     fracs = N / N.max()
 
-    # we need to normalize the data to 0..1 for the full range of the colormap
+    # We need to normalize the data to 0..1 for the full range of the colormap
     norm = colors.Normalize(fracs.min(), fracs.max())
 
     # Now, we'll loop through our objects and set the color of each accordingly
@@ -104,17 +125,23 @@ def plot_output_histogram(outputs: list[int]) -> None:
         color = plt.cm.viridis(norm(thisfrac))
         thispatch.set_facecolor(color)
 
+    # Mean is calculated and plotted. Label is put in legend.
     mean = round(np.average(outputs))
     plt.axvline(mean, color='k', linestyle='dashed', linewidth=1, label=f'mean: {mean}')
 
-    min_ylim, max_ylim = plt.ylim()
-
+    # Labels and legend are plotted.
     plt.xlabel("Costs")
     plt.ylabel("Count")
     plt.legend()
 
+    # Tight layout for nicer look.
     plt.tight_layout()
 
+    # File path is used to save the plot to output/histogram
+    file_path = f"output/histogram/{alg_method[2:]}-histogram.png"
+    plt.savefig(file_path, bbox_inches='tight')
+
+    # Show the plot
     plt.show()
 
 

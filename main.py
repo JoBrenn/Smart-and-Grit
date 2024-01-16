@@ -64,8 +64,7 @@ if __name__ == "__main__":
                 print("python3 main.py histogram <distrinct> [runs] [alg_method]")
 
             outputs = runs_algorithms_to_costs(district_number, runs, alg_method)
-            # runs_random_assignment_shortest_distance(int(sys.argv[2]), runs)
-            plot_output_histogram(outputs)
+            plot_output_histogram(outputs, alg_method, runs)
 
         else:
             print("Please specify distrinct.")
