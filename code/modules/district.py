@@ -88,8 +88,6 @@ class District:
                 battery_data[1] = battery_data[1].translate({ord('"'): None})
                 battery = Battery(i, int(battery_data[0]), int(battery_data[1]), float(battery_data[2]), 5000)
                 self.batteries.append(battery)
-                # Add costs of battery to total costs
-                #self.district_dict[f"{self.costs_type}"] += battery.price
                 # Add battery dictionary to the output list
                 self.output.append(battery.battery_dict)
     
@@ -106,8 +104,7 @@ class District:
         return cost
     
     def return_output(self) -> list:
-        """ Return the desired output in list form."""
-       
+        """ Return the desired output in list form."""  
         
         return self.output
 
