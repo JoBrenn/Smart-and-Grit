@@ -19,7 +19,7 @@ from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 from code.algorithms.run import *
-#from code.gen_cable import *
+from code.helpers.helpers import *
 
 
 if __name__ == "__main__":
@@ -130,5 +130,9 @@ if __name__ == "__main__":
 
         # Plot the output
         plot_output(output, method)
+
+        # Write output to JSON file
+        write_output_to_JSON(output, alg_method[2:])
+
     else:
         print("Invalid input.")
