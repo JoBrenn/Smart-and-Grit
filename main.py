@@ -19,7 +19,7 @@ from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 from code.algorithms.run import *
-#from code.gen_cable import *
+from code.helpers.helpers import *
 
 
 if __name__ == "__main__":
@@ -115,9 +115,6 @@ if __name__ == "__main__":
 
             output = run_random_assignment_shortest_distance_with_capacity(district, method)
             method = "Random + Manhattan + Capacity"
-            #print(district.is_valid())
-            #print(district.return_cost())
-            #print(district.return_output())
         elif alg_method == "--greedmanh":
             """
                 Here we apply a greedy algorithm. A house is assigned to the battery,
@@ -131,7 +128,10 @@ if __name__ == "__main__":
             method = "Greedy + Manhattan"
 
         # Plot the output
-        print(district.return_json_output())
-        #plot_output(output, method)
+        plot_output(output, method)
+
+        # Write output to JSON file
+        write_output_to_JSON(output, alg_method[2:])
+
     else:
         print("Invalid input.")
