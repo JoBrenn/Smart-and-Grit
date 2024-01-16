@@ -46,8 +46,9 @@ if __name__ == "__main__":
             print("--greedmanhcap: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
-        if len(sys.argv) < 4 or sys.argv[2] == "--help" or not sys.argv[3].isnumeric():
-            print("Usage: python3 main.py --histogram --<method> <distrinct> [runs]")
+        if len(sys.argv) < 4 or sys.argv[2] == "--help" or \
+         not sys.argv[3].isnumeric() or not 1 <= int(sys.argv[3]) <= 3:
+            print("Usage: python3 main.py --histogram --<method> <district> [runs]")
         else:
             # Default value
             runs = 10
@@ -61,7 +62,7 @@ if __name__ == "__main__":
                 runs = int(sys.argv[4])
 
             outputs = runs_algorithms_to_costs(district_number, runs, alg_method)
-            plot_output_histogram(outputs, alg_method, runs)
+            plot_output_histogram(outputs, alg_method, runs, district_number)
 
     # Shows output of one district between 1 - 3
     elif sys.argv[1] in ["--randmanh", "--randmanhcap", "--randrwalk", "--greedmanh"]:
@@ -69,7 +70,8 @@ if __name__ == "__main__":
             print("Usage: python3 main.py --<method> <district>")
         else:
             alg_method = sys.argv[1]
-            district = District(int(sys.argv[2]), "costs-own")
+            district_number = int(sys.argv[2])
+            district = District(district_number, "costs-own")
             method = "costs-own"
 
             # Run different methods based on user input
@@ -106,7 +108,7 @@ if __name__ == "__main__":
                 output = run_random_assignment_shortest_distance_with_capacity(district, method)
                 method = "Random + Manhattan + Capacity"
                 print(district.is_valid())
-                
+
             elif alg_method == "--greedmanh":
                 """
                     Here we apply a greedy algorithm. A house is assigned to the battery,
@@ -120,12 +122,12 @@ if __name__ == "__main__":
                 method = "Greedy + Manhattan"
 
             # Write output to JSON file
-            write_output_to_JSON(output, alg_method[2:])
+            write_output_to_JSON(output, alg_method[2:], district_number)
 
             # Plot the output
-            plot_output(output, alg_method, district, method)
+            plot_output(output, alg_method, district_number, method)
 
-            
+
 
     else:
         print("Invalid input.")

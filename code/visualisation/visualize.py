@@ -80,13 +80,13 @@ def plot_output(data: list, alg_method: str, district_number: int, plot_title: s
     #ax.legend([house_marker], ["House"])
     plt.tight_layout()
 
-    file_path = f"output/figures/{alg_method[2:]}-district{district_number}.png"
+    file_path = f"output/figures/{alg_method[2:]}-district_{district_number}.png"
 
-    #plt.savefig(file_path, bbox_inches='tight')
+    plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
 
-def plot_output_histogram(outputs: list[int], alg_method: str, runs: int) -> None:
+def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.
     Given the list of outputs, function creates histogram plot and shows it.
     Additionally, a .png file is of the plot is created in output/histogram.
@@ -138,7 +138,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int) -> Non
     plt.tight_layout()
 
     # File path is used to save the plot to output/histogram
-    file_path = f"output/histograms/{alg_method[2:]}_{runs}-histogram.png"
+    file_path = f"output/histograms/{alg_method[2:]}_{runs}-district_{district_number}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot
