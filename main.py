@@ -28,7 +28,7 @@ if __name__ == "__main__":
         print("Usage: python3 main.py <district> --[method]")
     # Shows format output
     elif sys.argv[1] == "--format":
-        data = load_JSON_output("output/output-format.json")
+        data = load_JSON_output("data/output-format.json")
         plot_output(data)
     # Shows the user a manual
     elif sys.argv[1] == "--help":
@@ -113,8 +113,8 @@ if __name__ == "__main__":
 
             output = run_random_assignment_shortest_distance_with_capacity(district, method)
             method = "Random + Manhattan + Capacity"
-            print(district.is_valid())
-            print(district.return_cost())
+            #print(district.is_valid())
+            #print(district.return_cost())
             #print(district.return_output())
         elif alg_method == "--greedmanh":
             """
@@ -129,6 +129,7 @@ if __name__ == "__main__":
             method = "Greedy + Manhattan"
 
         # Plot the output
-        plot_output(output, method)
+        print(district.return_json_output())
+        #plot_output(output, method)
     else:
         print("Invalid input.")
