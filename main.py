@@ -127,11 +127,13 @@ if __name__ == "__main__":
             # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
             method = "Greedy + Manhattan"
 
+        # Write output to JSON file
+        write_output_to_JSON(output, alg_method[2:])
+        
         # Plot the output
         plot_output(output, method)
 
-        # Write output to JSON file
-        write_output_to_JSON(output, alg_method[2:])
+        
 
     else:
         print("Invalid input.")
