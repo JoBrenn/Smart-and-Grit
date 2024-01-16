@@ -46,8 +46,9 @@ if __name__ == "__main__":
             print("--greedmanhcap: Uses greedy algorithm to assign houses to batteries. " + \
                     "Creates the cable path through the Manhattan distance from house to battery")
     elif sys.argv[1] in ["--h", "--histo", "--histogram"]:
-        if len(sys.argv) < 4 or sys.argv[2] == "--help" or not sys.argv[3].isnumeric():
-            print("Usage: python3 main.py --histogram --<method> <distrinct> [runs]")
+        if len(sys.argv) < 4 or sys.argv[2] == "--help" or \
+         not sys.argv[3].isnumeric() or not 1 <= int(sys.argv[3]) <= 3:
+            print("Usage: python3 main.py --histogram --<method> <district> [runs]")
         else:
             # Default value
             runs = 10
@@ -61,7 +62,7 @@ if __name__ == "__main__":
                 runs = int(sys.argv[4])
 
             outputs = runs_algorithms_to_costs(district_number, runs, alg_method)
-            plot_output_histogram(outputs, alg_method, runs)
+            plot_output_histogram(outputs, alg_method, runs, district_number)
 
     # Shows output of one district between 1 - 3
     elif sys.argv[1] in ["--randmanh", "--randmanhcap", "--randrwalk", "--greedmanh"]:
@@ -106,7 +107,7 @@ if __name__ == "__main__":
                 output = run_random_assignment_shortest_distance_with_capacity(district, method)
                 method = "Random + Manhattan + Capacity"
                 print(district.is_valid())
-                
+
             elif alg_method == "--greedmanh":
                 """
                     Here we apply a greedy algorithm. A house is assigned to the battery,
