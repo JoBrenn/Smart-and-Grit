@@ -25,7 +25,7 @@ def random_start_state(district: District) -> District:
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     
     output = district.return_output()
-    
+
     return district
 
 def random_change(district: District, costs_type: str) -> list:
@@ -37,8 +37,8 @@ def random_change(district: District, costs_type: str) -> list:
     Returns:
         (District) altered district object
     """
-    
-    output_1 = copy.deepcopy(district.output)
+
+    output_old = copy.deepcopy(district.output)
     
     # Get random house from district
     random_house = random.choice(district.houses)
@@ -49,40 +49,41 @@ def random_change(district: District, costs_type: str) -> list:
         if random_house in battery.houses:
             old_battery = battery
     
-    # Delete it in output dictionary
+    # Delete the house from the battery in output dictionary
     index = district.output.index(old_battery.battery_dict)
     district.output[index]["houses"].remove(dictionary)
     
     # Delete house from old battery
     old_battery.delete_house(random_house)
     
-    # Delete old cables
+    # Delete old cables in House class
     random_house.cables.clear()
     random_house.str_cables.clear()
     
-    # Clear house dictionary
+    # Clear cables in house dictionary
     random_house.house_dict["cables"].clear()
-    
                   
     # Determine new random battery
     new_battery = random.choice(district.batteries)
     # Add house to new battery
     new_battery.add_house(random_house)
+    # Create new Manhattan cable
     create_cable(random_house, (new_battery.row, new_battery.column))
 
     # Add new cables to house dictionary
     random_house.house_dict["cables"] = random_house.str_cables
     
+    # Add house to battery in output dictionary
     index_new = district.output.index(new_battery.battery_dict)
     dictionary_new = random_house.house_dict
-
     district.output[index_new]["houses"].append(dictionary_new)
     
+    # Reset first element in dictionary, so that the cost is accurate
     district.output[0] = {"district": district.district, f"{costs_type}": return_total_cost(district)}
 
     output = district.return_output()
-
-    return district.output
+    
+    return district
 
     
 def return_penalty(battery: Battery) -> float:
@@ -121,37 +122,63 @@ def return_total_cost(district: District) -> float:
     
     return total_cost
     
-def one_change_iteration(district: District) -> District:
+def one_change_iteration(district: District) -> list:
     """ Run one iteration of applying a random change
     Switches change back when cost has worsened.
     Params:
-        connection_dict    (dict): dictionary where houses are keys and batteries values
+        district    (District): District object
     Returns:
-        (District) either altered or original district object
+        (list) either altered or original district output list
     """
-    
-    # Initialize a random district configuration
-    random_start_state(district)
+    old_district = copy.deepcopy(district)
     output = copy.deepcopy(district.return_output())
     old_cost = return_total_cost(district)
-    new_output = random_change(district, "costs-own")
+    # Apply a random change
+    new_district = random_change(district, "costs-own")
     new_cost = return_total_cost(district)
     
+    # Change state when the cost is lower
     if new_cost < old_cost:
-        output = new_output
-        print('true')
+        #print('true')
+        return new_district
+        
+    return old_district
     
-
-    return output
     
-    
-def one_entire_iteration() -> None:
+def one_entire_iteration(district: District, N: int) -> None:
     """ Run one iteration of hill_climber
     Chooses random begin state.
     Params:
-        None, calls upon one_change_iteration()
+        district    (District): District object
+        N           (int):      Stop when N times not improved
     Returns:
         none
-        alters connection_dict only when cost has lowered multiple times
     """
+    # Initialize a random district configuration
+    district = random_start_state(district)
+    #print(return_total_cost(district))
+    
+    count = 0
+    
+    while count < N - 1:
+        previous_district = district
+        district = one_change_iteration(district)
+        
+        if previous_district != district:
+            count += 1
+        else:
+            count = 0
+
+    
+def run_hill_climber(n: int, N: int) -> None:
+    """ Run the hill_climber algorithm n times
+    Params:
+        n   (int): number of iterations of algorithm
+    Returns:
+        none
+        runs the algorithm and changes the state when better 
+        cost after each step
+    """
+    for i in range(n):
+        one_entire_iteration(district, N)
     return
