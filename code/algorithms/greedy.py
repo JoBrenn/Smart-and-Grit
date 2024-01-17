@@ -6,6 +6,9 @@ def greedy_assignment(district) -> None:
     """ Adds each house to the battery with the most capacity left
         pre: an instance of the District class and an optional starting
         house position can be passed as an int"""
+
+    connection_dict = {}
+
     max_capacity = 0
     houses_amount = len(district.houses)
 
@@ -31,12 +34,15 @@ def greedy_assignment(district) -> None:
         if max_battery != None:
             print(f"House {house.house_id} -> Battery {max_battery.battery_id}")
             max_battery.add_house(house)
+            connection_dict[house] = max_battery
         else:
             print("-------------------------------------------------")
             print("WARNING: house has not been assigned to a battery")
             print(f"House {house.house_id}: {house.output}, "+ \
                 f"x: {house.row}, y: {house.column}")
             print("-------------------------------------------------")
+    
+    return connection_dict
 
 """
 def greedy_assignment(district, starting_house: int = 0) -> None:
