@@ -22,7 +22,7 @@ class Battery:
         get_coordinate():       return string of coordinates
         add_house():            add house to list of connected houses to battery
     """
-    
+
     def __init__(self, battery_id: int, coordinate: tuple[int], capacity: float, price: int) -> None:
         """ Initialize Battery object
         Params:
@@ -41,7 +41,7 @@ class Battery:
         self.houses = []
         self.cables = set()
         # Initialize battery dictionary
-        self.battery_dict = {"location": self.get_coordinate((self.row, self.column)), 
+        self.battery_dict = {"location": self.get_coordinate((self.row, self.column)),
                              "capacity": float(self.capacity), "houses": []}
 
     def get_coordinate(self, coordinate: tuple[int]) -> str:
@@ -51,7 +51,7 @@ class Battery:
         Returns:
             (str) coordinate in form "x,y"
         """
-            
+
         return str(coordinate[0]) + "," + str(coordinate[1])
 
     def add_house(self, house: House) -> None:
@@ -62,7 +62,7 @@ class Battery:
             none
             adds house object to houses list
         """
-       
+
         self.houses.append(house)
         self.battery_dict["houses"].append(house.house_dict)
         # Reduce the leftover capacity of the battery
@@ -74,17 +74,16 @@ class Battery:
         self.left_over_capacity += house.output
 
     def return_capacity(self) -> float:
-        return self.left_over_capacity
         """ Return the leftover capacity of the battery
         Returns:
             (float) leftover capacity of battery
         """
-        
+
         return self.left_over_capacity
-        
+
     def add_house_cables(self, house) -> None:
         """ Adds the cable points of a House instance to the Battery instance
-        
+
         """
         for cable in house.cables:
             self.cables.add(cable)
