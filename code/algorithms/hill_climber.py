@@ -1,41 +1,67 @@
 import random
-from code.modules.battery import Battery
 from code.modules.district import District
+from code.modules.district import Battery
+from code.modules.district import House
+from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
 """Hill Climber with constraint relaxation where penalty is equal to capacity surplus"""
 
-def random_assignment(batteries: list, houses: list) -> dict:     
+def random_start_state(district: District) -> District:     
     """ Randomly assign houses to batteries, not taking capacity into account
     Creates dictionary, where houses are keys and batteries values
+    Creates connections via Manhattan distance
     Params:
-        batteries    (list): list of batteries in district
-        houses       (list): list of houses in district
+        district    (District): district object
     Returns:
-        (dict) houses as keys and batteries as values
+        (list) output list
     """
 
-    connection_dict = {}
-    for house in houses:
-        connection_dict[house] = random.choice(batteries)
-
-    return connection_dict
+    for house in district.houses: 
+        battery = random.choice(district.batteries)
+        # Add the house to the battery connection (such that dictionary is added)
+        battery.add_house(house)
+        create_cable(house, (battery.row, battery.column))
+    district.district_dict[f"{district.costs_type}"] = district.return_cost()
     
-def random_change(batteries: list, connection_dict: dict) -> dict:
+    output = district.return_output()
+    
+    return district
+
+def random_change(district: District) -> District:
     """ Randomly change one house-battery connection
     Alters this change in the connection dictionary
     Params:
         batteries          (list): list of batteries in district
         connection_dict    (dict): dictionary where houses are keys and batteries values
     Returns:
-        (dict) dictionary where houses are keys and batteries values, with small change
+        (District) altered district object
     """
     
-    # Get random house from the keys of dictionary
-    random_house = random.choice(list(connection_dict.keys()))
-    # Change dictionary value for a new random choice in batteries
-    connection_dict[random_house] = random.choice(batteries)
+    # Get random house from district
+    random_house = random.choice(district.houses)
+    print(random_house.return_cable_length())
+    print(random_house.cables)
+    # Find old battery connection
+    for battery in district.batteries:
+        if random_house in battery.houses:
+            old_battery = battery
+            
+    # Delete house from old battery
+    old_battery.delete_house(random_house)
+    # Delete old cables
+    random_house.cables.clear()
+    random_house.str_cables.clear()
     
-    return connection_dict
+                  
+    # Determine new random battery
+    new_battery = random.choice(district.batteries)
+    # Add house to new battery
+    new_battery.add_house(random_house)
+    create_cable(random_house, (new_battery.row, new_battery.column))
+    print(random_house.return_cable_length())
+    print(random_house.cables)
+    return district
+
     
 def return_penalty(battery: Battery) -> float:
     """ Return the penalty for a given battery object
@@ -72,3 +98,37 @@ def return_total_cost(district: District) -> float:
     total_cost = district.return_cost() + penalty_cost
     
     return total_cost
+    
+def one_change_iteration(district: District) -> District:
+    """ Run one iteration of applying a random change
+    Switches change back when cost has worsened.
+    Params:
+        connection_dict    (dict): dictionary where houses are keys and batteries values
+    Returns:
+        (District) either altered or original district object
+    """
+    random_start_state(district)
+    old_cost = district.return_cost()
+    new_cost = random_change(district).return_cost()
+    print(old_cost)
+    print(new_cost)
+    
+
+    if return_total_cost(district_new) < return_total_cost(district_old):
+        district = district_new
+        print(true)
+    
+    
+    return district
+    
+    
+def one_entire_iteration() -> None:
+    """ Run one iteration of hill_climber
+    Chooses random begin state.
+    Params:
+        None, calls upon one_change_iteration()
+    Returns:
+        none
+        alters connection_dict only when cost has lowered multiple times
+    """
+    return

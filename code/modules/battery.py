@@ -67,9 +67,15 @@ class Battery:
         self.battery_dict["houses"].append(house.house_dict)
         # Reduce the leftover capacity of the battery
         self.left_over_capacity -= house.output
+        
+    def delete_house(self, house: House) -> None:
+        self.houses.remove(house)
+        self.battery_dict["houses"].remove(house.house_dict)
+        self.left_over_capacity += house.output
 
     def return_capacity(self) -> float:
-         """ Return the leftover capacity of the battery
+        return self.left_over_capacity
+        """ Return the leftover capacity of the battery
         Returns:
             (float) leftover capacity of battery
         """
