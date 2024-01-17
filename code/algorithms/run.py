@@ -34,6 +34,14 @@ def run_random_assignment_random_walk(district) -> list:
         house_1.add_cable_segment(points_walked[i])
         #create_cable(house_1, battery)
 
+    # Temp fix
+    battery.battery_dict["houses"] = [battery.battery_dict["houses"][0]]
+    
+    district.output = [district.output[0]]
+    district.output.append(battery.battery_dict)
+
+    print(district.district_dict)
+    
     output = district.return_output()
     return output
 
