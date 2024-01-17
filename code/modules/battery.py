@@ -69,11 +69,11 @@ class Battery:
         self.left_over_capacity -= house.output
 
     def return_capacity(self) -> float:
-         """ Return the leftover capacity of the battery
+        """ Return the leftover capacity of the battery
         Returns:
             (float) leftover capacity of battery
         """
-        
+
         return self.left_over_capacity
         
     def add_house_cables(self, house) -> None:
