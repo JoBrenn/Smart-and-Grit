@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import colors
+
 import json
 import sys
 
@@ -31,7 +32,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
         battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
-                                   marker="o", markersize=8, \
+                                   marker="$£$", markersize=8, \
                                    markeredgecolor="green", \
                                    markerfacecolor="green", \
                                    zorder=2)
