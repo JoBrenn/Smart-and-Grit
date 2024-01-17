@@ -136,31 +136,34 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
     
 
 def run_alg_manh(district, assign_method, costs_type: str) -> list:
+    # Create conntection dictionary that assigns batteries to houses
     connections = assign_method(district)
 
+    # Loops over each house in the district that has a battery assigned
     for n, house in enumerate(connections):
         battery = connections[house]
+        # Create shortest path to battery for first house
         if n == 0:
             #print(house)
-            create_cable(house, (battery.row, battery.column))     
+            create_cable(house, (battery.row, battery.column))
+           
         else:
+            # Determine whether which cable point is the closest
             shortest = tuple([battery.row, battery.column])
             shortest_dist = (abs(shortest[0] - house.row) + abs(shortest[1] - house.column))
             for cable in battery.cables:
                 distance = (abs(cable[0] - house.row) + abs(cable[1] - house.column))
-                #print(f"Shortest {shortest}")
                 if distance < shortest_dist:
                     shortest = tuple([cable[0], cable[1]])
                     
-
             create_cable(house, shortest)
 
+            # Temporary check for paths that go over their assigned battery
             for o, cable_2 in enumerate(house.cables):
                 if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
                     print("-----------ERROR-----------")
                     print(f"House: {n}, Cable {o}, Coord: {cable_2}")
-
-
+        # Add the new cables of the house to the set in its battery 
         battery.add_house_cables(house)
 
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
