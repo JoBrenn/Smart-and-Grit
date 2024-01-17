@@ -42,7 +42,7 @@ def run_random_assignment_shortest_distance(district, costs_type) -> list:
         Plots the grid
         post: returns output list"""
 
-    connections = random_assignment(district.batteries, district.houses)
+    connections = random_assignment(district)
     for house in connections:
         battery = connections[house]
         # Add the house to the battery connection (such that dictionary is added)
@@ -61,7 +61,7 @@ def run_random_assignment_shortest_distance_with_capacity(district, costs_type) 
         Plots the grid
         post: returns output list"""
 
-    connections = random_assignment_capacity(district.batteries, district.houses)
+    connections = random_assignment_capacity(district)
     for house in connections:
         battery = connections[house]
         create_cable(house, (battery.row, battery.column))
@@ -79,11 +79,9 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
     # Uses greedy algorithm to assign houses to batteries
     connections = greedy_assignment(district)
     
-
     for n, house in enumerate(connections):
         battery = connections[house]
         if n == 0:
-            print(house)
             create_cable(house, (battery.row, battery.column))
             
         else:
@@ -105,6 +103,9 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
 
 
         battery.add_house_cables(house)
+    output = district.return_output()
+
+    return output
     """
     # Loops over each house in each battery to create cable paths
     for battery in district.batteries:
@@ -123,21 +124,44 @@ def run_greedy_assignment_shortest_walk(district, costs_type: str) -> list:
                         
 
                 create_cable(house, shortest)
-
+                
                 for o, cable_2 in enumerate(house.cables):
                     if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
                         print("-----------ERROR-----------")
                         print(f"House: {n}, Cable {o}, Coord: {cable_2}")
 
 
-            battery.add_house_cables(house)"""
-    district.district_dict[f"{district.costs_type}"] = district.return_cost()
-    output = district.return_output()
+            battery.add_house_cables(house)
+    district.district_dict[f"{district.costs_type}"] = district.return_cost()"""
     
-    return output
 
-def run_combine(district, costs_type, alg_method, assign_method):
-    
+def run_alg_manh(district, assign_method, costs_type: str) -> list:
+    connections = assign_method(district)
+
+    for n, house in enumerate(connections):
+        battery = connections[house]
+        if n == 0:
+            #print(house)
+            create_cable(house, (battery.row, battery.column))     
+        else:
+            shortest = tuple([battery.row, battery.column])
+            shortest_dist = (abs(shortest[0] - house.row) + abs(shortest[1] - house.column))
+            for cable in battery.cables:
+                distance = (abs(cable[0] - house.row) + abs(cable[1] - house.column))
+                #print(f"Shortest {shortest}")
+                if distance < shortest_dist:
+                    shortest = tuple([cable[0], cable[1]])
+                    
+
+            create_cable(house, shortest)
+
+            for o, cable_2 in enumerate(house.cables):
+                if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
+                    print("-----------ERROR-----------")
+                    print(f"House: {n}, Cable {o}, Coord: {cable_2}")
+
+
+        battery.add_house_cables(house)
 
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()

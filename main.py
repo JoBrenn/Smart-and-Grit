@@ -69,7 +69,7 @@ if __name__ == "__main__":
             alg_method = sys.argv[1]
             district_number = int(sys.argv[2])
             district = District(district_number, "costs-own")
-            method = "costs-own"
+            cost_type = "costs-own"
 
             # Run different methods based on user input
             if alg_method == "--randrwalk":
@@ -91,8 +91,8 @@ if __name__ == "__main__":
                     not taking the capacity into account. Instead of a random walk,
                     we now implement the shortest Manhattan distance.
                 """
-
-                output = run_random_assignment_shortest_distance(district, method)
+                #output = run_random_assignment_shortest_distance(district, method)
+                assignment = random_assignment 
                 method = "Random + Manhattan"
 
             elif alg_method == "--randmanhcap":
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                     we now implement the shortest Manhattan distance.
                 """
 
-                output = run_random_assignment_shortest_distance_with_capacity(district, method)
+                assignment = random_assignment_capacity
                 method = "Random + Manhattan + Capacity"
                 print(district.is_valid())
 
@@ -114,9 +114,13 @@ if __name__ == "__main__":
                     from the house towards the battery
                 """
 
-                output = run_greedy_assignment_shortest_walk(district, method)
+                #output = run_greedy_assignment_shortest_walk(district, method)
+                assignment = greedy_assignment
+               
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
+
+            output = run_alg_manh(district, assignment, cost_type)
 
             # Write output to JSON file
             write_output_to_JSON(output, alg_method[2:], district_number)
