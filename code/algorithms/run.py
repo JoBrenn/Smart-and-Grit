@@ -24,14 +24,15 @@ def run_random_assignment_random_walk(district) -> list:
         Plots the grid
         post: returns output list"""
 
-    connections = random_assignment(district.batteries, district.houses)
+    connections = random_assignment(district)
     house_1 = list(connections.keys())[0]
     battery = connections[house_1]
     battery.add_house(house_1)
     points_walked = random_walk((int(house_1.row), int(house_1.column)), (int(battery.row), int(battery.column)), 50)
     # Add a cable segment between all the points visited in the random walk
     for i in range(len(points_walked) - 1):
-        create_cable(house_1, battery)
+        house_1.add_cable_segment(points_walked[i])
+        #create_cable(house_1, battery)
 
     output = district.return_output()
     return output

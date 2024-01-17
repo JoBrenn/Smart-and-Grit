@@ -120,7 +120,8 @@ if __name__ == "__main__":
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
 
-            output = run_alg_manh(district, assignment, cost_type)
+            if alg_method != "--randrwalk":
+                output = run_alg_manh(district, assignment, cost_type)
 
             # Write output to JSON file
             write_output_to_JSON(output, alg_method[2:], district_number)
