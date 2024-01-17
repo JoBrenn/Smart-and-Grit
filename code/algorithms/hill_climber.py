@@ -1,4 +1,5 @@
 import random
+import copy
 from code.modules.district import District
 from code.modules.district import Battery
 from code.modules.district import House
@@ -27,7 +28,7 @@ def random_start_state(district: District) -> District:
     
     return district
 
-def random_change(district: District) -> District:
+def random_change(district: District, costs_type: str) -> list:
     """ Randomly change one house-battery connection
     Alters this change in the connection dictionary
     Params:
@@ -37,20 +38,30 @@ def random_change(district: District) -> District:
         (District) altered district object
     """
     
+    output_1 = copy.deepcopy(district.output)
+    
     # Get random house from district
     random_house = random.choice(district.houses)
-    print(random_house.return_cable_length())
-    print(random_house.cables)
+    dictionary = copy.deepcopy(random_house.house_dict)
+
     # Find old battery connection
     for battery in district.batteries:
         if random_house in battery.houses:
             old_battery = battery
-            
+    
+    # Delete it in output dictionary
+    index = district.output.index(old_battery.battery_dict)
+    district.output[index]["houses"].remove(dictionary)
+    
     # Delete house from old battery
     old_battery.delete_house(random_house)
+    
     # Delete old cables
     random_house.cables.clear()
     random_house.str_cables.clear()
+    
+    # Clear house dictionary
+    random_house.house_dict["cables"].clear()
     
                   
     # Determine new random battery
@@ -58,9 +69,20 @@ def random_change(district: District) -> District:
     # Add house to new battery
     new_battery.add_house(random_house)
     create_cable(random_house, (new_battery.row, new_battery.column))
-    print(random_house.return_cable_length())
-    print(random_house.cables)
-    return district
+
+    # Add new cables to house dictionary
+    random_house.house_dict["cables"] = random_house.str_cables
+    
+    index_new = district.output.index(new_battery.battery_dict)
+    dictionary_new = random_house.house_dict
+
+    district.output[index_new]["houses"].append(dictionary_new)
+    
+    district.output[0] = {"district": district.district, f"{costs_type}": return_total_cost(district)}
+
+    output = district.return_output()
+
+    return district.output
 
     
 def return_penalty(battery: Battery) -> float:
@@ -107,19 +129,20 @@ def one_change_iteration(district: District) -> District:
     Returns:
         (District) either altered or original district object
     """
+    
+    # Initialize a random district configuration
     random_start_state(district)
-    old_cost = district.return_cost()
-    new_cost = random_change(district).return_cost()
-    print(old_cost)
-    print(new_cost)
+    output = copy.deepcopy(district.return_output())
+    old_cost = return_total_cost(district)
+    new_output = random_change(district, "costs-own")
+    new_cost = return_total_cost(district)
+    
+    if new_cost < old_cost:
+        output = new_output
+        print('true')
     
 
-    if return_total_cost(district_new) < return_total_cost(district_old):
-        district = district_new
-        print(true)
-    
-    
-    return district
+    return output
     
     
 def one_entire_iteration() -> None:
