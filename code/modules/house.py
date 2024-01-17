@@ -24,9 +24,9 @@ class House:
     def __init__(self, house_id: int, coordinate: tuple[int], max_output: float) -> None:
         """ Initialize House object
         Params:
-            house_id        (int):          Assigned number of house
-            coordinate      (tuple[int]):   Coordinates of the house
-            max_output      (float):        Output of the house
+            house_id        (int):          assigned number of house
+            coordinate      (tuple[int]):   coordinates of the house
+            max_output      (float):        output of the house
         """
         self.house_id = house_id
         self.row = coordinate[0]

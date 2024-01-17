@@ -26,10 +26,10 @@ class Battery:
     def __init__(self, battery_id: int, coordinate: tuple[int], capacity: float, price: int) -> None:
         """ Initialize Battery object
         Params:
-            battery_id    (int):        Assigned number of battery
-            coordinate    (tuple[int]): Coordinates of the battery
-            capacity      (float):      Capacity of the battery
-            price         (int):        Price of the battery
+            battery_id    (int):        assigned number of battery
+            coordinate    (tuple[int]): coordinates of the battery
+            capacity      (float):      capacity of the battery
+            price         (int):        price of the battery
         """
         self.battery_id = battery_id
         self.row = coordinate[0]
@@ -57,7 +57,7 @@ class Battery:
     def add_house(self, house: House) -> None:
         """ Add house to list of houses connected to battery
         Params:
-            house    (House): House class object
+            house    (House): house class object
         Returns:
             none
             adds house object to houses list

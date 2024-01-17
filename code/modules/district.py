@@ -22,17 +22,17 @@ class District:
     """ District class
 
     Methods:
-        load_houses():          Loads houses from data/
-        load_batteries():       Loads batteries from data/
-        return_output():        Returns data in object in list format
-        return_json_output():   Returns data in object in string format
+        load_houses():          loads houses from data/
+        load_batteries():       loads batteries from data/
+        return_output():        returns data in object in list format
+        return_json_output():   returns data in object in string format
     """
 
     def __init__(self, district: int, costs_type: str) -> None:
         """ Initialize District object
         Params:
-            district    (int): Number of district (between 1 and 3)
-            costs_type  (str): Type of costs (either "costs-own" or "costs-shared")
+            district    (int): number of district (between 1 and 3)
+            costs_type  (str): type of costs (either "costs-own" or "costs-shared")
         """
         self.district = district
         self.costs_type = costs_type
@@ -49,7 +49,7 @@ class District:
         """ Load the houses from csv file.
         Creates house objects and adds them to list.
         Params:
-            filename    (str): Takes form of data/district_<district-number>/district-<district-number>_houses.csv
+            filename    (str): takes form of data/district_<district-number>/district-<district-number>_houses.csv
         Returns:
             none
             list of house objects is initialized
@@ -63,10 +63,10 @@ class District:
                 self.houses.append(house)
 
     def load_batteries(self, filename: str) -> None:
-        """ Load the batteries from csv file.
+        """ Load the batteries from csv file
         Creates battery objects and adds them to list.
         Params:
-            filename    (str): Takes form of data/district_<district-number>/district-<district-number>_batteries.csv
+            filename    (str): takes form of data/district_<district-number>/district-<district-number>_batteries.csv
         Returns:
             none
             list of battery objects is initialized
