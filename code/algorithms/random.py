@@ -3,9 +3,14 @@ from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
 
 def random_assignment(batteries: list, houses: list) -> dict:
-    """ Randomly assigns houses to batteries, not taking capacity into account
-        Adds this to dictionary with house as key and battery as value
-        post: returns dictionary"""
+     """ Randomly assign houses to batteries, not taking capacity into account
+    Creates dictionary, where houses are keys and batteries values
+    Params:
+        batteries    (list): list of batteries in district
+        houses       (list): list of houses in district
+    Returns:
+        (dict) houses as keys and batteries as values
+    """
 
     connection_dict = {}
     for house in houses:

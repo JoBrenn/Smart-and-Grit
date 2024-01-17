@@ -68,6 +68,14 @@ class Battery:
         # Reduce the leftover capacity of the battery
         self.left_over_capacity -= house.output
 
+    def return_capacity(self) -> float:
+         """ Return the leftover capacity of the battery
+        Returns:
+            (float) leftover capacity of battery
+        """
+        
+        return self.left_over_capacity
+        
     def add_house_cables(self, house) -> None:
         """ Adds the cable points of a House instance to the Battery instance
         
