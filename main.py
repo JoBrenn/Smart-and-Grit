@@ -83,6 +83,7 @@ if __name__ == "__main__":
                 """
 
                 output = run_random_assignment_random_walk(district)
+                merge = False
                 method = "Random + random walk"
 
             elif alg_method == "--randmanh":
@@ -93,6 +94,7 @@ if __name__ == "__main__":
                 """
                 #output = run_random_assignment_shortest_distance(district, method)
                 assignment = random_assignment 
+                merge = False
                 method = "Random + Manhattan"
 
             elif alg_method == "--randmanhcap":
@@ -104,6 +106,7 @@ if __name__ == "__main__":
 
                 assignment = random_assignment_capacity
                 method = "Random + Manhattan + Capacity"
+                merge = False
                 print(district.is_valid())
 
             elif alg_method == "--greedmanh":
@@ -116,12 +119,13 @@ if __name__ == "__main__":
 
                 #output = run_greedy_assignment_shortest_walk(district, method)
                 assignment = greedy_assignment
+                merge = True
                
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
 
             if alg_method != "--randrwalk":
-                output = run_alg_manh(district, assignment, cost_type)
+                output = run_alg_manh(district, assignment, merge, cost_type)
 
             # Write output to JSON file
             write_output_to_JSON(output, alg_method[2:], district_number)
