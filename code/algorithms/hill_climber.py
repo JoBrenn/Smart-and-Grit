@@ -28,7 +28,7 @@ def random_start_state(district: District) -> District:
 
     return district
 
-def random_change(district: District, costs_type: str) -> list:
+def random_change(district: District, costs_type: str) -> District:
     """ Randomly change one house-battery connection
     Alters this change in the connection dictionary
     Params:
@@ -116,13 +116,14 @@ def return_total_cost(district: District) -> float:
     penalty_cost = 0
     
     for battery in district.batteries:
+        #print(battery.left_over_capacity)
         penalty_cost += return_penalty(battery)
-        
+    #print(district.return_cost())
     total_cost = district.return_cost() + penalty_cost
     
     return total_cost
     
-def one_change_iteration(district: District) -> list:
+def one_change_iteration(district: District) -> District:
     """ Run one iteration of applying a random change
     Switches change back when cost has worsened.
     Params:
@@ -145,7 +146,7 @@ def one_change_iteration(district: District) -> list:
     return old_district
     
     
-def one_entire_iteration(district: District, N: int) -> None:
+def one_entire_iteration(district: District, N: int) -> District:
     """ Run one iteration of hill_climber
     Chooses random begin state.
     Params:
@@ -154,23 +155,29 @@ def one_entire_iteration(district: District, N: int) -> None:
     Returns:
         none
     """
+    district_start = copy.deepcopy(district)
+    #print(district_start.return_output())
     # Initialize a random district configuration
-    district = random_start_state(district)
     #print(return_total_cost(district))
-    
-    count = 0
-    
-    while count < N - 1:
-        previous_district = district
-        district = one_change_iteration(district)
-        
-        if previous_district != district:
-            count += 1
-        else:
-            count = 0
+    district_work = copy.deepcopy(random_start_state(district_start))
 
+    unchanged_count = 0
     
-def run_hill_climber(n: int, N: int) -> None:
+    # Keep going until the state hasn't improved N times
+    while unchanged_count < N - 1:
+        previous_district = copy.deepcopy(district_work)
+        district_work = one_change_iteration(district_work)
+        print(return_total_cost(previous_district))
+        print(return_total_cost(district_work))
+        # If output is unchanged, add one to count
+        if previous_district.return_output() == district_work.return_output():
+            unchanged_count += 1
+        else:
+            unchanged_count = 0
+            
+    return district_work
+
+def run_hill_climber(district: District, n: int, N: int) -> None:
     """ Run the hill_climber algorithm n times
     Params:
         n   (int): number of iterations of algorithm
@@ -179,6 +186,25 @@ def run_hill_climber(n: int, N: int) -> None:
         runs the algorithm and changes the state when better 
         cost after each step
     """
-    for i in range(n):
-        one_entire_iteration(district, N)
-    return
+    
+    # Start with empty initial district
+    district_start = copy.deepcopy(district)
+    print(district_start.return_output())
+    
+    # Keep track of 'best' district, initialize by one iteration
+    district_best = one_entire_iteration(district_start, N)
+    
+    # Initialize working district
+    district_work = district_best
+    
+    for i in range(n - 1):
+        #previous_district = copy.deepcopy(district_work)
+        district_work = one_entire_iteration(district_start, N)
+        #old_cost = return_total_cost(previous_district)
+        new_cost = return_total_cost(district_work)
+        #print(new_cost)
+        #if new_cost < old_cost:
+            #district_best = district_work
+            
+        #print(return_total_cost(district))
+            
