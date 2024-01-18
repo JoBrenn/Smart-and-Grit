@@ -37,18 +37,8 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     # Sources:
     # https://matplotlib.org/3.5.0/tutorials/introductory/images.html
     # https://towardsdatascience.com/how-to-add-an-image-to-a-matplotlib-plot-in-python-76098becaf53
-    house_imagebox = load_icon("images/house4.png", 0.10)
-    battery_imagebox = load_icon("images/battery2.png", 0.03)
-
-    # house_file = "images/house4.png"
-    # house_logo = mpimg.imread(house_file)
-    # house_imagebox = OffsetImage(house_logo, zoom = 0.10)
-    #
-    # battery_file = "images/battery2.png"
-    # battery_logo = mpimg.imread(battery_file)
-    # battery_imagebox = OffsetImage(battery_logo, zoom = 0.03)
-    # ab = AnnotationBbox(imagebox, (5, 10), frameon = False)
-    # # ax.add_artist(ab)
+    house_imagebox = load_icon("images/house.png", 0.10)
+    battery_imagebox = load_icon("images/battery.png", 0.03)
 
     cables = []
 
