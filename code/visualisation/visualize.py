@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
 from matplotlib import colors
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 import json
 import sys
@@ -13,6 +16,11 @@ def load_JSON_output(filename: str) -> list:
     with open(filename, "r") as f:
         return json.load(f)
 
+def load_icon(path: str, zoom: float):
+    file = path
+    image = mpimg.imread(file)
+    return OffsetImage(image, zoom = zoom)
+
 def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
@@ -20,33 +28,53 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
              have a list of cable coordinates
         post: draws a figure on screen through matplotlib where they markers represent houses
               and batteries while the cables are shown as solid lines"""
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
+    fig, ax = plt.subplots()
     plt.title(plot_title)
-    colors = ["b", "k", "c", "m", "g"]
+    # colors = ["red","green","blue","orange", "aquamarine"]
+    # colors = ["salmon","tomato","darksalmon","coral", "orangered"]
+    colors = ["dodgerblue","navy","aquamarine","mediumpurple", "violet"]
+
+    # Sources:
+    # https://matplotlib.org/3.5.0/tutorials/introductory/images.html
+    # https://towardsdatascience.com/how-to-add-an-image-to-a-matplotlib-plot-in-python-76098becaf53
+    house_imagebox = load_icon("images/house.png", 0.10)
+    battery_imagebox = load_icon("images/battery.png", 0.03)
+
+    cables = []
 
     # Loops over each battery
-    for battery in data[1:]:
+    for grid_index, battery in enumerate(data[1:]):
         index = data.index(battery)
-        color = colors[index - 1]
+        color = colors[grid_index - 1]
         # Gets battery location and displays it as a green mark
         bat_loc = battery['location'].split(",")
-        battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
-                                   marker="$£$", markersize=8, \
-                                   markeredgecolor="green", \
-                                   markerfacecolor="green", \
-                                   zorder=2)
+        bat_x = int(bat_loc[0])
+        bat_y = int(bat_loc[1])
+        ab = AnnotationBbox(battery_imagebox, (bat_x, bat_y), frameon = False, zorder=3, label="Battery")
+        ax.add_artist(ab)
+
+        # battery_marker, = plt.plot(int(bat_loc[0]), int(bat_loc[1]),\
+        #                            marker="o", markersize=8, \
+        #                            markeredgecolor="green", \
+        #                            markerfacecolor="green", \
+        #                            zorder=2)
 
         # Loops over each house of the battery
-        if len(battery['houses']) != 0:
+        if len(battery['houses']):
             for house in battery['houses']:
                 # Gets house location and displays it as a red mark
                 house_loc = house['location'].split(",")
-                house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]),\
-                                         marker="o", markersize=4, \
-                                         markeredgecolor="red", \
-                                         markerfacecolor="red", \
-                                         zorder=2)
+                house_x = int(house_loc[0])
+                house_y = int(house_loc[1])
+                ab = AnnotationBbox(house_imagebox, (house_x, house_y), frameon = False, zorder=2)
+                ax.add_artist(ab)
+
+
+                # house_marker, = plt.plot(int(house_loc[0]), int(house_loc[1]),\
+                #                          marker="o", markersize=4, \
+                #                          markeredgecolor="red", \
+                #                          markerfacecolor="red", \
+                #                          zorder=2)
 
                 # Loops over each cable segment of the house
                 for cable in range(len(house['cables']) - 1):
@@ -54,11 +82,22 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
                     cable1_loc = house['cables'][cable].split(",")
                     cable2_loc = house['cables'][cable + 1].split(",")
 
+                    x_coords = int(cable1_loc[0]), int(cable2_loc[0])
+                    y_coords = int(cable1_loc[1]), int(cable2_loc[1])
+                    # cables.extend([x_coords, y_coords, color])
+
+                    plt.plot(x_coords, y_coords,
+                             color, lw=2,
+                             label=f"Grid {grid_index + 1}",
+                             zorder=1
+                             )
+
                     # Plots a line from the first cable point to its destination point
-                    plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
-                             [int(cable1_loc[1]),int(cable2_loc[1])], \
-                             color + '-', lw=1, \
-                             zorder=1)
+                    # plt.plot([int(cable1_loc[0]),int(cable2_loc[0])], \
+                    #          [int(cable1_loc[1]),int(cable2_loc[1])], \
+                    #          color, lw=2, label="0",\
+                    #          zorder=1)
+                # plt.plot(*cables, zorder=1, label=f"Grid {grid_index}")
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
@@ -76,9 +115,35 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     ax.grid(which='minor', alpha=0.2)
     ax.grid(which='major', alpha=0.5)
 
-    plt.legend([battery_marker, house_marker], ["Battery", "House"], bbox_to_anchor=(1.05, 1.0), \
-               loc='upper left')
-    #ax.legend([house_marker], ["House"])
+    handles, labels = ax.get_legend_handles_labels()
+    newLabels, newHandles = [], []
+    for handle, label in zip(handles, labels):
+        if label not in newLabels:
+            newLabels.append(label)
+            newHandles.append(handle)
+
+    leg = plt.legend(newHandles, newLabels, fancybox=True, shadow=True, bbox_to_anchor=(1.05, 1.0), loc='upper left')
+
+    # print(plt.gca())
+
+    map_legend_to_ax = {}  # Will map legend lines to original lines.
+
+    pickradius = 5  # Points (Pt). How close the click needs to be to trigger an event.
+
+    for handle in leg.get_lines():
+        handle.set_picker(pickradius)
+
+
+    # for legend_line, ax_line in zip(leg.get_lines(), handles):
+    #     legend_line.set_picker(pickradius)  # Enable picking on the legend line.
+    #     if legend_line in map_legend_to_ax:
+    #         map_legend_to_ax[legend_line].append(ax_line)
+    #     else:
+    #         map_legend_to_ax[legend_line] = [ax_line]
+
+    fig.canvas.mpl_connect('pick_event', on_pick)
+    fig.canvas.mpl_connect('key_press_event', on_press)
+
     plt.tight_layout()
 
     if district_number:
@@ -144,6 +209,72 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
 
     # Show the plot
     plt.show()
+
+def on_pick(event):
+    selected_legend = event.artist
+    grid_number = selected_legend.get_label()
+    fig, ax = plt.gcf(), plt.gca()
+
+    handles, labels = ax.get_legend_handles_labels()
+
+    map_legend_to_ax = {}
+
+    for legend_line, ax_line in zip(labels, handles):
+        if legend_line in map_legend_to_ax:
+            map_legend_to_ax[legend_line].append(ax_line)
+        else:
+            map_legend_to_ax[legend_line] = [ax_line]
+
+    # Do nothing if the source of the event is not a legend line.
+    if grid_number not in map_legend_to_ax:
+        return
+
+    ax_line_list = map_legend_to_ax[grid_number]
+    for ax_line in ax_line_list:
+        visible = not ax_line.get_visible()
+        ax_line.set_visible(visible)
+    # Change the alpha on the line in the legend, so we can see what lines
+    # have been toggled.
+    selected_legend.set_alpha(1.0 if visible else 0.2)
+    fig.canvas.draw()
+
+def on_press(event):
+    print('press', event.key)
+    sys.stdout.flush()
+
+    if not 0 <= int(event.key) <= 5:
+        return
+
+    selected_grid = "Grid " + event.key
+    fig, ax = plt.gcf(), plt.gca()
+    legend_lines = ax.get_legend().get_lines()
+    selected_legend = legend_lines[int(event.key) - 1]
+
+    handles, labels = ax.get_legend_handles_labels()
+
+    map_legend_to_ax = {}
+
+    for legend_line, ax_line in zip(labels, handles):
+        if legend_line in map_legend_to_ax:
+            map_legend_to_ax[legend_line].append(ax_line)
+        else:
+            map_legend_to_ax[legend_line] = [ax_line]
+
+
+    # Do nothing if the source of the event is not a legend line.
+    if selected_grid not in map_legend_to_ax:
+        return
+
+    ax_line_list = map_legend_to_ax[selected_grid]
+    for ax_line in ax_line_list:
+        visible = not ax_line.get_visible()
+        ax_line.set_visible(visible)
+    # Change the alpha on the line in the legend, so we can see what lines
+    # have been toggled.
+
+    selected_legend.set_alpha(1.0 if visible else 0.2)
+    fig.canvas.draw()
+
 
 
 if __name__ == "__main__":

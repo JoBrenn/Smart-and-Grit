@@ -21,11 +21,28 @@ from code.algorithms.greedy import *
 from code.algorithms.run import *
 from code.helpers.helpers import *
 
+import json
+
 
 if __name__ == "__main__":
     # At least 1 argument
     if len(sys.argv) < 2 or len(sys.argv) > 5:
         print("Usage: python3 main.py <district> --<method> [options]")
+    elif sys.argv[1] == "--load":
+        try:
+            if sys.argv[2] == "--format":
+                print('cool')
+                with open("output/output-format.json", "r") as f:
+                    content = f.read()
+                    data = json.loads(content)
+            else:
+                with open(f"output/JSON/{sys.argv[2]}", "r") as f:
+                    content = f.read()
+                    data = json.loads(content)
+            plot_output(data)
+        except:
+            print("Usage: python3 --load <JSON_file>")
+
     # Shows format output
     elif sys.argv[1] == "--format":
         data = load_JSON_output("output/output-format.json")
@@ -94,7 +111,6 @@ if __name__ == "__main__":
                 """
                 #output = run_random_assignment_shortest_distance(district, method)
                 assignment = random_assignment 
-                merge = False
                 method = "Random + Manhattan"
 
             elif alg_method == "--randmanhcap":
