@@ -1,11 +1,14 @@
 from code.algorithms.hill_climber import *
 from code.modules.district import District
-district = District(1, "cost-own")
+from code.visualisation.visualize import plot_output
 
+district = District(1, "cost-own")
+#print(district.return_cost())
 #random_start_state(district)
 #print(district.return_cost())
 #print(random_change(district).return_cost())
 #one_change_iteration(district)
-one_entire_iteration(district, 10)
+run_hill_climber(district, 3, 10)
+#plot_output(district.return_output(), "hill_climber", 1, "lala")
 
 
