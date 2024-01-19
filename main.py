@@ -135,6 +135,13 @@ if __name__ == "__main__":
 
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
+            elif alg_method == "--hillclimb":
+                """
+                    Here we apply a greedy algorithm. A house is assigned to the battery,
+                    starting at a random house, with the most capacity left.
+                    The path of the cable is created using the shortest Manhattan distance
+                    from the house towards the battery
+                """
 
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, cost_type)

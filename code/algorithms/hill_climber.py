@@ -49,28 +49,33 @@ def random_change(district: District, costs_type: str) -> District:
     
     # Delete the house from the battery in output dictionary
     index = district.output.index(old_battery.battery_dict)
+    one = copy.deepcopy(district.output[index])
     district.output[index]["houses"].remove(dictionary)
-    
+
     # Delete house from old battery
     old_battery.delete_house(random_house)
     
-    # Delete old cables in House class
-    random_house.delete_cables()
+    random_house.cables.clear()
+    random_house.str_cables.clear()
+    
+    # Clear cables in house dictionary
+    random_house.house_dict["cables"].clear()
                   
     # Determine new random battery
     new_battery = random.choice(district.batteries)
-    # Add house to new battery
-    new_battery.add_house(random_house)
     # Create new Manhattan cable
     create_cable(random_house, (new_battery.row, new_battery.column))
-
+    
     # Add new cables to house dictionary
     random_house.house_dict["cables"] = random_house.str_cables
     
+    # Add house to new battery
+    new_battery.add_house(random_house)
+
     # Add house to battery in output dictionary
     index_new = district.output.index(new_battery.battery_dict)
-    dictionary_new = random_house.house_dict
-    district.output[index_new]["houses"].append(dictionary_new)
+    dictionary_new = copy.deepcopy(random_house.house_dict)
+    #district.output[index_new]["houses"].append(dictionary_new)
     
     # Reset first element in dictionary, so that the cost is accurate
     district.output[0] = {"district": district.district, f"{costs_type}": return_total_cost(district)}
@@ -78,9 +83,11 @@ def random_change(district: District, costs_type: str) -> District:
     return district
 
 def random_switch(district: District, costs_type: str) -> District:
-    # Get random houses from district
+    # Get random different houses from district
+    houses = district.houses.copy()
     random_house_1 = random.choice(district.houses)
-    random_house_2 = random.choice(district.houses)
+    houses.remove(random_house_1)
+    random_house_2 = random.choice(houses)
     dictionary_1 = copy.deepcopy(random_house_1.house_dict)
     dictionary_2 = copy.deepcopy(random_house_2.house_dict)
     
@@ -88,7 +95,7 @@ def random_switch(district: District, costs_type: str) -> District:
     for battery in district.batteries:
         if random_house_1 in battery.houses:
             battery_1 = battery
-        elif random_house_2 in battery.houses:
+        if random_house_2 in battery.houses:
             battery_2 = battery
     
     # Delete the houses from the batteries in output dictionary
@@ -102,15 +109,26 @@ def random_switch(district: District, costs_type: str) -> District:
     battery_2.delete_house(random_house_2)
     
     # Delete old cables in House classes
-    random_house_1.delete_cables()
-    random_house_2.delete_cables()
+    random_house_1.cables.clear()
+    random_house_2.cables.clear()
+    random_house_1.str_cables.clear()
+    random_house_2.str_cables.clear()
+    
+    # Clear cables in house dictionaries
+    random_house_1.house_dict["cables"].clear()
+    random_house_2.house_dict["cables"].clear()
                   
-    # Add houses to new batteries
-    battery_1.add_house(random_house_2)
-    battery_2.add_house(random_house_1)
     # Create new Manhattan cables
     create_cable(random_house_1, (battery_2.row, battery_2.column))
     create_cable(random_house_2, (battery_1.row, battery_1.column))
+    
+    # Add new cables to house dictionary
+    random_house_1.house_dict["cables"] = random_house_1.str_cables
+    random_house_2.house_dict["cables"] = random_house_2.str_cables
+    
+    # Add houses to new batteries
+    battery_1.add_house(random_house_2)
+    battery_2.add_house(random_house_1)
 
     # Add new cables to house dictionaries
     random_house_1.house_dict["cables"] = random_house_1.str_cables
@@ -119,10 +137,10 @@ def random_switch(district: District, costs_type: str) -> District:
     # Add house to battery in output dictionary
     index_new_1 = district.output.index(battery_1.battery_dict)
     dictionary_new_2 = random_house_2.house_dict
-    district.output[index_new_1]["houses"].append(dictionary_new_2)
+    #district.output[index_new_1]["houses"].append(dictionary_new_2)
     index_new_2 = district.output.index(battery_2.battery_dict)
     dictionary_new_1 = random_house_1.house_dict
-    district.output[index_new_2]["houses"].append(dictionary_new_1)
+    #district.output[index_new_2]["houses"].append(dictionary_new_1)
     
     # Reset first element in dictionary, so that the cost is accurate
     district.output[0] = {"district": district.district, f"{costs_type}": return_total_cost(district)}
@@ -256,8 +274,8 @@ def one_entire_iteration(district: District, N: int) -> District:
     while unchanged_count < N - 1:
         previous_district = copy.deepcopy(district_work)
         district_work = one_change_iteration(district_work)
-        print(return_total_cost(previous_district))
-        print(return_total_cost(district_work))
+        #print(return_total_cost(previous_district))
+        #print(return_total_cost(district_work))
         # If output is unchanged, add one to count
         if previous_district.return_output() == district_work.return_output():
             unchanged_count += 1
@@ -290,7 +308,7 @@ def one_entire_iteration_switch(district: District, N: int) -> District:
         previous_district = copy.deepcopy(district_work)
         # Go over to switch when we have a valid solution
         if check_valid(previous_district) is True:
-            district_work = one_entire_iteration_switch(district_work)
+            district_work = one_switch_iteration(district_work)
         else:
             district_work = one_change_iteration(district_work)
         print(return_total_cost(previous_district))
@@ -322,6 +340,7 @@ def run_hill_climber(district: District, n: int, N: int) -> District:
     district_work = one_entire_iteration(district_empty, N)
     
     for i in range(n - 1):
+        print(i)
         previous_district = copy.deepcopy(district_work)
         district_work = one_entire_iteration(district_empty, N)
         old_cost = return_total_cost(previous_district)
@@ -332,9 +351,9 @@ def run_hill_climber(district: District, n: int, N: int) -> District:
         if check_valid(district_work) is False:
             district_work = previous_district
             
-    f = open('best output', 'a')
-    f.write(district_work.return_json_output())
-    f.close()
+    district_work.output[0] = {"district": district_work.district, f"{district_work.costs_type}": district_work.return_cost()}
+    with open("output.json", "w") as outfile:
+        outfile.write(district_work.return_json_output())
     return district_work
             
             
@@ -355,6 +374,7 @@ def run_hill_climber_2(district: District, n: int, N: int) -> District:
     district_work = one_entire_iteration_switch(district_empty, N)
     
     for i in range(n - 1):
+        print(i)
         previous_district = copy.deepcopy(district_work)
         district_work = one_entire_iteration_switch(district_empty, N)
         old_cost = return_total_cost(previous_district)
@@ -364,10 +384,13 @@ def run_hill_climber_2(district: District, n: int, N: int) -> District:
         # Probeersel met goeie solution
         if check_valid(district_work) is False:
             district_work = previous_district
-            
+    
+    district_work.output[0] = {"district": district_work.district, f"{district_work.costs_type}": district_work.return_cost()}
     filename = f"output/JSON/best_output_switch_combination.json"
     with open(filename, "w") as f:
         f.write(district_work.return_json_output())
+    with open("output.json", "w") as outfile:
+        outfile.write(district_work.return_json_output())
         
     return district_work
 """

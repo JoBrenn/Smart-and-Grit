@@ -69,16 +69,16 @@ class House:
             
         return len(self.cables) - 1
         
-    def delete_cables(self) -> None
+    def delete_cables(self) -> None:
         """ Delete all the cables associated with house
         Returns:
             none
             alters cables and str_cables list and dictionary
         """
         # Delete old cables in House class
-        house.cables.clear()
-        house.str_cables.clear()
+        self.cables.clear()
+        self.str_cables.clear()
         
         # Clear cables in house dictionary
-        house.house_dict["cables"].clear()
+        self.house_dict["cables"].clear()
     
