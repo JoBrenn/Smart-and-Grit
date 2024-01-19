@@ -8,7 +8,9 @@ district = District(1, "cost-own")
 #print(district.return_cost())
 #print(random_change(district).return_cost())
 #one_change_iteration(district)
-run_hill_climber(district, 3, 10)
-#plot_output(district.return_output(), "hill_climber", 1, "lala")
-
+#district = run_hill_climber(district, 500, 1000)
+district = run_hill_climber_2(district, 1, 1000)
+print(district.return_cost())
+print(check_valid(district))
+plot_output(district.return_output(), "hill_climber_2", 1, "goed")
 
