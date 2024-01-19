@@ -55,11 +55,7 @@ def random_change(district: District, costs_type: str) -> District:
     old_battery.delete_house(random_house)
     
     # Delete old cables in House class
-    random_house.cables.clear()
-    random_house.str_cables.clear()
-    
-    # Clear cables in house dictionary
-    random_house.house_dict["cables"].clear()
+    random_house.delete_cables()
                   
     # Determine new random battery
     new_battery = random.choice(district.batteries)
@@ -106,14 +102,8 @@ def random_switch(district: District, costs_type: str) -> District:
     battery_2.delete_house(random_house_2)
     
     # Delete old cables in House classes
-    random_house_1.cables.clear()
-    random_house_1.str_cables.clear()
-    random_house_2.cables.clear()
-    random_house_2.str_cables.clear()
-    
-    # Clear cables in house dictionaries
-    random_house_1.house_dict["cables"].clear()
-    random_house_2.house_dict["cables"].clear()
+    random_house_1.delete_cables()
+    random_house_2.delete_cables()
                   
     # Add houses to new batteries
     battery_1.add_house(random_house_2)

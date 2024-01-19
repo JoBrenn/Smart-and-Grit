@@ -9,10 +9,26 @@ def get_cable_points(begin: tuple[int], end: tuple[int]) -> tuple[int]:
         points = [begin, (begin[0], end[1]), end]
         return tuple(points)
 
+def return_manhattan_distance(house: House, end: tuple[int]) -> int:
+    """ Return manhattan distance from a house to a given end point
+        Params:
+            house         (House): House object from which we want to start
+            coordinate    (tuple[int]): given end coordinate
+        Returns:
+            (int) Manhattan distance between house and end point
+    """
+    house_coordinate = (house.row, house.column)
+    
+    x_distance = abs(house_coordinate[0] - end_coordinate[0])
+    y_distance = abs(house_coordinate[1] - end_coordinate[1])
+    distance = x_distance + y_distance
+    
+    return distance
+    
 def create_cable(house: House, end: tuple[int]) -> None:
     """ Creates entire cable connection between house and battery
         following shortest manhatten distance.
-        Again following from house first up or donw then left or right
+        Again following from house first up or down then left or right
         post: returns the cost of the cable"""
 
     cable_points = get_cable_points((house.row, house.column), (end[0], end[1]))
