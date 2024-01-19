@@ -31,7 +31,6 @@ if __name__ == "__main__":
     elif sys.argv[1] == "--load":
         try:
             if sys.argv[2] == "--format":
-                print('cool')
                 with open("output/output-format.json", "r") as f:
                     content = f.read()
                     data = json.loads(content)
