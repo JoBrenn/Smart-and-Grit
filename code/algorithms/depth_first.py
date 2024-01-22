@@ -85,7 +85,7 @@ def valid_cap(state):
 
 # Example code from Lecture Constructive algorithm by Bas Terwijn 
 def test_depth():
-    depth = 12
+    depth = 10
     stack = [""]
     while len(stack) > 0:
         state = stack.pop()
