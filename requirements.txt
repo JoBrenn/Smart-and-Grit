@@ -2,3 +2,4 @@ NumPy
 matplotlib
 json
 sys
+mplcursor
