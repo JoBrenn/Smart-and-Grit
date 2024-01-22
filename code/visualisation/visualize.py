@@ -102,7 +102,6 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
 
         # Add battery icons
         battery_icon = ax.add_artist(location_to_artist(battery['location'], battery_imagebox, order=3))
-        mplcursors.cursor([battery_icon])
 
         # Loops over each house of the battery
         if battery['houses']:
@@ -118,7 +117,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
 
-    mplcursors.cursor()
+    #mplcursors.cursor()
 
     # Major ticks every 20, minor ticks every 5
     major_ticks = np.arange(0, 51, 10)
@@ -163,6 +162,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
+    
 
 def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.
