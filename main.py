@@ -20,6 +20,7 @@ from code.algorithms.random import *
 from code.algorithms.greedy import *
 from code.algorithms.run import *
 from code.helpers.helpers import *
+from code.algorithms.hill_climber import HillClimber
 
 import json
 
@@ -78,7 +79,7 @@ if __name__ == "__main__":
             plot_output_histogram(outputs, alg_method, runs, district_number)
 
     # Shows output of one district between 1 - 3
-    elif sys.argv[1] in ["--randmanh", "--randmanhcap", "--randrwalk", "--greedmanh"]:
+    elif sys.argv[1] in ["--randmanh", "--randmanhcap", "--randrwalk", "--greedmanh", "--hillclimb"]:
         if len(sys.argv) < 3 or sys.argv[2] == "--help" or not sys.argv[2].isnumeric():
             print("Usage: python3 main.py --<method> <district>")
         else:
@@ -138,14 +139,22 @@ if __name__ == "__main__":
                
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
+                
             elif alg_method == "--hillclimb":
                 """
-                    Here we apply a greedy algorithm. A house is assigned to the battery,
-                    starting at a random house, with the most capacity left.
-                    The path of the cable is created using the shortest Manhattan distance
-                    from the house towards the battery
+                    Here we apply a Hillclimber algorithm. We start with a random configuration
+                    of house-battery connections by Manhattan distance. We change one house-battery
+                    connection and check whether this lowers the costs
+                    until we come across a valid solution to our problem. From there 
+                    we randomly swap two house-battery connections and check whether the solution
+                    is still valid and the cost is lowered.
+                    Give integer of number of iterations in command line before indicating district number
                 """
-
+                
+                n = int(sys.argv[3])
+                hillclimb = HillClimber(district)
+                output = hillclimb.run_hill_climber(district, n, 1000).return_output()
+                
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, merge, cost_type)
 
