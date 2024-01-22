@@ -38,6 +38,7 @@ class District:
         self.costs_type = costs_type
         self.batteries: list[Battery] = []
         self.houses: list[House] = []
+        self.assigned_houses = 0
         self.district_dict = {"district": self.district, f"{costs_type}": 0}
         self.output: list[dict] = [self.district_dict]
 
@@ -92,10 +93,13 @@ class District:
         """
         
         cost = 0
-        for house in self.houses:
+        """for house in self.houses:
             if house.return_cable_length() != -1:
-                cost += house.return_cable_length() * 9
+                cost += house.return_cable_length() * 9"""
         for battery in self.batteries:
+            for house in battery.houses:
+                if house.return_cable_length() != -1:
+                    cost += house.return_cable_length() * 9
             cost += battery.price
             
         return cost
