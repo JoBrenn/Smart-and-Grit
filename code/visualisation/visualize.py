@@ -15,12 +15,12 @@ Usage:  python3 main.py --load [file]
 """
 import json
 import sys
+import mplcursors
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
 
 def load_JSON_output(filename: str) -> list:
     """ Returns JSON data as a list
@@ -84,11 +84,16 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     # Define colors used in figure
     colors = ["dodgerblue","navy","aquamarine","mediumpurple", "violet"]
 
+    # Points (Pt). How close the click needs to be to trigger an event.
+    pickradius = 5
+
     # Sources:
     # https://matplotlib.org/3.5.0/tutorials/introductory/images.html
     # https://towardsdatascience.com/how-to-add-an-image-to-a-matplotlib-plot-in-python-76098becaf53
     house_imagebox = load_icon("images/house.png", 0.10)
     battery_imagebox = load_icon("images/battery.png", 0.03)
+
+    clickable = []
 
     # Loops over each battery
     for grid_index, battery in enumerate(data[1:]):
@@ -96,19 +101,24 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         color = colors[grid_index]
 
         # Add battery icons
-        ax.add_artist(location_to_artist(battery['location'], battery_imagebox, order=3))
+        battery_icon = ax.add_artist(location_to_artist(battery['location'], battery_imagebox, order=3))
+        mplcursors.cursor([battery_icon])
 
         # Loops over each house of the battery
         if battery['houses']:
             for house in battery['houses']:
                 # Add house icons
-                ax.add_artist(location_to_artist(house['location'], house_imagebox, order=2))
+                ab = location_to_artist(house['location'], house_imagebox, order=2)
+                ax.add_artist(ab)
+                # clickable.append(ab)
 
                 # Plot cables connect to current house
                 plot_cables(plt, house['cables'], grid_index, color)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
+
+    mplcursors.cursor()
 
     # Major ticks every 20, minor ticks every 5
     major_ticks = np.arange(0, 51, 10)
@@ -131,9 +141,6 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     leg = plt.legend(unqHandles, unqLabels, fancybox=True, shadow=True,
                      bbox_to_anchor=(1.05, 1.0), loc='upper left', title='District Legend')
 
-    # Points (Pt). How close the click needs to be to trigger an event.
-    pickradius = 5
-
     # Make legend lines clickable
     for handle in leg.get_lines():
         handle.set_picker(pickradius)
@@ -142,7 +149,12 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     fig.canvas.mpl_connect('pick_event', on_pick)
     fig.canvas.mpl_connect('key_press_event', on_press)
 
+    # ax.annotate('local max', xy=(2, 1), xytext=(36, 30),
+    #             arrowprops=dict(facecolor='black', shrink=0.05),
+    #             )
+
     # Tight plot for better look
+    # mplcursors.cursor()
     plt.tight_layout()
 
     # Save figure if district number is defined
@@ -239,7 +251,7 @@ def on_pick(event):
         return
 
     # Reverse visibility of selected grid cables
-    ax_line_list = map_legend_to_ax[selected_grid]
+    ax_line_list = map_legend_to_ax[grid_number]
     for ax_line in ax_line_list:
         visible = not ax_line.get_visible()
         ax_line.set_visible(visible)
