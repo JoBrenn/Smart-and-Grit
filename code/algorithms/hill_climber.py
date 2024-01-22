@@ -311,15 +311,15 @@ def one_entire_iteration_switch(district: District, N: int) -> District:
             district_work = one_switch_iteration(district_work)
         else:
             district_work = one_change_iteration(district_work)
-        print(return_total_cost(previous_district))
-        print(return_total_cost(district_work))
+        #print(return_total_cost(previous_district))
+        #print(return_total_cost(district_work))
         # If output is unchanged, add one to count
         if previous_district.return_output() == district_work.return_output():
             unchanged_count += 1
         else:
             unchanged_count = 0
             
-        print(check_valid(district_work))
+        #print(check_valid(district_work))
         
     return district_work
     

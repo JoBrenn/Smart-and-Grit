@@ -19,8 +19,8 @@ def return_manhattan_distance(house: House, end: tuple[int]) -> int:
     """
     house_coordinate = (house.row, house.column)
     
-    x_distance = abs(house_coordinate[0] - end_coordinate[0])
-    y_distance = abs(house_coordinate[1] - end_coordinate[1])
+    x_distance = abs(house_coordinate[0] - end[0])
+    y_distance = abs(house_coordinate[1] - end[1])
     distance = x_distance + y_distance
     
     return distance
