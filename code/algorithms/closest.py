@@ -9,11 +9,12 @@ def run_closest(district):
         closest_bat = district.batteries[0]
 
         for battery in district.batteries:
-            dist = return_manhattan_distance(house, tuple([battery.row, battery.column]))
+            if battery.left_over_capacity > house.output:
+                dist = return_manhattan_distance(house, tuple([battery.row, battery.column]))
 
-            if dist < closest_dist:
-                closest_dist = dist
-                closest_bat = battery
+                if dist < closest_dist:
+                    closest_dist = dist
+                    closest_bat = battery
                 
         closest_bat.add_house(house)
         create_cable(house, [closest_bat.row, closest_bat.column])
