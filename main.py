@@ -35,6 +35,10 @@ if __name__ == "__main__":
                 with open("output/output-format.json", "r") as f:
                     content = f.read()
                     data = json.loads(content)
+            # elif sys.argv[2] == "--empty":
+            #     with open(f"data/district_{sys.argv[3]}{sys.argv[2]}", "r") as f:
+            #         content = f.read()
+            #         data = json.loads(content)
             else:
                 with open(f"output/JSON/{sys.argv[2]}", "r") as f:
                     content = f.read()
@@ -110,7 +114,7 @@ if __name__ == "__main__":
                     we now implement the shortest Manhattan distance.
                 """
                 #output = run_random_assignment_shortest_distance(district, method)
-                assignment = random_assignment 
+                assignment = random_assignment
                 method = "Random + Manhattan"
 
             elif alg_method == "--randmanhcap":
@@ -136,25 +140,25 @@ if __name__ == "__main__":
                 #output = run_greedy_assignment_shortest_walk(district, method)
                 assignment = greedy_assignment
                 merge = True
-               
+
                 # print(f"The cost for greedy assignment and shortest Manhattan distance in district {district.district} is {district.return_cost()}.")
                 method = "Greedy + Manhattan"
-                
+
             elif alg_method == "--hillclimb":
                 """
                     Here we apply a Hillclimber algorithm. We start with a random configuration
                     of house-battery connections by Manhattan distance. We change one house-battery
                     connection and check whether this lowers the costs
-                    until we come across a valid solution to our problem. From there 
+                    until we come across a valid solution to our problem. From there
                     we randomly swap two house-battery connections and check whether the solution
                     is still valid and the cost is lowered.
                     Give integer of number of iterations in command line before indicating district number
                 """
-                
+
                 n = int(sys.argv[3])
                 hillclimb = HillClimber(district)
                 output = hillclimb.run_hill_climber(district, n, 1000).return_output()
-                
+
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, merge, cost_type)
 
