@@ -15,10 +15,6 @@ Usage:  python3 main.py --load [file]
 """
 import json
 import sys
-<<<<<<< HEAD
-import mplcursors
-=======
->>>>>>> c535c85f4c7c962250c1c95440d3c1192a32611b
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -105,11 +101,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         color = colors[grid_index]
 
         # Add battery icons
-<<<<<<< HEAD
-        battery_icon = ax.add_artist(location_to_artist(battery['location'], battery_imagebox, order=3))
-=======
         ax.add_artist(location_to_artist(battery['location'], battery_imagebox, grid_index, order=3))
->>>>>>> c535c85f4c7c962250c1c95440d3c1192a32611b
 
         # Loops over each house of the battery
         if battery['houses']:
