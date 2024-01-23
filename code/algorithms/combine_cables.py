@@ -5,6 +5,7 @@ from code.algorithms.manhattan_distance import return_manhattan_distance, create
 
 import random
 import copy
+import json
 
 def assign_random_house(houses: list) -> dict:
     """ Assign a random house connected to battery to hold it's original path"""
@@ -120,6 +121,11 @@ def run(output: list, n: int) -> list:
         if cost < lowest_cost:
             output_best = copy.deepcopy(output)
         #output = output_original
+        
+    filename = f"output/JSON/combined_cables.json"
+    with open(filename, "w") as f:
+        f.write(json.dumps(output_best))
+            
     return output_best
         
         
