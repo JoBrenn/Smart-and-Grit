@@ -156,6 +156,7 @@ if __name__ == "__main__":
                 """
 
                 n = int(sys.argv[3])
+                print(n)
                 hillclimb = HillClimber(district)
                 output = hillclimb.run_hill_climber(district, n, 1000).return_output()
 

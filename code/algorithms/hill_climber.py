@@ -286,8 +286,8 @@ class HillClimber:
                 district_work = self.one_switch_iteration(district_work)
             else:
                 district_work = self.one_change_iteration(district_work)
-            print(self.return_total_cost(previous_district))
-            print(self.return_total_cost(district_work))
+            #print(self.return_total_cost(previous_district))
+            #print(self.return_total_cost(district_work))
             #print(return_total_cost(previous_district))
             #print(return_total_cost(district_work))
             # If output is unchanged, add one to count
@@ -309,6 +309,8 @@ class HillClimber:
             runs the algorithm and changes the state when better 
             cost after each step
         """
+        
+        self.iterations = n
         
         # Start with empty initial district
         district_empty = copy.deepcopy(district)

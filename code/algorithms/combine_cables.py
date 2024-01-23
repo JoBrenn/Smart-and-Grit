@@ -5,6 +5,7 @@ from code.algorithms.manhattan_distance import return_manhattan_distance, create
 
 import random
 import copy
+import json
 
 def assign_random_house(houses: list) -> dict:
     """ Assign a random house connected to battery to hold it's original path"""
@@ -89,17 +90,14 @@ def combine_district(output: list) -> list:
         # Add new dictionary to output
         output.append(battery_dict_new)
         for house_dict in battery_dict_new["houses"]:
-            house_x = int(house_dict["location"].split(",")[0])
-            house_y = int(house_dict["location"].split(",")[1])
-            house_coordinate = (house_x, house_y)
-            house = House(1, house_coordinate, float(house_dict["output"]))
-            if house.return_cable_length() != -1:
-                cost += house.return_cable_length() * 9
+            cable_length = len(house_dict["cables"]) - 1
+            if cable_length != -1:
+                cost += cable_length * 9
     
-    # Alter dictionary cost in dictionary
+    # Delete old costs from output
     del output[0]["costs-own"]
     
-    # Add new value
+    # Add new cost value and change it to costs-shared
     output[0]["costs-shared"] = cost
     
     return output, output_original
@@ -123,6 +121,11 @@ def run(output: list, n: int) -> list:
         if cost < lowest_cost:
             output_best = copy.deepcopy(output)
         #output = output_original
+        
+    filename = f"output/JSON/combined_cables.json"
+    with open(filename, "w") as f:
+        f.write(json.dumps(output_best))
+            
     return output_best
         
         
