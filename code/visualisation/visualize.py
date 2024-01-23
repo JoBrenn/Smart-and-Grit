@@ -15,10 +15,14 @@ Usage:  python3 main.py --load [file]
 """
 import json
 import sys
+<<<<<<< HEAD
 import mplcursors
+=======
+>>>>>>> c535c85f4c7c962250c1c95440d3c1192a32611b
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import matplotlib.colors as colors
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
@@ -35,13 +39,15 @@ def load_icon(path: str, zoom: float):
     image = mpimg.imread(file)
     return OffsetImage(image, zoom = zoom)
 
-def location_to_artist(location: str, imagebox, order: int = 1) -> AnnotationBbox:
+def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1) -> AnnotationBbox:
     """ Create a figure box for either batteries or houses.
     This box is placed on x and y coordinates and thus can be plotted."""
     loc_coords = location.split(",")
     x = int(loc_coords[0])
     y = int(loc_coords[1])
-    return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order, label="Battery")
+    # plt.plot(x, y, "ro", picker=True, visible=False)
+    # plt.annotate("Hello", x, y)
+    return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order)
 
 def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
     """ Plot cables corresponding to house.
@@ -93,31 +99,30 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     house_imagebox = load_icon("images/house.png", 0.10)
     battery_imagebox = load_icon("images/battery.png", 0.03)
 
-    clickable = []
-
     # Loops over each battery
     for grid_index, battery in enumerate(data[1:]):
         # Select color for cables of current battery
         color = colors[grid_index]
 
         # Add battery icons
+<<<<<<< HEAD
         battery_icon = ax.add_artist(location_to_artist(battery['location'], battery_imagebox, order=3))
+=======
+        ax.add_artist(location_to_artist(battery['location'], battery_imagebox, grid_index, order=3))
+>>>>>>> c535c85f4c7c962250c1c95440d3c1192a32611b
 
         # Loops over each house of the battery
         if battery['houses']:
             for house in battery['houses']:
                 # Add house icons
-                ab = location_to_artist(house['location'], house_imagebox, order=2)
+                ab = location_to_artist(house['location'], house_imagebox, grid_index, order=2)
                 ax.add_artist(ab)
-                # clickable.append(ab)
 
                 # Plot cables connect to current house
                 plot_cables(plt, house['cables'], grid_index, color)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
-
-    #mplcursors.cursor()
 
     # Major ticks every 20, minor ticks every 5
     major_ticks = np.arange(0, 51, 10)
@@ -153,7 +158,6 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     #             )
 
     # Tight plot for better look
-    # mplcursors.cursor()
     plt.tight_layout()
 
     # Save figure if district number is defined
@@ -162,7 +166,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
-    
+
 
 def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.
@@ -177,7 +181,6 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
         .png in output/histogram
         plot shown
     """
-    #
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
 
@@ -205,7 +208,13 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
 
     # Mean is calculated and plotted. Label is put in legend.
     mean = round(np.average(outputs))
-    plt.axvline(mean, color='k', linestyle='dashed', linewidth=1, label=f'mean: {mean}')
+    median = round(np.median(outputs))
+    minimum = round(np.min(outputs))
+    plt.axvline(mean, color='k', linestyle='dashed', linewidth=1.5, label=f'mean: {mean}')
+    plt.axvline(median, color='r', linestyle='-.', linewidth=1.5, label=f'median: {median}')
+    plt.axvline(minimum, color='b', linestyle='solid', linewidth=1.5, label=f'minimum: {minimum}')
+
+
 
     # Labels and legend are plotted.
     plt.xlabel("Costs")
@@ -228,8 +237,8 @@ def on_pick(event):
     Usage: Click legend line to toggle visibility
     """
     # Get selected line in legend
-    selected_legend = event.artist
-    grid_number = selected_legend.get_label()
+    selected_element = event.artist
+    grid_number = selected_element.get_label()
 
     # Get current figure and axes
     fig, ax = plt.gcf(), plt.gca()
@@ -258,7 +267,7 @@ def on_pick(event):
 
     # Change the alpha on the line in the legend, so we can see what lines
     # have been toggled.
-    selected_legend.set_alpha(1.0 if visible else 0.2)
+    selected_element.set_alpha(1.0 if visible else 0.2)
 
     # Draw updated figure
     fig.canvas.draw()
