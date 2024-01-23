@@ -19,6 +19,9 @@ class HillClimber:
     
     def __init__(self, district: District) -> None:
         self.district_empty = copy.deepcopy(district)
+        self.district = copy.deepcopy(district)
+        self.total_cost = self.return_total_cost(district)
+        self.iterations = 0
     
     def random_start_state(self, district: District) -> District:     
         """ Randomly assign houses to batteries, not taking capacity into account
@@ -223,7 +226,6 @@ class HillClimber:
             (list) either altered or original district output list
         """
         old_district = copy.deepcopy(district)
-        output = copy.deepcopy(district.return_output())
         old_cost = self.return_total_cost(district)
         # Apply a random change
         new_district = self.random_change(district, "costs-own")
@@ -243,6 +245,7 @@ class HillClimber:
         Returns:
             (list) either altered or original district output list
         """
+        
         old_district = copy.deepcopy(district)
         output = copy.deepcopy(district.return_output())
         old_cost = self.return_total_cost(district)
@@ -286,10 +289,8 @@ class HillClimber:
                 district_work = self.one_switch_iteration(district_work)
             else:
                 district_work = self.one_change_iteration(district_work)
-            #print(self.return_total_cost(previous_district))
-            #print(self.return_total_cost(district_work))
-            #print(return_total_cost(previous_district))
-            #print(return_total_cost(district_work))
+            print(self.return_total_cost(previous_district))
+            print(self.return_total_cost(district_work))
             # If output is unchanged, add one to count
             if previous_district.return_output() == district_work.return_output():
                 unchanged_count += 1
