@@ -89,17 +89,14 @@ def combine_district(output: list) -> list:
         # Add new dictionary to output
         output.append(battery_dict_new)
         for house_dict in battery_dict_new["houses"]:
-            house_x = int(house_dict["location"].split(",")[0])
-            house_y = int(house_dict["location"].split(",")[1])
-            house_coordinate = (house_x, house_y)
-            house = House(1, house_coordinate, float(house_dict["output"]))
-            if house.return_cable_length() != -1:
-                cost += house.return_cable_length() * 9
+            cable_length = len(house_dict["cables"]) - 1
+            if cable_length != -1:
+                cost += cable_length * 9
     
-    # Alter dictionary cost in dictionary
+    # Delete old costs from output
     del output[0]["costs-own"]
     
-    # Add new value
+    # Add new cost value and change it to costs-shared
     output[0]["costs-shared"] = cost
     
     return output, output_original
