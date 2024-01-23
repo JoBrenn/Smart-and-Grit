@@ -15,7 +15,6 @@ Usage:  python3 main.py --load [file]
 """
 import json
 import sys
-import mplcursors
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -159,6 +158,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
+
 
 def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.

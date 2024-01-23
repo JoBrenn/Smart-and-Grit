@@ -4,6 +4,7 @@ from code.modules.house import House
 from code.algorithms.manhattan_distance import return_manhattan_distance, create_cable
 
 import random
+import copy
 
 def assign_random_house(houses: list) -> dict:
     """ Assign a random house connected to battery to hold it's original path"""
@@ -28,7 +29,10 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
         houses_dicts.append(house_dict)
         
     same_house_dict = assign_random_house(houses_dicts)
-    all_cable_points = set(same_house_dict["cables"])
+    all_cable_points = set()
+    for point in same_house_dict["cables"]:
+        point = (int(point.split(",")[0]), int(point.split(",")[1]))
+        all_cable_points.add(point)
     
     # Randomly shuffle houses to get random order of combining
     random.shuffle(houses_dicts)
@@ -44,7 +48,6 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
             shortest_length = manhattan_cable_length
             shortest_coordinate = battery_coordinate
             for point in all_cable_points:
-                point = (int(point.split(",")[0]), int(point.split(",")[1]))
                 if return_manhattan_distance(house, point) < shortest_length:
                     shortest_length = return_manhattan_distance(house, point)
                     shortest_coordinate = point
@@ -73,6 +76,8 @@ def combine_district(output: list) -> list:
     Returns:
         (District) District object with altered cables in output"""
     
+    output_original = copy.deepcopy(output)
+    
     cost = 0
     
     # Combine for every battery
@@ -97,7 +102,7 @@ def combine_district(output: list) -> list:
     # Add new value
     output[0]["costs-shared"] = cost
     
-    return output
+    return output, output_original
 
 def run(output: list, n: int) -> list:
     """ Combine cable connections for entire district n times
@@ -109,15 +114,15 @@ def run(output: list, n: int) -> list:
         (District) District configuration with lowest cost"""
     
     output_original = copy.deepcopy(output)
-    lowest_cost = output_original[0]["costs-shared"]
+    lowest_cost = output_original[0]["costs-own"]
     output_best = output_original
     
     for iteration in range(n):
-        output = combine_district(output_original)
+        output, output_original = combine_district(output_original)
         cost = output[0]["costs-shared"]
         if cost < lowest_cost:
-            output_best = output
-    
+            output_best = copy.deepcopy(output)
+        #output = output_original
     return output_best
         
         

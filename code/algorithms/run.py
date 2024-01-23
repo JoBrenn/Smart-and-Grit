@@ -165,12 +165,12 @@ def run_alg_manh(district, assign_method, merge: bool, costs_type: str) -> list:
                         shortest = tuple([cable[0], cable[1]])
                         
                 create_cable(house, shortest)
-
+                """
                 # Temporary check for paths that go over their assigned battery
                 for o, cable_2 in enumerate(house.cables):
                     if o < len(house.cables) - 1 and tuple([battery.row, battery.column]) == cable_2:
                         print("-----------ERROR-----------")
-                        print(f"House: {n}, Cable {o}, Coord: {cable_2}")
+                        print(f"House: {n}, Cable {o}, Coord: {cable_2}")"""
             # Add the new cables of the house to the set in its battery 
             battery.add_house_cables(house)
 
