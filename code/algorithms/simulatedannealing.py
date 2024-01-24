@@ -17,9 +17,12 @@ class Simmulatedannealing(HillClimber):
         self.temp = temp
         
     def linear_temperature_change(self) -> None:
-        """ Temperature goes to zero when all iterations have passed"""
-        self.temp = (self.temp_0 / self.iterations)
-        #print(self.temp)
+        """ Temperature becomes zero when all 1000 unchanged iterations have passed"""
+        #self.temp = self.temp - (self.temp_0 / self.iterations)
+        print(self.temp)
+
+        alpha = 0.99
+        self.temp = self.temp * alpha
         
     """ 
         Alter all functions where we accept a new solution or not
@@ -35,9 +38,6 @@ class Simmulatedannealing(HillClimber):
         # Make sure temperature is not zero
         assert self.temp != 0
         
-        # Add iteration 
-        self.iterations += 1
-        
         old_district = copy.deepcopy(district)
         old_cost = self.return_total_cost(district)
         # Apply a random change
@@ -46,11 +46,11 @@ class Simmulatedannealing(HillClimber):
         
         # Minimize value, so new minus old
         cost_difference = new_cost - old_cost
-        print(cost_difference)
+        #print(cost_difference)
         
         if cost_difference == 0:
             self.linear_temperature_change()
-            return new_district
+            return old_district
             
         else:
             # Determine the probability
@@ -74,9 +74,6 @@ class Simmulatedannealing(HillClimber):
         Returns:
             (list) either altered or original district output list
         """
-        
-        # Add iteration 
-        self.iterations += 1
         
         old_district = copy.deepcopy(district)
         output = copy.deepcopy(district.return_output())

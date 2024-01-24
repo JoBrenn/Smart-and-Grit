@@ -280,22 +280,28 @@ class HillClimber:
         district_work = copy.deepcopy(self.random_start_state(district_empty))
 
         unchanged_count = 0
+        self.iterations = N
         
         # Keep going until the state hasn't improved N times
         while unchanged_count < N - 1:
+            #print(self.iterations)
+            #print(self.iterations)
             previous_district = copy.deepcopy(district_work)
             # Go over to switch when we have a valid solution
             if self.check_valid(previous_district) is True:
                 district_work = self.one_switch_iteration(district_work)
             else:
                 district_work = self.one_change_iteration(district_work)
-            print(self.return_total_cost(previous_district))
-            print(self.return_total_cost(district_work))
+            #print(self.return_total_cost(previous_district))
+            #print(self.return_total_cost(district_work))
             # If output is unchanged, add one to count
             if previous_district.return_output() == district_work.return_output():
                 unchanged_count += 1
+                self.iterations -= 1
             else:
                 unchanged_count = 0
+                # Reset 1000 iterations
+                self.iterations = N
                 
             #print(check_valid(district_work))
             
@@ -310,8 +316,6 @@ class HillClimber:
             runs the algorithm and changes the state when better 
             cost after each step
         """
-        
-        self.iterations = n
         
         # Start with empty initial district
         district_empty = copy.deepcopy(district)
