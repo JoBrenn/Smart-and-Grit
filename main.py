@@ -167,9 +167,9 @@ if __name__ == "__main__":
                 """
 
                 n = int(sys.argv[3])
-                print(n)
                 hillclimb = HillClimber(district)
                 output = hillclimb.run_hill_climber(district, n, 1000).return_output()
+                method = "HillClimber + Manhattan"
 
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, merge, cost_type)
