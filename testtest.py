@@ -14,19 +14,20 @@ district = District(1, "costs-own")
 #hill = HillClimber(district)
 #dishil = hill.run_hill_climber(district, 1, 1000)
 #simul = Simmulatedannealing(district, 10000)
-#district = simul.run_hill_climber(district, 10, 1000)
+#district = simul.run_hill_climber(district, 1, 1000)
 #district = run_hill_climber_2(district, 500, 1000)
 #print(district.return_cost())
 #print(check_valid(district))
-#plot_output(district.return_output(), "hill_climber_2", 1, "Hill Climber with switch")
+#plot_output(district.return_output(), "simulatedannealing", 1, "simulatedannealing")
 
 # Convert json to list again
 #filename = f"output/JSON/test-output.json"
 #with open(filename, "r") as f:
 #    test_output = copy.deepcopy(json.load(f))
 #test_output = copy.deepcopy(test_output)
-filename2 = f"output/JSON/output_500_times_switch_combination_cable_combine.json"
-with open(filename2, "r") as f2:
+#filename2 = f"output/JSON/output_samenvoegvoorbeeld_presentatie - Copy.json"
+filename = f"output/JSON/district_1/output_simulated_10000_1keer_1.json"
+with open(filename, "r") as f2:
     output = json.load(f2)
 
-plot_output(output, "Test-combined", 1, "Test-combined")
+plot_output(output, "Sim 1 keer", 1, "Sim 1 keer")
