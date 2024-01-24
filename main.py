@@ -21,11 +21,22 @@ from code.algorithms.greedy import *
 from code.algorithms.run import *
 from code.helpers.helpers import *
 from code.algorithms.hill_climber import HillClimber
+from code.algorithms.beam_search import BeamSearch
+
 
 import json
 
 
 if __name__ == "__main__":
+
+    # print("Running SmartGrid main", end="\n\n")
+    #
+    # method = get_method_input()
+    # district = get_district_input()
+    #
+    # exit()
+
+
     # At least 1 argument
     if len(sys.argv) < 2 or len(sys.argv) > 5:
         print("Usage: python3 main.py <district> --<method> [options]")
