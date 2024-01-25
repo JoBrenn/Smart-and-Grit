@@ -29,7 +29,7 @@ class Simmulatedannealing(HillClimber):
         one_entire_iteration():     one iteration of choosing random state and making lots of changes
     """
     
-    def __init__(self, district: District, iterations: int, temperature: float = 100):
+    def __init__(self, district: District, iterations: int, temperature: float = 5000):
         """ Initialize Simmulatedannealing
         Params:
             district    (District): district upon which we want to apply simulatedannealing
@@ -45,7 +45,7 @@ class Simmulatedannealing(HillClimber):
         self.temp = temperature
         
         # Initialize iterations
-        self.iterations = 1
+        self.iterations = 0
         self.iterations_total = iterations
         
     def linear_temperature_change(self) -> None:
@@ -75,7 +75,8 @@ class Simmulatedannealing(HillClimber):
         
         # Minimize value, so new minus old
         cost_difference = old_cost - new_cost
-        print(cost_difference)
+        if abs(cost_difference) >= 1000:
+            print(cost_difference)
         
         if cost_difference == 0:
             self.linear_temperature_change()
@@ -87,7 +88,7 @@ class Simmulatedannealing(HillClimber):
         else:
             #print(self.temp)
             # Determine the probability
-            probability = 2**(cost_difference / self.temp)
+            probability = math.exp(cost_difference / self.temp)
             # Change state with probability
             if random.random() < probability:
                 # Update temperature
@@ -117,7 +118,8 @@ class Simmulatedannealing(HillClimber):
         
         # Minimize value
         cost_difference = old_cost - new_cost
-        print(cost_difference)
+        if abs(cost_difference) >= 1000:
+            print(cost_difference)
         
         # Make sure you cannot go from good solution to non solution
         if self.check_valid(old_district) is True and self.check_valid(new_district) is False:
@@ -133,7 +135,7 @@ class Simmulatedannealing(HillClimber):
         else:
             #print(self.temp)
             # Determine the probability
-            probability = 2**(cost_difference / self.temp)
+            probability = math.exp(cost_difference / self.temp)
             # Change state with probability
             if random.random() < probability:
                 # Update temperature
@@ -179,8 +181,8 @@ class Simmulatedannealing(HillClimber):
                     district_work = self.one_switch_iteration(district_work)
                 else:
                     district_work = self.one_change_iteration(district_work)
-                #print(self.return_total_cost(previous_district))
-                #print(self.return_total_cost(district_work))
+                print(self.return_total_cost(previous_district))
+                print(self.return_total_cost(district_work))
                 # If output is unchanged, add one to count
                 if previous_district.return_output() == district_work.return_output():
                     unchanged_count += 1

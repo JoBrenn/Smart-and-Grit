@@ -10,6 +10,7 @@ def random_assignment(district):#batteries: list, houses: list) -> dict:
     Returns:
         (dict) houses as keys and batteries as values
     """
+    
     connection_dict = {}
     for house in district.houses:
         connection_dict[house] = random.choice(district.batteries)
@@ -20,8 +21,11 @@ def random_assignment(district):#batteries: list, houses: list) -> dict:
 def random_assignment_capacity(district) -> dict:
     """ Randomly assigns houses to batteries, taking capacity into account
         Adds this to dictionary with house as key and battery as value
-        post: returns dictionary"""
-
+    Params:
+        district: District instance containing Battery and House instances
+    Returns:
+        (dict) houses as keys and batteries as values
+    """
     connection_dict = {}
     for house in district.houses:
         # Randomize the batteries list for every house
@@ -38,6 +42,13 @@ def random_assignment_capacity(district) -> dict:
 
 def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     """ returns list of the surrounding points given x and y coordinates of a point"""
+    """ Randomly assigns houses to batteries, taking capacity into account
+        Adds this to dictionary with house as key and battery as value
+    Params:
+        district: District instance containing Battery and House instances
+    Returns:
+        (dict) houses as keys and batteries as values
+    """
 
     border_points = []
 
