@@ -67,10 +67,14 @@ class BeamSearch:
             # House is connected to all batteries
             for index in range(len(state.batteries)):
                 # Deepcopy district and house for new state
-                
-                
-                create_cable(house, (battery.row, battery.column))
-                new_states.append(district)
+                district_new = copy.deepcopy(state)
+                house_new = copy.deepcopy(house)
+                battery = district_new.batteries[index]
+
+                battery.add_house(house_new)
+
+                create_cable(house_new, (battery.row, battery.column))
+                new_states.append(district_new)
 
         # Override old with new states
         self.states = new_states

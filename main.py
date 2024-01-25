@@ -80,7 +80,7 @@ if __name__ == "__main__":
             print("Usage: python3 main.py --histogram --<method> <district> [runs]")
         else:
             # Default value
-            runs = 10
+            runs = 100
 
             if len(sys.argv) == 4:
                 alg_method = sys.argv[2]
