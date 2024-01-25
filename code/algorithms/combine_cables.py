@@ -1,3 +1,17 @@
+""" Functions able to combine cables in district
+
+File: combine_cables.py
+
+Author:    Kathy Molenaar
+
+Date: 19/01/24
+
+Description:    Here from a district configuration where each house has 
+                its own cable a new configuration with combined cables
+                can be made
+
+Usage:  from code.algorithms.combine_cables import ...
+"""
 from code.modules.district import District
 from code.modules.battery import Battery
 from code.modules.house import House

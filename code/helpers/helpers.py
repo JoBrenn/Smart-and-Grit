@@ -5,6 +5,8 @@ import copy
 from halo import Halo
 from code.algorithms.run import *
 from code.visualisation.visualize import plot_output
+from code.algorithms.hill_climber import HillClimber
+from code.algorithms.simulatedannealing import Simulatedannealing
 
 
 def load_JSON_output(filename: str) -> list:
@@ -61,7 +63,7 @@ def get_method_input() -> str:
             print_helpmsg_methods()
             method = ""
         elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimb", "beamsearch"}:
+                            "randrwalk", "greedmanh", "hillclimb", "beamsearch", "simulated"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -183,6 +185,10 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
+        
+    elif method == "simulated":
+        simul = Simulatedannealing(district, 50000) #TODO?: 50000 variabel maken
+        data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":
         beam = get_beam()
