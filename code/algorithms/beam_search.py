@@ -133,5 +133,5 @@ class BeamSearch:
             if index > 4:
                 break
             print(state.return_cost())
-        
-        return self.states
+
+        return self.states[0]

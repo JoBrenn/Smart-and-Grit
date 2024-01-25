@@ -21,13 +21,7 @@ import matplotlib.image as mpimg
 import matplotlib.colors as colors
 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-def load_JSON_output(filename: str) -> list:
-    """ Returns JSON data as a list
-        pre: takes a filename argument as a string
-        post: returns a list containing JSON objects as dictionaries"""
-    with open(filename, "r") as f:
-        return json.load(f)
+from halo import Halo
 
 def load_icon(path: str, zoom: float):
     """ Load an icon for batteries or houses."""
@@ -72,6 +66,7 @@ def deduplicate_legend_items(handles, labels):
             newHandles.append(handle)
     return newLabels, newHandles
 
+@Halo(text='Loading Plot', spinner='dots')
 def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
@@ -159,7 +154,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
 
     plt.show()
 
-
+@Halo(text='Loading Plot', spinner='dots')
 def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.
     Given the list of outputs, function creates histogram plot and shows it.
@@ -177,7 +172,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
     ax = fig.add_subplot(1, 1, 1)
 
     # Title includes the method and the number of runs.
-    plt.title(f"Histogram: {alg_method[2:]} (n={runs})")
+    plt.title(f"Histogram: {alg_method} (n={runs})")
     binwidth = 500
     # The numbers of bins is a range from the mininum value to the maximum value
     # and the step is the binwidth
@@ -217,7 +212,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
     plt.tight_layout()
 
     # File path is used to save the plot to output/histogram
-    file_path = f"output/histograms/{alg_method[2:]}_{runs}-district_{district_number}-histogram.png"
+    file_path = f"output/histograms/{alg_method}_{runs}-district_{district_number}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot
