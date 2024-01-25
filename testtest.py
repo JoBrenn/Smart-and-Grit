@@ -26,8 +26,8 @@ district = District(1, "costs-own")
 #    test_output = copy.deepcopy(json.load(f))
 #test_output = copy.deepcopy(test_output)
 #filename2 = f"output/JSON/output_samenvoegvoorbeeld_presentatie - Copy.json"
-filename = f"output/JSON/district_1/output_simulated_10000_1keer_1.json"
+filename = f"output/JSON/district_3/output_hill_climber_500_3.json"
 with open(filename, "r") as f2:
-    output = json.load(f2)
+    output = run(json.load(f2), 10000)
 
-plot_output(output, "Sim 1 keer", 1, "Sim 1 keer")
+plot_output(output, "Hill Climber district 3", 3, "Hill Climber district 3")
