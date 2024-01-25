@@ -8,7 +8,12 @@ import copy
 import json
 
 def assign_random_house(houses: list) -> dict:
-    """ Assign a random house connected to battery to hold it's original path"""
+    """ Assign one random house from a list
+        Params:
+            houses    (list): list with house objects to choose from
+        Returns:
+            (dict) dictionary of said house object 
+    """
     
     house_dict = random.choice(houses)
         
@@ -18,7 +23,8 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
     """ Combine cable connections associated with a single battery
     Alter battery dictionary to new configuration
     Returns:
-        (Battery) Battery object with altered cables in dictionary"""
+        (Battery) Battery object with altered cables in dictionary
+    """
     
     battery_x = int(battery_dict["location"].split(",")[0])
     battery_y = int(battery_dict["location"].split(",")[1])
@@ -73,9 +79,10 @@ def combine_district(output: list) -> list:
     """ Combine cable connections for entire district
     Alter district dictionary to new configuration
     Params:
-            district    (District):        filled district configuration
+            output    (list):        filled output of district configuration
     Returns:
-        (District) District object with altered cables in output"""
+        (list) altered cables in output
+    """
     
     output_original = copy.deepcopy(output)
     
@@ -106,10 +113,10 @@ def run(output: list, n: int) -> list:
     """ Combine cable connections for entire district n times
     Gives best solution
     Params:
-            district    (District):        filled district configuration
+            output    (list):        filled output of district configuration
             n           (int):             number of iterations
     Returns:
-        (District) District configuration with lowest cost"""
+        ((list) altered cables in output with lowest cost"""
     
     output_original = copy.deepcopy(output)
     lowest_cost = output_original[0]["costs-own"]
