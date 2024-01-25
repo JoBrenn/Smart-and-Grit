@@ -1,4 +1,4 @@
-""" Module of House class.
+""" Module of House class
 
 File: house.py
 
@@ -8,10 +8,12 @@ Authors:    Kathy Molenaar
 
 Date: 09/01/24 (11/01/24)
 
-Description:    This House class can be used to initialize a District object.
+Description:    This House class can be used to initialize a house object.
 
-Usage:  from modules.house import House
+Usage:  from code.modules.house import House
 """
+
+
 class House:
     """ House class
 
@@ -19,6 +21,7 @@ class House:
         get_coordinate():       return string of coordinates
         add_cable_segment():    add coordinate to cable connection of house
         return_cable_length():  return lenght of cable associated with house
+        delete_cables():        delete all cables associated with house
     """
     
     def __init__(self, house_id: int, coordinate: tuple[int], max_output: float) -> None:

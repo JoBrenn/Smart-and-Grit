@@ -1,4 +1,4 @@
-from code.modules.district import *
+from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 
@@ -53,7 +53,7 @@ def run_random_assignment_shortest_distance(district, costs_type) -> list:
     for house in connections:
         battery = connections[house]
         # Add the house to the battery connection (such that dictionary is added)
-        battery.add_house(house)
+        #battery.add_house(house)
         create_cable(house, (battery.row, battery.column))
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
 

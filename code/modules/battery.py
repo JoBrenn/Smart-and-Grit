@@ -10,8 +10,9 @@ Date: 09/01/24 (11/01/24)
 
 Description:    This Battery class can be used to initialize a Battery object.
 
-Usage:  from models.battery import Battery
+Usage:  from code.modules.battery import Battery
 """
+
 from code.modules.house import House
 
 
@@ -20,10 +21,14 @@ class Battery:
 
     Methods:
         get_coordinate():       return string of coordinates
-        add_house():            add house to list of connected houses to battery
+        add_house():            add house to battery connection
+        delete_house():         delete house from battery connection
+        return_capacity():      return battery capacity
+        add_house_cables():     add cables of house to battery cable network
     """
 
-    def __init__(self, battery_id: int, coordinate: tuple[int], capacity: float, price: int) -> None:
+    def __init__(self, battery_id: int, coordinate: tuple[int],\
+                 capacity: float, price: int) -> None:
         """ Initialize Battery object
         Params:
             battery_id    (int):        assigned number of battery
@@ -55,12 +60,13 @@ class Battery:
         return str(coordinate[0]) + "," + str(coordinate[1])
 
     def add_house(self, house: House) -> None:
-        """ Add house to list of houses connected to battery
+        """ Add house to battery connection
         Params:
             house    (House): house class object
         Returns:
             none
-            adds house object to houses list
+            adds house object to houses list and battery dictionary
+            reduce house output from battery capacity
         """
 
         self.houses.append(house)
@@ -69,6 +75,14 @@ class Battery:
         self.left_over_capacity -= house.output
         
     def delete_house(self, house: House) -> None:
+        """ Delete house from battery connection
+        Params:
+            house    (House): house class object
+        Returns:
+            none
+            removes house object from houses list
+            add house output to battery capacity
+        """
         self.houses.remove(house)
         self.left_over_capacity += house.output
 
@@ -81,8 +95,14 @@ class Battery:
         return self.left_over_capacity
 
     def add_house_cables(self, house) -> None:
-        """ Adds the cable points of a House instance to the Battery instance
-
+        """ Add cables of house to battery cable network
+        Params:
+            house    (House): house class object
+        Returns:
+            none
+            adds cables associated with house to battery 
+            cables list
         """
+        
         for cable in house.cables:
             self.cables.add(cable)

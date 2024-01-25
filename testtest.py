@@ -13,12 +13,12 @@ district = District(1, "costs-own")
 #one_change_iteration(district)
 #hill = HillClimber(district)
 #dishil = hill.run_hill_climber(district, 1, 1000)
-#simul = Simmulatedannealing(district, 10000)
-#district = simul.run_hill_climber(district, 1, 1000)
+simul = Simmulatedannealing(district, 10000)
+district = simul.run_hill_climber(district, 10, 1000)
 #district = run_hill_climber_2(district, 500, 1000)
 #print(district.return_cost())
 #print(check_valid(district))
-#plot_output(district.return_output(), "simulatedannealing", 1, "simulatedannealing")
+plot_output(district.return_output(), "simulatedannealing", 1, "simulatedannealing")
 
 # Convert json to list again
 #filename = f"output/JSON/test-output.json"
@@ -26,8 +26,8 @@ district = District(1, "costs-own")
 #    test_output = copy.deepcopy(json.load(f))
 #test_output = copy.deepcopy(test_output)
 #filename2 = f"output/JSON/output_samenvoegvoorbeeld_presentatie - Copy.json"
-filename = f"output/JSON/district_3/output_hill_climber_500_3.json"
-with open(filename, "r") as f2:
-    output = run(json.load(f2), 10000)
+#filename = f"output/JSON/district_1/hillclimber/output_hill_climber_500_1.json"
+#with open(filename, "r") as f2:
+#    output = run(json.load(f2), 10000)
 
-plot_output(output, "Hill Climber district 3", 3, "Hill Climber district 3")
+#plot_output(output, "Hill Climber district 1", 1, "Hill Climber district 1")
