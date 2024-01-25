@@ -29,12 +29,34 @@ import json
 
 if __name__ == "__main__":
 
-    # print("Running SmartGrid main", end="\n\n")
-    #
-    # method = get_method_input()
-    # district = get_district_input()
-    #
-    # exit()
+    method, data, runs, district = None, None, None, None
+
+    print("Running SmartGrid main", end="\n\n")
+
+    # Get method input (LOCATION: code/helpers/helpers.py)
+    method = get_method_input()
+
+    # General Methods LOAD and Format
+    if method in {"format", "load"}:
+        data = run_general_method(method)
+    # Algo Methods:
+    else:
+        # Select district between 1 - 3 (LOCATION: code/helpers/helpers.py)
+        district = get_district_input()
+
+        # Select runs >0 (LOCATION: helpers)
+        runs = get_runs_input(method)
+
+        # Run algorithm (LOCATION: code/helpers/helpers.py)
+        data = run_algo_method(method, district, runs)
+
+        # Write data to JSON (LOCATION: code/helpers/helpers.py)
+        write_data_to_JSON(data, method, district, runs)
+
+    # Plot data (LOCATION: code/helpers/helpers.py)
+    plot_data(data, method, runs, district)
+
+    exit()
 
 
     # At least 1 argument
@@ -80,7 +102,7 @@ if __name__ == "__main__":
             print("Usage: python3 main.py --histogram --<method> <district> [runs]")
         else:
             # Default value
-            runs = 10
+            runs = 100
 
             if len(sys.argv) == 4:
                 alg_method = sys.argv[2]
@@ -124,9 +146,11 @@ if __name__ == "__main__":
                     not taking the capacity into account. Instead of a random walk,
                     we now implement the shortest Manhattan distance.
                 """
-                #output = run_random_assignment_shortest_distance(district, method)
+                output = run_random_assignment_shortest_distance(district, cost_type)
                 assignment = random_assignment
                 method = "Random + Manhattan"
+                # print(output)
+                print(output[0]["costs-own"])
 
             elif alg_method == "--randmanhcap":
                 """
@@ -167,9 +191,9 @@ if __name__ == "__main__":
                 """
 
                 n = int(sys.argv[3])
+                print(n)
                 hillclimb = HillClimber(district)
                 output = hillclimb.run_hill_climber(district, n, 1000).return_output()
-                method = "HillClimber + Manhattan"
 
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, merge, cost_type)
