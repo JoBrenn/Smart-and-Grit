@@ -1,12 +1,17 @@
 import json
 import os
 import copy
+import time
 
 from halo import Halo
 from code.algorithms.run import *
 from code.visualisation.visualize import plot_output
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.simulatedannealing import Simulatedannealing
+# from code.algorithms.random import *
+# from code.algorithms.greedy import *
+from code.algorithms.beam_search import BeamSearch
+
 
 
 def load_JSON_output(filename: str) -> list:
@@ -115,10 +120,13 @@ def get_load_file(possibilities: list[str]):
             print("\nExiting main.\n")
             exit()
         if not file in possibilities and not file.isnumeric():
-            print("Please choose one of the possibilities.")
+            print("\nPlease choose one of the possibilities.")
+            file = ""
+        elif not file.isnumeric() or not 1 <= int(file) <= len(possibilities):
+            print("\nPlease choose one of the possibilities.")
             file = ""
     if file.isnumeric():
-        return possibilities[int(file) + 1]
+        return possibilities[int(file) - 1]
     else:
         return file
 
@@ -132,13 +140,20 @@ def run_general_method(method: str):
             print_possibilities(possibilities)
             file = get_load_file(possibilities)
             data.append(load_JSON_output(f"output/JSON/{file}"))
+            # file_content = load_JSON_output(f"output/JSON/{file}")
+            # if isinstance(file_content[0], dict):
+            #     data.append(file_content)
+            #     print(data)
+            # else:
+            #     data = file_content
         else:
             print("No load options. Try running an algorithm first.")
     return data
 
 
-@Halo(text='Running method\n', spinner='dots')
+@Halo(text='Running method', spinner='dots')
 def run_algo_method(method: str, district_number: int, runs: int) -> list:
+    start_time = time.time()
     data = []
     district = District(district_number, "costs-own")
 
@@ -197,8 +212,18 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     # Does not work yet.
     # elif method == "randrwalk":
+        # """
+        # Here we apply a random assignment of houses to batteries,
+        # not taking the capacity into account. Furthermore is a
+        # random walk used for the connections between house and
+        # batttery.
+        # Takes quite some time and is really messy in visualisation,
+        # so we only take the first house into account.
+        # """
     #     print("Run are not taken into account.")
     #     data.append(run_alg_manh(district, cost_type))
+    end_time = time.time()
+    print(f"\nMethod Time: {round(end_time - start_time, 5)}")
 
     return data
 
