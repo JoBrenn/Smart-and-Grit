@@ -1,4 +1,4 @@
-""" Module of District class.
+""" Module of District class
 
 File: district.py
 
@@ -14,7 +14,6 @@ Usage:  from modules.district import District
 """
 from code.modules.battery import Battery
 from code.modules.house import House
-from code.algorithms.random import *
 
 import json
 
@@ -24,8 +23,10 @@ class District:
     Methods:
         load_houses():          loads houses from data/
         load_batteries():       loads batteries from data/
-        return_output():        returns data in object in list format
-        return_json_output():   returns data in object in string format
+        return_cost():          return total cost of district
+        return_output():        return data in object in list format
+        return_json_output():   return data in object in string format
+        is_valid():             check whether district configuration is valid
     """
 
     def __init__(self, district: int, costs_type: str) -> None:
@@ -93,9 +94,7 @@ class District:
         """
         
         cost = 0
-        """for house in self.houses:
-            if house.return_cable_length() != -1:
-                cost += house.return_cable_length() * 9"""
+
         for battery in self.batteries:
             for house in battery.houses:
                 if house.return_cable_length() != -1:
@@ -156,8 +155,5 @@ class District:
                 number_houses += 1
                 if len(house["cables"]) == 0:
                     return False
-        print(number_houses)
-        #if number_houses != 149:
-        #    return False
             
         return True

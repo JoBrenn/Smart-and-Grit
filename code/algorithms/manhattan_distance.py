@@ -1,22 +1,45 @@
+""" Manhattan distance functions
+
+File: manhattan_distance.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 12/01/24 
+
+Description:    Determines Manhattan distance and lays cables along this distance
+
+Usage:  from code.algorithms.manhattan_distance import ...
+"""
+
 from code.modules.house import House
 from code.modules.battery import Battery
 
+
 def get_cable_points(begin: tuple[int], end: tuple[int]) -> tuple[int]:
-        """ Generates the points between which a cable must be layed from house
-            to battery, following the shortest Manhatten distance
-            From house first up or down then left or right"""
+        """ Generate 3 points between which cable must be layed along Manhattan distance
+            From begin point first up or down then left or right
+        Params:
+            begin    (tuple[int]): tuple of begin coordinates
+            end      (tuple[int]): tuple of end coordinates
+        Returns:
+            (tuple[int]) tuple of begin, in between, end coordinates
+        """
 
         points = [begin, (begin[0], end[1]), end]
+        
         return tuple(points)
 
 def return_manhattan_distance(house: House, end: tuple[int]) -> int:
     """ Return manhattan distance from a house to a given end point
         Params:
             house         (House): House object from which we want to start
-            coordinate    (tuple[int]): given end coordinate
+            end    (tuple[int]): given end coordinate
         Returns:
             (int) Manhattan distance between house and end point
     """
+    
     house_coordinate = (house.row, house.column)
     
     x_distance = abs(house_coordinate[0] - end[0])
@@ -26,10 +49,15 @@ def return_manhattan_distance(house: House, end: tuple[int]) -> int:
     return distance
     
 def create_cable(house: House, end: tuple[int]) -> None:
-    """ Creates entire cable connection between house and battery
+    """ Creates entire cable connection between house and end point
         following shortest manhatten distance.
-        Again following from house first up or down then left or right
-        post: returns the cost of the cable"""
+        Params:
+            house         (House): House object from which we want to start
+            end    (tuple[int]): given end coordinate
+        Returns:
+            none
+            add cable to house object
+    """
 
     cable_points = get_cable_points((house.row, house.column), (end[0], end[1]))
 

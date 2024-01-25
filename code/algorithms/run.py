@@ -1,4 +1,4 @@
-from code.modules.district import *
+from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 
