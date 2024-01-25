@@ -1,4 +1,4 @@
-from code.modules.district import *
+from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 
@@ -147,11 +147,13 @@ def run_alg_manh(district, assign_method, merge: bool, costs_type: str) -> list:
     connections = assign_method(district)
 
     # Loops over each house in the district that has a battery assigned
-    for n, house in enumerate(connections):
+    #for n, house in enumerate(connections):
+    for house in connections:
         battery = connections[house]
         if merge == True:
             # Create shortest path to battery for first house
-            if n == 0:
+            #if n == 0:
+            if len(battery.houses) == 0:
                 #print(house)
                 create_cable(house, (battery.row, battery.column))
 

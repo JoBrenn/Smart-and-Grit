@@ -6,7 +6,12 @@ from code.modules.district import House
 from code.algorithms.manhattan_distance import *
 from code.visualisation.visualize import plot_output
 
+class Depth_first:
+    def __init__(self, district, depth=len(district.houses)):
+        self.depth = depth
+        self.stack = [district]
 
+    pass
 
 def test_depth_district(district):
     depth = 5#len(district.houses)

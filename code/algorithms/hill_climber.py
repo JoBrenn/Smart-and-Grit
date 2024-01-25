@@ -1,11 +1,30 @@
-import random
-import copy
+""" Module of HillClimber class
+
+File: hill_climber.py
+
+Author:    Kathy Molenaar
+
+Date: 19/01/24
+
+Description:    This HillClimber class runs the HillClimber algorithm on a given district
+                Here we make use of constraint relaxation; we start with a random state.
+                First our small change consists of choosing one random house and re-assigning
+                it to a random battery. When we have reached a good solution (no capacity exceedance)
+                we change our small change to choosing two random houses and swapping their battery
+                connections. This change is only accepted when the state remains a good solution.
+
+Usage:  from code.algorithms.hill_climber import HillClimber
+"""
+
 from code.modules.district import District
 from code.modules.district import Battery
 from code.modules.district import House
 from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
-"""Hill Climber with constraint relaxation where penalty is equal to capacity surplus"""
+import random
+import copy
+import csv
+
 
 class HillClimber:
     """ HillClimber algorithm class
@@ -15,22 +34,31 @@ class HillClimber:
         random_change():            takes random house and randomly assigns it to different battery
         random_switch():            takes two random houses and switches batteries assignments
         return_penalty():           return battery capacity exceedance penalty
+        return_total_cost():        return cost of district plus penalty
+        check_valid():              check whether district configuration is valid
+        one_change_iteration():     one iteration of changing random house-battery connection
+        one_switch_iteration():     one iteration of swapping two random house-battery connections
+        one_entire_iteration():     one iteration of choosing random state and making lots of changes
+        run_hill_climber():         runs one entire iteration n times
     """
     
+    
     def __init__(self, district: District) -> None:
+        """ Initialize HillClimber
+        Params:
+            district    (District): district upon which we want to apply HillClimber
+        """
         self.district_empty = copy.deepcopy(district)
         self.district = copy.deepcopy(district)
         self.total_cost = self.return_total_cost(district)
-        self.iterations = 0
     
-    def random_start_state(self, district: District) -> District:     
+    def random_start_state(self, district: District) -> District:
         """ Randomly assign houses to batteries, not taking capacity into account
-        Creates dictionary, where houses are keys and batteries values
         Creates connections via Manhattan distance
         Params:
             district    (District): district object
         Returns:
-            (list) output list
+            (District) random configurated District object
         """
         
         # Take the empty district as initial configuration
@@ -45,10 +73,10 @@ class HillClimber:
 
     def random_change(self, district: District, costs_type: str) -> District:
         """ Randomly change one house-battery connection
-        Alters this change in the connection dictionary
+        Alters this change in all relevant structures
         Params:
-            batteries          (list): list of batteries in district
-            connection_dict    (dict): dictionary where houses are keys and batteries values
+            district      (District):  district object
+            costs_type    (float):     indication of costs-shared or costs-own
         Returns:
             (District) altered district object
         """
@@ -98,6 +126,15 @@ class HillClimber:
         return district
 
     def random_switch(self, district: District, costs_type: str) -> District:
+        """ Randomly switch two house-battery connections
+        Alters this change in all relevant structures
+        Params:
+            district      (District):  district object
+            costs_type    (float):     indication of costs-shared or costs-own
+        Returns:
+            (District) altered district object
+        """
+        
         # Get random different houses from district
         houses = district.houses.copy()
         random_house_1 = random.choice(district.houses)
@@ -223,8 +260,9 @@ class HillClimber:
         Params:
             district    (District): District object
         Returns:
-            (list) either altered or original district output list
+            (District) either altered or original district
         """
+        
         old_district = copy.deepcopy(district)
         old_cost = self.return_total_cost(district)
         # Apply a random change
@@ -243,7 +281,7 @@ class HillClimber:
         Params:
             district    (District): District object
         Returns:
-            (list) either altered or original district output list
+            (District) either altered or original district
         """
         
         old_district = copy.deepcopy(district)
@@ -263,14 +301,14 @@ class HillClimber:
             
         return old_district   
 
-    def one_entire_iteration_switch(self, district: District, N: int) -> District:
+    def one_entire_iteration(self, district: District, N: int) -> District:
         """ Run one iteration of hill_climber when true go over to switch change
         Chooses random begin state.
         Params:
             district    (District): District object
-            N           (int):      Stop when N times not improved
+            N           (int):      stop when N times not improved
         Returns:
-            none
+            (District) district configuration with lowest found cost 
         """
         
         # Make copy of empty district, such that always start with empty
@@ -280,12 +318,9 @@ class HillClimber:
         district_work = copy.deepcopy(self.random_start_state(district_empty))
 
         unchanged_count = 0
-        self.iterations = N
         
         # Keep going until the state hasn't improved N times
         while unchanged_count < N - 1:
-            #print(self.iterations)
-            #print(self.iterations)
             previous_district = copy.deepcopy(district_work)
             # Go over to switch when we have a valid solution
             if self.check_valid(previous_district) is True:
@@ -297,11 +332,8 @@ class HillClimber:
             # If output is unchanged, add one to count
             if previous_district.return_output() == district_work.return_output():
                 unchanged_count += 1
-                self.iterations -= 1
             else:
                 unchanged_count = 0
-                # Reset 1000 iterations
-                self.iterations = N
                 
             #print(check_valid(district_work))
             
@@ -310,25 +342,29 @@ class HillClimber:
     def run_hill_climber(self, district: District, n: int, N: int) -> District:
         """ Run the hill_climber algorithm n times
         Params:
-            n   (int): number of iterations of algorithm
+            district (District): district we want to run 
+            n   (int):           number of iterations of algorithm
+            N   (int):           every iterations stops after the state hasn't changed N times
         Returns:
-            none
-            runs the algorithm and changes the state when better 
-            cost after each step
+            (District)  district with lowest cost after n iterations
         """
         
         # Start with empty initial district
         district_empty = copy.deepcopy(district)
 
         # Initialize working district
-        district_work = self.one_entire_iteration_switch(district_empty, N)
+        district_work = self.one_entire_iteration(district_empty, N)
         
         for i in range(n - 1):
             print(i)
             previous_district = copy.deepcopy(district_work)
-            district_work = self.one_entire_iteration_switch(district_empty, N)
+            district_work = self.one_entire_iteration(district_empty, N)
             old_cost = self.return_total_cost(previous_district)
             new_cost = self.return_total_cost(district_work)
+            file = f"output/csv/costs_hc.csv"
+            with open(file, 'w', newline='') as filecsv:
+                writer = csv.writer(filecsv)
+                writer.writerow(previous_district.return_output())
             if new_cost > old_cost:
                 district_work = previous_district
             # Probeersel met goeie solution
@@ -341,5 +377,9 @@ class HillClimber:
             f.write(district_work.return_json_output())
         with open("output.json", "w") as outfile:
             outfile.write(district_work.return_json_output())
+        file = f"output/csv/costs_hc.csv"
+        with open(file, 'w', newline='') as filecsv:
+            writer = csv.writer(filecsv)
+            writer.writerow(district_work.return_output())
             
         return district_work

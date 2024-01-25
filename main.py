@@ -102,7 +102,7 @@ if __name__ == "__main__":
             print("Usage: python3 main.py --histogram --<method> <district> [runs]")
         else:
             # Default value
-            runs = 10
+            runs = 100
 
             if len(sys.argv) == 4:
                 alg_method = sys.argv[2]
@@ -191,9 +191,9 @@ if __name__ == "__main__":
                 """
 
                 n = int(sys.argv[3])
+                print(n)
                 hillclimb = HillClimber(district)
                 output = hillclimb.run_hill_climber(district, n, 1000).return_output()
-                method = "HillClimber + Manhattan"
 
             if alg_method != "--randrwalk":
                 output = run_alg_manh(district, assignment, merge, cost_type)
