@@ -43,7 +43,7 @@ class HillClimber:
     """
     
     
-    def __init__(self, district: District) -> None:
+    def __init__(self, district: District, iterations: int) -> None:
         """ Initialize HillClimber
         Params:
             district    (District): district upon which we want to apply HillClimber
@@ -51,6 +51,10 @@ class HillClimber:
         self.district_empty = copy.deepcopy(district)
         self.district = copy.deepcopy(district)
         self.total_cost = self.return_total_cost(district)
+        
+        # Initialize iterations
+        self.iterations = 0
+        self.iterations_total = iterations
     
     def random_start_state(self, district: District) -> District:
         """ Randomly assign houses to batteries, not taking capacity into account
@@ -302,15 +306,16 @@ class HillClimber:
         return old_district   
 
     def one_entire_iteration(self, district: District, N: int) -> District:
-        """ Run one iteration of hill_climber when true go over to switch change
+        """ Run one iteration of simulated annealing when true go over to switch change
         Chooses random begin state.
+        Stops when N times not improved or after self.iterations
         Params:
             district    (District): District object
-            N           (int):      stop when N times not improved
+            N           (int):      stop when N times not improved or after self.iterations
         Returns:
             (District) district configuration with lowest found cost 
         """
-
+        
         # Make copy of empty district, such that always start with empty
         district_empty = copy.deepcopy(district)
         
@@ -319,25 +324,36 @@ class HillClimber:
 
         unchanged_count = 0
         
-        # Keep going until the state hasn't improved N times
-        while unchanged_count < N - 1:
-            previous_district = copy.deepcopy(district_work)
-            # Go over to switch when we have a valid solution
-            if self.check_valid(previous_district) is True:
-                district_work = self.one_switch_iteration(district_work)
+        for iteration in range(self.iterations_total + 1):
+            self.iterations += 1
+            #print(self.iterations)
+            # Stop when the state hasn't improved N times
+            if unchanged_count == N - 1:
+                # Reset iterations
+                self.iterations = self.iterations_total
+                return district_work
             else:
-                district_work = self.one_change_iteration(district_work)
-            #print(self.return_total_cost(previous_district))
-            #print(self.return_total_cost(district_work))
-            # If output is unchanged, add one to count
-            if previous_district.return_output() == district_work.return_output():
-                unchanged_count += 1
-            else:
-                unchanged_count = 0
+                previous_district = copy.deepcopy(district_work)
+                # Go over to switch when we have a valid solution
+                if self.check_valid(previous_district) is True:
+                    district_work = self.one_switch_iteration(district_work)
+                else:
+                    district_work = self.one_change_iteration(district_work)
+                print(self.return_total_cost(previous_district))
+                print(self.return_total_cost(district_work))
+                # If output is unchanged, add one to count
+                if previous_district.return_output() == district_work.return_output():
+                    unchanged_count += 1
+                else:
+                    unchanged_count = 0
+                #print(self.check_valid(district_work))
                 
-            #print(check_valid(district_work))
-            
+        # Reset iterations and temperature
+        self.iterations = 0
+        self.temp = self.temp_0
+        
         return district_work
+    
                 
     def run_hill_climber(self, district: District, n: int, N: int) -> District:
         """ Run the hill_climber algorithm n times
@@ -354,21 +370,22 @@ class HillClimber:
 
         # Initialize working district
         district_work = self.one_entire_iteration(district_empty, N)
-        
+        file = f"output/csv/costs_hc.csv"
+        with open(file, 'w', newline='') as filecsv:
+            writer = csv.writer(filecsv)
+            writer.writerow([district_work.return_cost()])
+        print(district_work.return_cost())
         for i in range(n - 1):
             print(i)
             previous_district = copy.deepcopy(district_work)
             district_work = self.one_entire_iteration(district_empty, N)
             old_cost = self.return_total_cost(previous_district)
             new_cost = self.return_total_cost(district_work)
-            file = f"output/csv/costs_hc.csv"
-            with open(file, 'w', newline='') as filecsv:
+            print(district_work.return_cost())
+            with open(file, 'a', newline='') as filecsv:
                 writer = csv.writer(filecsv)
-                writer.writerow(previous_district.return_output())
+                writer.writerow([district_work.return_cost()])
             if new_cost > old_cost:
-                district_work = previous_district
-            # Probeersel met goeie solution
-            if self.check_valid(district_work) is False:
                 district_work = previous_district
         
         district_work.output[0] = {"district": district_work.district, f"{district_work.costs_type}": district_work.return_cost()}
@@ -378,8 +395,5 @@ class HillClimber:
         with open("output.json", "w") as outfile:
             outfile.write(district_work.return_json_output())
         file = f"output/csv/costs_hc.csv"
-        with open(file, 'w', newline='') as filecsv:
-            writer = csv.writer(filecsv)
-            writer.writerow(district_work.return_output())
             
         return district_work
