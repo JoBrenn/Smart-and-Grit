@@ -5,13 +5,83 @@ from code.modules.district import Battery
 from code.modules.district import House
 from code.algorithms.manhattan_distance import *
 from code.visualisation.visualize import plot_output
+from random import shuffle
 
-class Depth_first:
-    def __init__(self, district, depth=len(district.houses)):
+class DepthFirst:
+    def __init__(self, district, depth = 5):#: int = len(district.houses)) -> None:
+        """ Initialize Depth First class
+        Params:
+            district    (District): Distrisct object
+            depth       (int): Tha maximum depth that the Depth search tree
+                               will be. Set at the max as default"""
+
         self.depth = depth
         self.stack = [district]
+        self.house_num = len(district.houses)
+        # Randomize
+        shuffle(self.stack[0].houses)
 
-    pass
+    def run(self):
+        """
+            Returns """
+        # Set the initial costs to be the 
+        lowest_costs = float("inf")
+        lowest_state = None
+
+        # Loop over stack until it is empty
+        while len(self.stack) > 0:
+            state = self.return_next_state()
+            #print(state.houses)
+
+            #print(self.valid_capacity(state))
+            if self.valid_capacity(state) == True:
+                #print(len(state.houses))
+                #print(self.depth)
+                if self.house_num - len(state.houses) < self.depth:
+                    print(self.house_num - len(state.houses))
+                    #print(self.depth)
+                    house = state.houses.pop()
+                    
+
+                    for n, battery in enumerate(state.batteries):
+                        child = copy.deepcopy(state)
+                        house_add = copy.deepcopy(house)
+
+                        create_cable(house_add, (battery.row, battery.column))
+                        child.batteries[n].add_house(house_add)
+                        #house_2 = copy.deepcopy()
+                        #child.batteries[n].append(house_2)
+                        self.stack.append(child)
+
+                else:
+                    #print(f"{state.return_json_output()}")
+                    # Check solution
+                    state.district_dict[f"{state.costs_type}"] = state.return_cost()
+                    #print(state.return_cost())
+
+                    if state.district_dict[district.costs_type] < lowest_costs:
+                        lowest_costs = state.district_dict[district.costs_type]
+                        lowest_costs_state = copy.deepcopy(state)
+
+        return lowest_costs_state
+
+
+    def return_next_state(self):
+        """ Returns next state in the stack
+            Returns:
+        """
+        return self.stack.pop()
+
+    def valid_capacity(self, district) -> bool: 
+        """ TODO
+            Returns:
+
+        """
+        for battery in district.batteries:
+            if battery.left_over_capacity < 0:
+                return False
+        return True
+
 
 def test_depth_district(district):
     depth = 5#len(district.houses)
@@ -41,7 +111,7 @@ def test_depth_district(district):
 
 
         if state.assigned_houses < depth and valid_cap(state):
-            #print("hey")
+
             house = houses[state.assigned_houses]
             #print(house)
             for n, battery in enumerate(state.batteries):
