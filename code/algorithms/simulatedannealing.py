@@ -75,8 +75,6 @@ class Simulatedannealing(HillClimber):
         
         # Minimize value, so new minus old
         cost_difference = old_cost - new_cost
-        if abs(cost_difference) >= 1000:
-            print(cost_difference)
         
         if cost_difference == 0:
             self.linear_temperature_change()
@@ -118,8 +116,6 @@ class Simulatedannealing(HillClimber):
         
         # Minimize value
         cost_difference = old_cost - new_cost
-        if abs(cost_difference) >= 1000:
-            print(cost_difference)
         
         # Make sure you cannot go from good solution to non solution
         if self.check_valid(old_district) is True and self.check_valid(new_district) is False:

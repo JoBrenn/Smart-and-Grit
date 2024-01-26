@@ -37,7 +37,6 @@ def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1)
     # plt.annotate("Hello", x, y)
     return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order)
 
-@Halo(text='Plotting cables', spinner='dots')
 def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
     """ Plot cables corresponding to house.
     Two point coordinates are defined and a line is drawn between them.
