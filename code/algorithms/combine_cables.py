@@ -6,16 +6,20 @@ Author:    Kathy Molenaar
 
 Date: 19/01/24
 
-Description:    Here from a district configuration where each house has 
-                its own cable a new configuration with combined cables
-                can be made
+Description:    
+
+Here from a district configuration where each house has 
+its own cable a new configuration with combined cables
+can be made
 
 Usage:  from code.algorithms.combine_cables import ...
 """
+
 from code.modules.district import District
 from code.modules.battery import Battery
 from code.modules.house import House
-from code.algorithms.manhattan_distance import return_manhattan_distance, create_cable
+from code.algorithms.manhattan_distance import return_manhattan_distance,\
+                                               create_cable
 
 import random
 import copy
@@ -65,7 +69,8 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
         house = House(1, house_coordinate, float(house_dict["output"]))
         # Do not alter the one house
         if house_dict != same_house_dict:
-            manhattan_cable_length = return_manhattan_distance(house, battery_coordinate)
+            manhattan_cable_length\
+            = return_manhattan_distance(house, battery_coordinate)
             shortest_length = manhattan_cable_length
             shortest_coordinate = battery_coordinate
             for point in all_cable_points:
@@ -74,18 +79,13 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
                     shortest_coordinate = point
                     # Delete old cable, will not need it
                     house_dict["cables"].clear()
-                    # Delete house from battery, such that old cable is removed in dictionary
-                    #battery.delete_house(house)
             # After having point shortest from all points create new cable
             create_cable(house, shortest_coordinate)
             # Alter house dictionary
             house_dict["cables"] = house.str_cables
-            # Add house to battery again
-            #battery.add_house(house)
             # Add new cable points to the set
             for point in house.cables:
                 all_cable_points.add(point)
-
         
     return battery_dict
 
@@ -93,7 +93,7 @@ def combine_district(output: list) -> list:
     """ Combine cable connections for entire district
     Alter district dictionary to new configuration
     Params:
-            output    (list):        filled output of district configuration
+            output    (list):  filled output of district configuration
     Returns:
         (list) altered cables in output
     """
@@ -127,8 +127,8 @@ def run(output: list, n: int) -> list:
     """ Combine cable connections for entire district n times
     Gives best solution
     Params:
-            output    (list):        filled output of district configuration
-            n           (int):             number of iterations
+            output    (list):   filled output of district configuration
+            n           (int):  number of iterations
     Returns:
         ((list) altered cables in output with lowest cost"""
     
