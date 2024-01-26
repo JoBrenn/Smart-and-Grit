@@ -200,7 +200,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "simulated":
-        simul = Simulatedannealing(district, 10000) #TODO?: 50000 variabel maken
+        simul = Simulatedannealing(district, 10000) 
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":

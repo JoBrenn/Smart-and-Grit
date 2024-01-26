@@ -18,8 +18,8 @@ from .hill_climber import HillClimber
 from code.modules.district import District
 
 import math
-import random
-import copy
+from random import random
+from copy import deepcopy, copy
 
 class Simulatedannealing(HillClimber):
     """ Simulatedannealing algorithm class
@@ -68,7 +68,7 @@ class Simulatedannealing(HillClimber):
             (District) either altered or original district
         """
         
-        old_district = copy.deepcopy(district)
+        old_district = deepcopy(district)
         old_cost = self.return_total_cost(district)
         # Apply a random change
         new_district = self.random_change(district, "costs-own")
@@ -88,7 +88,7 @@ class Simulatedannealing(HillClimber):
             # Determine the probability
             probability = 2**(cost_difference / self.temp)
             # Change state with probability
-            if random.random() < probability:
+            if random() < probability:
                 # Update temperature
                 self.linear_temperature_change()
                 return new_district
@@ -107,8 +107,8 @@ class Simulatedannealing(HillClimber):
             (District) either altered or original district
         """
         
-        old_district = copy.deepcopy(district)
-        output = copy.deepcopy(district.return_output())
+        old_district = deepcopy(district)
+        output = deepcopy(district.return_output())
         old_cost = self.return_total_cost(district)
         # Apply a random change
         new_district = self.random_switch(district, "costs-own")
@@ -152,10 +152,10 @@ class Simulatedannealing(HillClimber):
         """
         
         # Make copy of empty district, such that always start with empty
-        district_empty = copy.deepcopy(district)
+        district_empty = deepcopy(district)
         
         # Initialize a random district configuration
-        district_work = copy.deepcopy(self.random_start_state(district_empty))
+        district_work = deepcopy(self.random_start_state(district_empty))
 
         unchanged_count = 0
         
@@ -167,7 +167,7 @@ class Simulatedannealing(HillClimber):
                 self.iterations = self.iterations_total
                 return district_work
             else:
-                previous_district = copy.deepcopy(district_work)
+                previous_district = deepcopy(district_work)
                 # Go over to switch when we have a valid solution
                 if self.check_valid(previous_district) is True:
                     district_work = self.one_switch_iteration(district_work)

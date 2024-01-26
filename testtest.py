@@ -4,7 +4,7 @@ from code.visualisation.visualize import plot_output
 from code.algorithms.combine_cables import *
 from code.algorithms.simulatedannealing import *
 from experiments.hillclimber.hill_climb_experiment import *
-
+from experiments.simulatedannealing.simulatedannealing_experiment import *
 import json
 district = District(1, "costs-own")
 #print(district.return_cost())
@@ -28,9 +28,10 @@ district = District(1, "costs-own")
 #test_output = copy.deepcopy(test_output)
 #filename2 = f"output/JSON/output_samenvoegvoorbeeld_presentatie - Copy.json"
 filename = f"output/JSON/output_samenvoegvoorbeeld_presentatie.json"
-with open(filename, "r") as f2:
-    output = json.load(f2)
+#with open(filename, "r") as f2:
+#    output = run(json.load(f2), 10)
 
-plot_output(output, "Voorbeeld", 1, "Voorbeeld")
+#plot_output(output, "Voorbeeld", 1, "Voorbeeld")
 
-#hillclimb_one_climb_graph_penalty()
+simulannealing_one_climb(district)
+simulannealing_one_climb_graph_penalty()

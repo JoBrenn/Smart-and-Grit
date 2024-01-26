@@ -23,8 +23,8 @@ from code.modules.district import Battery
 from code.modules.district import House
 from code.algorithms.manhattan_distance import get_cable_points, create_cable
 
-import random
-import copy
+from random import choice
+from copy import deepcopy, copy
 import csv
 
 
@@ -50,8 +50,8 @@ class HillClimber:
         Params:
             district    (District): district upon which we want to apply HillClimber
         """
-        self.district_empty = copy.deepcopy(district)
-        self.district = copy.deepcopy(district)
+        self.district_empty = deepcopy(district)
+        self.district = deepcopy(district)
         self.total_cost = self.return_total_cost(district)
         
         # Initialize iterations
@@ -69,7 +69,7 @@ class HillClimber:
         
         # Take the empty district as initial configuration
         for house in district.houses: 
-            battery = random.choice(district.batteries)
+            battery = choice(district.batteries)
             # Add the house to the battery connection
             battery.add_house(house)
             create_cable(house, (battery.row, battery.column))
@@ -88,8 +88,8 @@ class HillClimber:
         """
         
         # Get random house from district
-        random_house = random.choice(district.houses)
-        dictionary = copy.deepcopy(random_house.house_dict)
+        random_house = choice(district.houses)
+        dictionary = deepcopy(random_house.house_dict)
 
         # Find old battery connection
         for battery in district.batteries:
@@ -98,7 +98,7 @@ class HillClimber:
         
         # Delete the house from the battery in output dictionary
         index = district.output.index(old_battery.battery_dict)
-        one = copy.deepcopy(district.output[index])
+        one = deepcopy(district.output[index])
         district.output[index]["houses"].remove(dictionary)
 
         # Delete house from old battery
@@ -111,7 +111,7 @@ class HillClimber:
         random_house.house_dict["cables"].clear()
                       
         # Determine new random battery
-        new_battery = random.choice(district.batteries)
+        new_battery = choice(district.batteries)
         # Create new Manhattan cable
         create_cable(random_house, (new_battery.row, new_battery.column))
         
@@ -123,7 +123,7 @@ class HillClimber:
 
         # Add house to battery in output dictionary
         index_new = district.output.index(new_battery.battery_dict)
-        dictionary_new = copy.deepcopy(random_house.house_dict)
+        dictionary_new = deepcopy(random_house.house_dict)
         
         # Reset first element in dictionary, so that the cost is accurate
         district.output[0] = {"district": district.district,\
@@ -143,11 +143,11 @@ class HillClimber:
         
         # Get random different houses from district
         houses = district.houses.copy()
-        random_house_1 = random.choice(district.houses)
+        random_house_1 = choice(district.houses)
         houses.remove(random_house_1)
-        random_house_2 = random.choice(houses)
-        dictionary_1 = copy.deepcopy(random_house_1.house_dict)
-        dictionary_2 = copy.deepcopy(random_house_2.house_dict)
+        random_house_2 = choice(houses)
+        dictionary_1 = deepcopy(random_house_1.house_dict)
+        dictionary_2 = deepcopy(random_house_2.house_dict)
         
         # Find batteries connected
         for battery in district.batteries:
@@ -195,16 +195,13 @@ class HillClimber:
         # Add house to battery in output dictionary
         index_new_1 = district.output.index(battery_1.battery_dict)
         dictionary_new_2 = random_house_2.house_dict
-        #district.output[index_new_1]["houses"].append(dictionary_new_2)
         index_new_2 = district.output.index(battery_2.battery_dict)
         dictionary_new_1 = random_house_1.house_dict
-        #district.output[index_new_2]["houses"].append(dictionary_new_1)
         
         # Reset first element in dictionary, so that the cost is accurate
         district.output[0] = {"district": district.district,\
                              f"{costs_type}": self.return_total_cost(district)}
 
-        output = district.return_output()
         
         return district
 
@@ -270,7 +267,7 @@ class HillClimber:
             (District) either altered or original district
         """
         
-        old_district = copy.deepcopy(district)
+        old_district = deepcopy(district)
         old_cost = self.return_total_cost(district)
         # Apply a random change
         new_district = self.random_change(district, "costs-own")
@@ -291,8 +288,8 @@ class HillClimber:
             (District) either altered or original district
         """
 
-        old_district = copy.deepcopy(district)
-        output = copy.deepcopy(district.return_output())
+        old_district = deepcopy(district)
+        output = deepcopy(district.return_output())
         old_cost = self.return_total_cost(district)
         # Apply a random change
         new_district = self.random_switch(district, "costs-own")
@@ -321,10 +318,10 @@ class HillClimber:
         """
         
         # Make copy of empty district, such that always start with empty
-        district_empty = copy.deepcopy(district)
+        district_empty = deepcopy(district)
         
         # Initialize a random district configuration
-        district_work = copy.deepcopy(self.random_start_state(district_empty))
+        district_work = deepcopy(self.random_start_state(district_empty))
 
         unchanged_count = 0
         
@@ -336,7 +333,7 @@ class HillClimber:
                 self.iterations = self.iterations_total
                 return district_work
             else:
-                previous_district = copy.deepcopy(district_work)
+                previous_district = deepcopy(district_work)
                 # Go over to switch when we have a valid solution
                 if self.check_valid(previous_district) is True:
                     district_work = self.one_switch_iteration(district_work)
@@ -362,7 +359,7 @@ class HillClimber:
         """
         
         # Start with empty initial district
-        district_empty = copy.deepcopy(district)
+        district_empty = deepcopy(district)
 
         # Initialize working district
         district_work = self.one_entire_iteration(district_empty, N)
@@ -373,7 +370,7 @@ class HillClimber:
         #print(district_work.return_cost())
         for i in range(n - 1):
             print(i)
-            previous_district = copy.deepcopy(district_work)
+            previous_district = deepcopy(district_work)
             district_work = self.one_entire_iteration(district_empty, N)
             old_cost = self.return_total_cost(previous_district)
             new_cost = self.return_total_cost(district_work)
