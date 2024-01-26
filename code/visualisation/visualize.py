@@ -2,16 +2,14 @@
 
 File: vizualize.py
 
-Authors:    Kathy Molenaar
-            Jesper Vreugde
+Authors:    Jesper Vreugde
             Jonas Brenninkmeijer
 
 Date: 10/01/24 (19/01/24)
 
 Description:   Depending on input gives a vizualization of data.
 
-Usage:  python3 main.py --load [file]
-    Note: file should be in output/JSON
+Usage:  python3 main.py
 """
 import json
 import sys
@@ -39,6 +37,7 @@ def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1)
     # plt.annotate("Hello", x, y)
     return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order)
 
+@Halo(text='Plotting cables', spinner='dots')
 def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
     """ Plot cables corresponding to house.
     Two point coordinates are defined and a line is drawn between them.
@@ -66,7 +65,7 @@ def deduplicate_legend_items(handles, labels):
             newHandles.append(handle)
     return newLabels, newHandles
 
-@Halo(text='Loading Plot', spinner='dots')
+@Halo(text='Loading Grid Plot', spinner='dots')
 def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot_title: str = "Graph"):
     """ Plots and shows a grid containing the houses, batteries and cables
         pre: takes an output list as an argument that, from the second element onwards,
@@ -154,7 +153,7 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
 
     plt.show()
 
-@Halo(text='Loading Plot', spinner='dots')
+@Halo(text='Loading Histogram Plot', spinner='dots')
 def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
     """Plot histogram.
     Given the list of outputs, function creates histogram plot and shows it.
