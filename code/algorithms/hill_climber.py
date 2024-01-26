@@ -283,7 +283,7 @@ class HillClimber:
         Returns:
             (District) either altered or original district
         """
-        
+
         old_district = copy.deepcopy(district)
         output = copy.deepcopy(district.return_output())
         old_cost = self.return_total_cost(district)
@@ -310,7 +310,7 @@ class HillClimber:
         Returns:
             (District) district configuration with lowest found cost 
         """
-        
+
         # Make copy of empty district, such that always start with empty
         district_empty = copy.deepcopy(district)
         

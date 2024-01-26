@@ -19,8 +19,8 @@ import math
 import random
 import copy
 
-class Simmulatedannealing(HillClimber):
-    """ Simmulatedannealing algorithm class
+class Simulatedannealing(HillClimber):
+    """ Simulatedannealing algorithm class
 
     Methods:
         linear_temperature_change():    linearly alters the temperature
@@ -29,7 +29,7 @@ class Simmulatedannealing(HillClimber):
         one_entire_iteration():     one iteration of choosing random state and making lots of changes
     """
     
-    def __init__(self, district: District, iterations: int, temperature: float = 5000):
+    def __init__(self, district: District, iterations: int, temperature: float = 3000):
         """ Initialize Simmulatedannealing
         Params:
             district    (District): district upon which we want to apply simulatedannealing
@@ -88,7 +88,7 @@ class Simmulatedannealing(HillClimber):
         else:
             #print(self.temp)
             # Determine the probability
-            probability = math.exp(cost_difference / self.temp)
+            probability = 2**(cost_difference / self.temp)
             # Change state with probability
             if random.random() < probability:
                 # Update temperature
@@ -135,7 +135,7 @@ class Simmulatedannealing(HillClimber):
         else:
             #print(self.temp)
             # Determine the probability
-            probability = math.exp(cost_difference / self.temp)
+            probability = 2**(cost_difference / self.temp)
             # Change state with probability
             if random.random() < probability:
                 # Update temperature
