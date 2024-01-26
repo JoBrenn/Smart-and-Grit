@@ -1,6 +1,6 @@
 from code.modules.district import District
-from code.algorithms.random import random_assignment, random_assignment_capacity, random_walk
-from code.algorithms.greedy import greedy_assignment
+from code.algorithms.random import *
+from code.algorithms.greedy import *
 
 def runs_algorithms_to_costs(district_number: int, runs: int, alg_method: str) -> list[int]:
     """ Create list of outputs, used for mpl histogram."""

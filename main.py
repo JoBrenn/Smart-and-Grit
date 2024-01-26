@@ -14,7 +14,7 @@ Usage:  python3 main.py [argument 1]
         argument 1:     - format:   returns output-format.json vizualization
                         - 1-3:      returns specified district vizualization
 """
-from code.helpers.helpers import *
+import code.helpers.helpers as hlp
 
 
 if __name__ == "__main__":
@@ -23,25 +23,25 @@ if __name__ == "__main__":
 
     print("Running SmartGrid main", end="\n\n")
 
-    # Get method input (LOCATION: code/helpers/helpers.py)
-    method = get_method_input()
+    # Get method input
+    method = hlp.get_method_input()
 
     # General Methods LOAD and Format
     if method in {"format", "load"}:
-        data = run_general_method(method)
+        data = hlp.run_general_method(method)
     # Algo Methods:
     else:
-        # Select district between 1 - 3 (LOCATION: code/helpers/helpers.py)
-        district = get_district_input()
+        # Select district between 1 - 3
+        district = hlp.get_district_input()
 
-        # Select runs >0 (LOCATION: helpers)
-        runs = get_runs_input(method)
+        # Select runs >0
+        runs = hlp.get_runs_input()
 
-        # Run algorithm (LOCATION: code/helpers/helpers.py)
-        data = run_algo_method(method, district, runs)
+        # Run algorithm
+        data = hlp.run_algo_method(method, district, runs)
 
-        # Write data to JSON (LOCATION: code/helpers/helpers.py)
-        write_data_to_JSON(data, method, district, runs)
+        # Write data to JSON
+        hlp.write_data_to_JSON(data, method, district, runs)
 
-    # Plot data (LOCATION: code/helpers/helpers.py)
-    plot_data(data, method, runs, district)
+    # Plot data
+    hlp.plot_data(data, method, runs, district)

@@ -71,13 +71,20 @@ class BeamSearch:
                 house_new = copy.deepcopy(house)
                 battery = district.batteries[index]
 
-                battery.add_house(house_new)
+                # print("Battery left:", battery.left_over_capacity)
+                # print("House output:", house_new.output)
 
-                create_cable(house_new, (battery.row, battery.column))
-                new_states.append(district)
+
+                if battery.left_over_capacity - house_new.output >= 0:
+                    battery.add_house(house_new)
+                    create_cable(house_new, (battery.row, battery.column))
+                    new_states.append(district)
+
+        # print(new_states)
 
         # Override old with new states
-        self.states = new_states
+        if new_states:
+            self.states = new_states
 
 
     def random_avaliable_house(self) -> House:
@@ -109,7 +116,7 @@ class BeamSearch:
 
         # Keep the states from the start of the list until beam index
         self.states = [state for index, state in sorted_states[0:self.beam]]
-        print("Selected best. Current best:", self.states[0].return_cost())
+        # print("Selected best. Current best:", self.states[0].return_cost())
 
 
     def run(self) -> list[District]:
@@ -130,9 +137,21 @@ class BeamSearch:
                 self.select_best()
 
         # Print the first five best states
+        print()
         for index, state in enumerate(self.states):
-            if index > 4:
+            if index > 5:
                 break
-            print(state.return_cost())
+            print(f"State {index+1} cost: {state.return_cost()}")
+
+        total = 0
+        for index, state in enumerate(self.states):
+            if index > 5:
+                break
+            for battery in state.batteries:
+                total += len(battery.houses)
+            print(f"State {index+1} houses: {total}")
+            total = 0
+
+        # print(self.states)
 
         return self.states[0]
