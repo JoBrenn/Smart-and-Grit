@@ -173,7 +173,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = copy.deepcopy(district)
-            data.append(run_random_assignment_shortest_distance_with_capacity(district, method))
+            data.append(run_random_assignment_shortest_distance_with_capacity(district_copy, method))
 
     elif method == "greedmanh":
         """
@@ -184,7 +184,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = copy.deepcopy(district)
-            data.append(run_greedy_assignment_shortest_walk(district, method))
+            data.append(run_greedy_assignment_shortest_walk(district_copy, method))
 
     elif method == "hillclimb":
         """
@@ -217,7 +217,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
     #     print("Run are not taken into account.")
     #     data.append(run_alg_manh(district, cost_type))
     end_time = time.time()
-    print(f"\nMethod Time: {round(end_time - start_time, 5)}")
+    print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
 
     return data
 
