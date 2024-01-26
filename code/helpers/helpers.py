@@ -7,11 +7,7 @@ from halo import Halo
 from code.algorithms.run import *
 from code.visualisation.visualize import plot_output
 from code.algorithms.hill_climber import HillClimber
-from code.algorithms.simulatedannealing import Simulatedannealing
-# from code.algorithms.random import *
-# from code.algorithms.greedy import *
 from code.algorithms.beam_search import BeamSearch
-
 
 
 def load_JSON_output(filename: str) -> list:
@@ -68,7 +64,7 @@ def get_method_input() -> str:
             print_helpmsg_methods()
             method = ""
         elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimb", "beamsearch", "simulated"}:
+                            "randrwalk", "greedmanh", "hillclimb", "beamsearch"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -85,7 +81,7 @@ def get_district_input() -> int:
             district = 0
     return int(district)
 
-def get_runs_input(method: str) -> int:
+def get_runs_input() -> int:
     runs = 0
     if runs == "format":
         runs = 1
@@ -151,9 +147,11 @@ def run_general_method(method: str):
     return data
 
 
-@Halo(text='Running method', spinner='dots')
+# @Halo(text='Running method', spinner='dots')
 def run_algo_method(method: str, district_number: int, runs: int) -> list:
     start_time = time.time()
+    spinner = Halo(text='Running method', spinner='dots')
+    spinner.start()
     data = []
     district = District(district_number, "costs-own")
 
@@ -200,15 +198,15 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
-        
-    elif method == "simulated":
-        simul = Simulatedannealing(district, 50000) #TODO?: 50000 variabel maken
-        data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":
+        spinner.stop()
         beam = get_beam()
+        spinner.start()
         beamsearch = BeamSearch(district, beam)
-        data.append(beamsearch.run().return_output())
+        best_state = beamsearch.run()
+        data.append(best_state.return_output())
+        # print("Best state:", best_state.return_cost())
 
     # Does not work yet.
     # elif method == "randrwalk":
@@ -222,9 +220,9 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         # """
     #     print("Run are not taken into account.")
     #     data.append(run_alg_manh(district, cost_type))
+    spinner.stop()
     end_time = time.time()
     print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
-
     return data
 
 def plot_data(data, method, runs: int = 1, district_number: str = "Graph"):
