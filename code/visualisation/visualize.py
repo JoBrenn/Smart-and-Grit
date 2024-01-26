@@ -7,7 +7,9 @@ Authors:    Jesper Vreugde
 
 Date: 10/01/24 (19/01/24)
 
-Description:   Depending on input gives a vizualization of data.
+Description:
+
+Depending on input gives a vizualization of data.
 
 Usage:  python3 main.py
 """

@@ -6,8 +6,10 @@ Author:    Kathy Molenaar
 
 Date: 23/01/24
 
-Description:    This simulatedannealing class runs the HillClimber algorithm on a given district,
-                where changes have been made to make it a simulatedannealing algorithm.
+Description:
+
+This simulatedannealing class runs the HillClimber algorithm on a given district,
+where changes have been made to make it a simulatedannealing algorithm.
 
 Usage:  from code.algorithms.simulatedannealing import Simmulatedannealing
 """
@@ -23,30 +25,28 @@ class Simulatedannealing(HillClimber):
     """ Simulatedannealing algorithm class
 
     Methods:
-        linear_temperature_change():    linearly alters the temperature
-        one_change_iteration():     one iteration of changing random house-battery connection
-        one_switch_iteration():     one iteration of swapping two random house-battery connections
-        one_entire_iteration():     one iteration of choosing random state and making lots of changes
+    
+    linear_temperature_change():linearly alters the temperature
+    one_change_iteration():     changing random house-battery connection
+    one_switch_iteration():     swapping two random house-battery connections
+    one_entire_iteration():     one iteration of starting with random state
     """
     
-    def __init__(self, district: District, iterations: int, temperature: float = 3000):
+    def __init__(self, district: District, iterations: int,\
+                 temperature: float = 3000):
         """ Initialize Simmulatedannealing
         Params:
-            district    (District): district upon which we want to apply simulatedannealing
-            iterations  (int):      number of iterations (small changes) we want to run each time
+            district    (District): district 
+            iterations  (int):      number of small changes we want to run
             temperature (float):    begin temperature of our model
         """
-        # Use init of the Hillclimber class
-        super().__init__(district)
+        # Use init of the HillClimber class
+        super().__init__(district, iterations)
         
         # Starting temperature
         self.temp_0 = temperature
         # Current temperature
         self.temp = temperature
-        
-        # Initialize iterations
-        self.iterations = 0
-        self.iterations_total = iterations
         
     def linear_temperature_change(self) -> None:
         """ Linearly alter the temperature
@@ -56,11 +56,12 @@ class Simulatedannealing(HillClimber):
             alters self.temp
         """
         
-        self.temp = self.temp_0 - (self.temp_0 / self.iterations_total) * self.iterations
+        self.temp = self.temp_0 -\
+                    (self.temp_0 / self.iterations_total) * self.iterations
         
     def one_change_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random change
-        Allow change with probability 2**(old_cost - new_cost)/self.temp
+        Allow change with certain probability
         Params:
             district    (District): District object
         Returns:
@@ -84,7 +85,6 @@ class Simulatedannealing(HillClimber):
             self.linear_temperature_change()
             return old_district
         else:
-            #print(self.temp)
             # Determine the probability
             probability = 2**(cost_difference / self.temp)
             # Change state with probability
@@ -100,7 +100,7 @@ class Simulatedannealing(HillClimber):
     
     def one_switch_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random switch
-        Allow change with probability 2**(old_cost - new_cost)/self.temp
+        Allow change with certain probability
         Params:
             district    (District): District object
         Returns:
@@ -118,18 +118,15 @@ class Simulatedannealing(HillClimber):
         cost_difference = old_cost - new_cost
         
         # Make sure you cannot go from good solution to non solution
-        if self.check_valid(old_district) is True and self.check_valid(new_district) is False:
+        if self.check_valid(old_district) is True \
+        and self.check_valid(new_district) is False:
             self.linear_temperature_change()
             return old_district
             
-        #if cost_difference == 0:
-        #    self.linear_temperature_change()
-        #    return old_district
         if self.temp == 0:
             self.linear_temperature_change()
             return old_district
         else:
-            #print(self.temp)
             # Determine the probability
             probability = 2**(cost_difference / self.temp)
             # Change state with probability
@@ -144,12 +141,12 @@ class Simulatedannealing(HillClimber):
         return old_district
         
     def one_entire_iteration(self, district: District, N: int) -> District:
-        """ Run one iteration of simulated annealing when true go over to switch change
+        """ Run one iteration of simulated annealing
         Chooses random begin state.
         Stops when N times not improved or after self.iterations
         Params:
             district    (District): District object
-            N           (int):      stop when N times not improved or after self.iterations
+            N           (int):      maximum repeat number
         Returns:
             (District) district configuration with lowest found cost 
         """
@@ -164,7 +161,6 @@ class Simulatedannealing(HillClimber):
         
         for iteration in range(self.iterations_total + 1):
             self.iterations += 1
-            #print(self.iterations)
             # Stop when the state hasn't improved N times
             if unchanged_count == N - 1:
                 # Reset iterations
@@ -177,18 +173,15 @@ class Simulatedannealing(HillClimber):
                     district_work = self.one_switch_iteration(district_work)
                 else:
                     district_work = self.one_change_iteration(district_work)
-                print(self.return_total_cost(previous_district))
-                print(self.return_total_cost(district_work))
                 # If output is unchanged, add one to count
-                if previous_district.return_output() == district_work.return_output():
+                if previous_district.return_output() ==\
+                   district_work.return_output():
                     unchanged_count += 1
                 else:
                     unchanged_count = 0
-                #print(self.check_valid(district_work))
                 
         # Reset iterations and temperature
         self.iterations = 0
         self.temp = self.temp_0
         
         return district_work
-    
