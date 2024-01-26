@@ -198,7 +198,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         is still valid and the cost is lowered.
         Give integer of number of iterations in command line before indicating district number.
         """
-        hillclimb = HillClimber(district, 100000)
+        hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
         
     elif method == "simulated":

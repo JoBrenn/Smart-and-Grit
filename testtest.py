@@ -3,6 +3,7 @@ from code.modules.district import District
 from code.visualisation.visualize import plot_output
 from code.algorithms.combine_cables import *
 from code.algorithms.simulatedannealing import *
+from experiments.hillclimber.hill_climb_experiment import *
 
 import json
 district = District(1, "costs-own")
@@ -31,3 +32,5 @@ with open(filename, "r") as f2:
     output = json.load(f2)
 
 plot_output(output, "Voorbeeld", 1, "Voorbeeld")
+
+#hillclimb_one_climb_graph_penalty()

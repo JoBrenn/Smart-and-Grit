@@ -8,7 +8,9 @@ Authors:    Kathy Molenaar
 
 Date: 12/01/24 
 
-Description:    Determines Manhattan distance and lays cables along this distance
+Description:    
+
+Determines Manhattan distance and lays cables along this distance
 
 Usage:  from code.algorithms.manhattan_distance import ...
 """
