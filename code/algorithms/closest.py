@@ -22,6 +22,14 @@ from code.algorithms.manhattan_distance import return_manhattan_distance, create
 from copy import deepcopy
 
 class Closest:
+    """ Closest algorithm classes
+
+    Methods:
+        run():                  runs the closest assignment algorithm                   
+        return_valid()          determines whether the state of the district is a valid solution
+
+    """
+    
     def __init__(self, old_district: District, max_runs: int):
         """ Initialize Closest class
         Params:

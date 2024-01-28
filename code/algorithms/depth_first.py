@@ -6,7 +6,12 @@ Author:    Jesper Vreugde
 
 Date: 26/01/24
 
-Description:    
+Description:    A depth first algorithm that goes through each possible
+                configuration of houses being assigned to batteries.
+                Runs until a specified depth(assigned houses) which is set at
+                5 as the default. Prunes the branches where the sum of the output
+                of each house assigned to a battery exceeds the capacity of that 
+                battery.
 
 Usage:  from code.algorithms.depth_first import DepthFirst
 """
@@ -21,6 +26,13 @@ from code.visualisation.visualize import plot_output
 from random import shuffle
 
 class DepthFirst:
+    """ DepthFirst algorithm classes
+
+    Methods:
+        run():                      runs the depth first algorithm                   
+        return_next_state()         returns the next item in the stack
+        valid_capacity(district)    determines whether each battery has exceeded their capacity
+    """
     def __init__(self, district: District, depth: int = 5)-> None:
         """ Initialize Depth First class
         Params:
