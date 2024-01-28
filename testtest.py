@@ -33,5 +33,5 @@ filename = f"output/JSON/output_samenvoegvoorbeeld_presentatie.json"
 
 #plot_output(output, "Voorbeeld", 1, "Voorbeeld")
 
-simulannealing_one_climb(district)
-simulannealing_one_climb_graph_penalty()
+simulannealing_temp_comparison(district)
+simulannealing_temp_comparison_mean_graph()
