@@ -1,8 +1,25 @@
+""" Experiments concerning HillClimber algorithm
+
+File: hill_climb_experiment.py
+
+Author:    Kathy Molenaar
+
+Date: 26/01/24
+
+Description:
+
+Contains functions in which experiments concerning Hill Climber
+happen.
+
+Usage:
+from experiments.hillclimber.hill_climb_experiment import ...
+"""
+
 from code.algorithms.hill_climber import HillClimber
 from code.modules.district import District
 
 import csv
-import copy
+from copy import deepcopy
 import matplotlib.pyplot as plt
 
 def hillclimb_one_climb(district: District) -> None:
