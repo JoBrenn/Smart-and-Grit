@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>100</x>
+      <y>680</y>
+      <w>310</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Closest
+old_district: District, max_duns: int
+--
+old_district:district = old_district
+max_runs: int = max_runs
+district: Districit
+--
+run(self) -&gt; District
+return_valid(self) -&gt; bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>0</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+Subclass </panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>10</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>BreadthFirst(DepthFirst)
+--
+DepthFirst attributes
+
+--
+return_next_state()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>100</x>
+      <y>10</y>
+      <w>310</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>DepthFirst
+district: District, depth: int = 5
+--
+depth: int
+states: [district] = district
+house_num: int = len(district.houses)
+--
+run() -&gt; District
+return_next_state() -&gt; District
+valid_capacity(district: District) -&gt; bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>480</y>
+      <w>270</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>BeamSearch
+(district: District, beam: int)
+--
+district: District
+houses: list[House]
+beam: int
+states: list[District]
+--
+update_states() -&gt; None
+random_available_house() -&gt; House
+select_best() -&gt; None
+run(self) -&gt; list[District]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>170</y>
+      <w>380</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>HillClimber
+(district: District, iterations: int = 1000)
+--
+district_empty: District
+district: District
+total_cost: float
+iterations: int
+iteration_total: int
+--
+random_start_state(district: District) -&gt; District
+random_change(district: District, costs_type: str) -&gt; District:          
+random_switch(district: District, costs_type: str) -&gt; District:    
+return_penalty(battery: Battery) -&gt; float:       
+return_total_cost(district: District) -&gt; float:
+check_valid(district: District) -&gt; bool:
+one_change_iteration(district: District) -&gt; District:
+one_switch_iteration(district: District) -&gt; District:
+one_entire_iteration(istrict: District, N: int) -&gt; District:
+run_hill_climber( district: District, n: int, N: int) -&gt; District:</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>170</y>
+      <w>380</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Simulatedannealing(HillClimber)
+(district: District, iterations: int, temperature: float = 3000)
+--
+temp_0: float
+temp: float
+--
+linear_temperature_change -&gt; None
+one_change_iteration(district: District) -&gt; District
+one_switch_iteration(district: District) -&gt; District:
+one_entire_iteration(district: District, N: int) -&gt; District:</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>170</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+Subclass </panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+</diagram>

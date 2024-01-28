@@ -1,3 +1,21 @@
+""" Depth first algorithm
+
+File: depth_first.py
+
+Author:    Jesper Vreugde
+
+Date: 26/01/24
+
+Description:    A depth first algorithm that goes through each possible
+                configuration of houses being assigned to batteries.
+                Runs until a specified depth(assigned houses) which is set at
+                5 as the default. Prunes the branches where the sum of the output
+                of each house assigned to a battery exceeds the capacity of that 
+                battery.
+
+Usage:  from code.algorithms.depth_first import DepthFirst
+"""
+
 import copy
 
 from code.modules.district import District
@@ -5,103 +23,87 @@ from code.modules.district import Battery
 from code.modules.district import House
 from code.algorithms.manhattan_distance import *
 from code.visualisation.visualize import plot_output
+from random import shuffle
 
-class Depth_first:
-    def __init__(self, district, depth=len(district.houses)):
+class DepthFirst:
+    """ DepthFirst algorithm classes
+
+    Methods:
+        run():                      runs the depth first algorithm                   
+        return_next_state()         returns the next item in the stack
+        valid_capacity(district)    determines whether each battery has exceeded their capacity
+    """
+    def __init__(self, district: District, depth: int = 5)-> None:
+        """ Initialize Depth First class
+        Params:
+            district    (District): Distrisct object
+            depth       (int): Tha maximum depth that the Depth search tree
+                               will be. Set at the max as default
+        Returns
+            None"""
+
         self.depth = depth
-        self.stack = [district]
+        self.states = [district]
+        self.house_num = len(district.houses)
+        # Randomize
+        shuffle(self.states[0].houses)
 
-    pass
+    def run(self) -> District:
+        """ Runs the depth first algorithm
 
-def test_depth_district(district):
-    depth = 5#len(district.houses)
-    stack = [district]
+            Returns
+                A district object that has the lowest found cost state"""
+        # Set the initial costs to be the 
+        lowest_costs = float("inf")
+        lowest_state = None
 
-    #state_set = set()
-    lowest_costs = float('inf')
-    lowest_costs_state = None
+        # Loop over stack until it is empty
+        while len(self.states) > 0:
+            state = self.return_next_state()
 
-    houses = copy.deepcopy(district.houses)
-    total = 0
+            # Prunes branches where a battery's capacity has been exceeded 
+            if self.valid_capacity(state) == True:
 
-    while len(stack) > 0:
-        state = stack.pop()
-        curr_depth = len(district.houses) - len(houses)
+                # Will run if the 
+                if self.house_num - len(state.houses) < self.depth:
+                    print(self.house_num - len(state.houses))
+                    house = state.houses.pop()
+                    
+                    for n, battery in enumerate(state.batteries):
+                        child = copy.deepcopy(state)
+                        house_add = copy.deepcopy(house)
+                        create_cable(house_add, (battery.row, battery.column))
+                        child.batteries[n].add_house(house_add)
+                        self.states.append(child)
+                        
 
-        # TODO Prunen
+                # If not, a state at the desired depth has been found and can be compared
+                else:
+                    state.district_dict[f"{state.costs_type}"] = state.return_cost()
 
-        #print("len: {:2} statelen: {:2} depth: {:2} stacklen: {:2}"\
-         #   .format(len(houses),state.assigned_houses,curr_depth,len(stack)))
-        """if state.assigned_houses == 1:
-            print("train")
+                    if state.district_dict[state.costs_type] < lowest_costs:
+                        lowest_costs = state.district_dict[state.costs_type]
+                        lowest_costs_state = copy.deepcopy(state)
 
-        if state.assigned_houses == 7:
-            print("train2")"""
-
-
-
-        if state.assigned_houses < depth and valid_cap(state):
-            #print("hey")
-            house = houses[state.assigned_houses]
-            #print(house)
-            for n, battery in enumerate(state.batteries):
-
-                child = copy.deepcopy(state)
-                house_add = copy.deepcopy(house)
-                #house cables = []
-                create_cable(house_add, (battery.row, battery.column))
-                child.batteries[n].add_house(house_add)
-
-                child.assigned_houses += 1
-                # house_2 = copy.deepcopy()
-                #child.batteries[n].append(house_2)
-                stack.append(child)
-
-        else:
-            #print(f"{state.return_json_output()}")
-            total += 1
-            # check solution
-
-            state.district_dict[f"{state.costs_type}"] = state.return_cost()
-            #print(state.return_cost())
-
-            if state.district_dict[district.costs_type] < lowest_costs:
-                lowest_costs = state.district_dict[district.costs_type]
-                lowest_costs_state = copy.deepcopy(state)
-            #plot_output(state.return_output())
-
-    #print(f"Lowest: {lowest_costs}")
-    #print(total)
-    #plot_output(lowest_costs_state.return_output())
+        return lowest_costs_state
 
 
+    def return_next_state(self) -> District:
+        """ Returns next state in the stack
+            Returns:
+                a District object at the end of the states list
+        """
+        return self.states.pop()
 
-district = District(1, "costs-own")
+    def valid_capacity(self, district) -> bool: 
+        """ Determines whether the district is a valid solution for
+            the depth that was given
+            Returns: 
+                a bool that that determines whether or not a battery
+                has exceeded its maximum capacity
 
-def valid_cap(state):
-    for battery in state.batteries:
-        if battery.left_over_capacity < 0:
-            #print("Not valid")
-            return False
-
-        #print("Valid")
+        """
+        for battery in district.batteries:
+            if battery.left_over_capacity < 0:
+                return False
         return True
-
-
-# Example code from Lecture Constructive algorithm by Bas Terwijn
-def test_depth():
-    depth = 11
-    stack = [""]
-    while len(stack) > 0:
-        state = stack.pop()
-        #print(state)
-        #print("stack")
-        if len(state) < depth:
-            for i in ["1","2","3","4","5"]:
-                child = copy.deepcopy(state)
-                child += i
-                # print(child)
-                stack.append(child)
-       # else:
-            # check solution
-            #print(state)
