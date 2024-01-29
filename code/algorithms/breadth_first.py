@@ -17,6 +17,12 @@ from code.algorithms.depth_first import DepthFirst
 from code.modules.district import District
 
 class BreadthFirst(DepthFirst):
+    """ BreadthFirst algorithm classes
+        Subclass of DepthFirst
+
+    Methods:            
+        return_next_state()         returns the next item in the queue
+    """
     def __init__(self, district, depth) -> None:
         """ Initializes the BreadthFirst class
             Params:
@@ -24,7 +30,8 @@ class BreadthFirst(DepthFirst):
                 depth       (int): Tha maximum depth that the Depth search tree
                             will be. Set at the max as default
             Returns
-                None"""
+                None
+        """
         
         super().__init__(district, depth)
 

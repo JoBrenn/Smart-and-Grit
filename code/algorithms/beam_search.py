@@ -13,15 +13,13 @@ Description:    The implementation of a Beam Search (BS) algorithm.
 
 Usage:  from algorithms.beam_search import BeamSearch
 """
-import copy
-import random
+from copy import deepcopy
+from random import randint, seed
 from .manhattan_distance import create_cable
 from code.modules.district import District
 from code.modules.district import Battery
 from code.modules.district import House
 
-
-random.seed(1)
 
 class BeamSearch:
 
@@ -36,8 +34,8 @@ class BeamSearch:
             Initialized BeamSearch object
         """
         # Create deepcopies of (empty) district
-        self.district = copy.deepcopy(district)
-        self.houses = copy.deepcopy(district.houses)
+        self.district = deepcopy(district)
+        self.houses = deepcopy(district.houses)
 
         # Set Beam
         self.beam = beam
@@ -67,8 +65,8 @@ class BeamSearch:
             # House is connected to all batteries
             for index in range(len(state.batteries)):
                 # Deepcopy district and house for new state
-                district = copy.deepcopy(state)
-                house_new = copy.deepcopy(house)
+                district = deepcopy(state)
+                house_new = deepcopy(house)
                 battery = district.batteries[index]
 
                 # print("Battery left:", battery.left_over_capacity)
@@ -92,7 +90,7 @@ class BeamSearch:
         Returns:
             House object, removed from self.houses
         """
-        random_index = random.randint(0,len(self.houses)-1)
+        random_index = randint(0,len(self.houses)-1)
         return self.houses.pop(random_index)
 
     def select_best(self) -> None:
@@ -119,7 +117,7 @@ class BeamSearch:
         # print("Selected best. Current best:", self.states[0].return_cost())
 
 
-    def run(self) -> list[District]:
+    def run(self) -> District | None:
         """ Run the Beam Search algorithm.
         Searches the states with a width of the beam.
         CAUTION: Might take up a lot of time and space, depending on the beam.
@@ -136,22 +134,38 @@ class BeamSearch:
             if len(self.states) > self.beam:
                 self.select_best()
 
-        # Print the first five best states
-        print()
-        for index, state in enumerate(self.states):
-            if index > 5:
-                break
-            print(f"State {index+1} cost: {state.return_cost()}")
+        self.filter_valid_states()
 
-        total = 0
-        for index, state in enumerate(self.states):
-            if index > 5:
-                break
-            for battery in state.batteries:
-                total += len(battery.houses)
-            print(f"State {index+1} houses: {total}")
-            total = 0
+        # Print the first five best states
+        # print()
+        # for index, state in enumerate(self.states):
+        #     if index > 5:
+        #         break
+        #     print(f"State {index+1} cost: {state.return_cost()}")
+        #
+        # total = 0
+        # for index, state in enumerate(self.states):
+        #     if index > 5:
+        #         break
+        #     for battery in state.batteries:
+        #         total += len(battery.houses)
+        #     print(f"State {index+1} houses: {total}")
+        #     total = 0
 
         # print(self.states)
+        if self.states:
+            print(f"At beam {self.beam} found:", self.states[0].return_cost())
+            return self.states[0]
+        else:
+            return
 
-        return self.states[0]
+    def filter_valid_states(self) -> None:
+        valid_states = []
+        included_houses = 0
+        for state in self.states:
+            for battery in state.batteries:
+                included_houses += len(battery.houses)
+            if included_houses == 150:
+                valid_states.append(state)
+            included_houses = 0
+        self.states = valid_states

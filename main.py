@@ -39,7 +39,7 @@ if __name__ == "__main__":
         # Select runs >0
         runs = hlp.get_runs_input()
 
-        # Run algorithm
+        # Run selected algorithm
         data = hlp.run_algo_method(method, district, runs)
 
         # Write data to JSON

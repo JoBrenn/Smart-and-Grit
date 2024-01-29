@@ -43,7 +43,6 @@ class District:
         self.costs_type = costs_type
         self.batteries: list[Battery] = []
         self.houses: list[House] = []
-        self.assigned_houses = 0
         self.district_dict = {"district": self.district, f"{costs_type}": 0}
         self.output: list[dict] = [self.district_dict]
 
