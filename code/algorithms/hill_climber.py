@@ -371,6 +371,8 @@ class HillClimber:
             district_work = self.one_entire_iteration(district_empty, N)
             old_cost = self.return_total_cost(previous_district)
             new_cost = self.return_total_cost(district_work)
+
+            # Write to csv file
             with open(file, 'a', newline='') as filecsv:
                 writer = csv.writer(filecsv)
                 writer.writerow([district_work.return_cost()])
@@ -386,6 +388,5 @@ class HillClimber:
             f.write(district_work.return_json_output())
         with open("output.json", "w") as outfile:
             outfile.write(district_work.return_json_output())
-        file = "output/csv/costs_hc.csv"
 
         return district_work

@@ -11,6 +11,7 @@ from code.visualisation.visualize import plot_output
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.simulatedannealing import Simulatedannealing
+from code.modules.district import District
 
 
 def load_JSON_output(filename: str) -> list:
@@ -67,6 +68,10 @@ def print_helpmsg_methods():
     \t\t(Manhattan Distance)")
     print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped\
     batteries. \t(Manhattan Distance) ")
+    print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
+    batteries. \t(Manhattan Distance) ")
+    print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
+    houses to capped batteries. \t(Manhattan Distance) ")
     print("  exit:\t\t Stop running main.\n")
 
 

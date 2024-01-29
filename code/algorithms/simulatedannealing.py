@@ -31,8 +31,8 @@ class Simulatedannealing(HillClimber):
     one_entire_iteration():     one iteration of starting with random state
     """
 
-    def __init__(self, district: District, iterations: int,
-                 temperature: float = 4000):
+    def __init__(self, district: District, iterations: int = 10000,
+                 temperature: float = 4100):
         """ Initialize Simmulatedannealing
         Params:
             district    (District): district
