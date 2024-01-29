@@ -33,8 +33,9 @@ filename = f"output/JSON/output_samenvoegvoorbeeld_presentatie.json"
 
 #plot_output(output, "Voorbeeld", 1, "Voorbeeld")
 
-#simulannealing_temp_comparison(district)
-#simulannealing_temp_comparison_lowest_graph()
-simulatedannealing_tuning(district)
+#simulatedannealing_temp_comparison(district)
+#simulatedannealing_temp_comparison_mean_graph()
+#simulatedannealing_temp_comparison_lowest_graph()
 #simulatedannealing_one_climb(district)
 #simulatedannealing_one_climb_graph_penalty()
+simulatedannealing_tuning(district)

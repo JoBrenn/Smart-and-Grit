@@ -65,7 +65,7 @@ def get_method_input() -> str:
             print_helpmsg_methods()
             method = ""
         elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimb", "beamsearch", "simulated"}:
+                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -187,7 +187,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
             district_copy = copy.deepcopy(district)
             data.append(run_greedy_assignment_shortest_walk(district_copy, method))
 
-    elif method == "hillclimb":
+    elif method == "hillclimber":
         """
         Here we apply a Hillclimber algorithm. We start with a random configuration
         of house-battery connections by Manhattan distance. We change one house-battery
@@ -200,7 +200,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
-    elif method == "simulated":
+    elif method == "simulatedannealing":
         simul = Simulatedannealing(district, 10000) 
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 

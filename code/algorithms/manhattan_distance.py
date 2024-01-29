@@ -6,32 +6,32 @@ Authors:    Kathy Molenaar
             Jesper Vreugde
             Jonas Brenninkmeijer
 
-Date: 12/01/24 
+Date: 12/01/24
 
-Description:    
-
+Description:
 Determines Manhattan distance and lays cables along this distance
 
 Usage:  from code.algorithms.manhattan_distance import ...
 """
 
 from code.modules.house import House
-from code.modules.battery import Battery
 
 
 def get_cable_points(begin: tuple[int], end: tuple[int]) -> tuple[int]:
-        """ Generate 3 points between which cable must be layed along Manhattan distance
-            From begin point first up or down then left or right
-        Params:
-            begin    (tuple[int]): tuple of begin coordinates
-            end      (tuple[int]): tuple of end coordinates
-        Returns:
-            (tuple[int]) tuple of begin, in between, end coordinates
-        """
+    """ Generate 3 points between which cable must be layed
+        along Manhattan distance
+        From begin point first up or down then left or right
+    Params:
+        begin    (tuple[int]): tuple of begin coordinates
+        end      (tuple[int]): tuple of end coordinates
+    Returns:
+        (tuple[int]) tuple of begin, in between, end coordinates
+    """
 
-        points = [begin, (begin[0], end[1]), end]
-        
-        return tuple(points)
+    points = [begin, (begin[0], end[1]), end]
+
+    return tuple(points)
+
 
 def return_manhattan_distance(house: House, end: tuple[int]) -> int:
     """ Return manhattan distance from a house to a given end point
@@ -41,15 +41,16 @@ def return_manhattan_distance(house: House, end: tuple[int]) -> int:
         Returns:
             (int) Manhattan distance between house and end point
     """
-    
+
     house_coordinate = (house.row, house.column)
-    
+
     x_distance = abs(house_coordinate[0] - end[0])
     y_distance = abs(house_coordinate[1] - end[1])
     distance = x_distance + y_distance
-    
+
     return distance
-    
+
+
 def create_cable(house: House, end: tuple[int]) -> None:
     """ Creates entire cable connection between house and end point
         following shortest manhatten distance.
@@ -61,10 +62,12 @@ def create_cable(house: House, end: tuple[int]) -> None:
             add cable to house object
     """
 
-    cable_points = get_cable_points((house.row, house.column), (end[0], end[1]))
+    cable_points = get_cable_points((house.row, house.column),
+                                    (end[0], end[1]))
 
-    # begin y minus in between y
+    # Begin y minus in between y
     y_distance = cable_points[0][1] - cable_points[1][1]
+
     # In between x minus end x
     x_distance = cable_points[1][0] - cable_points[2][0]
 
@@ -82,14 +85,13 @@ def create_cable(house: House, end: tuple[int]) -> None:
             y_current -= 1
             house.add_cable_segment((x_current, y_current))
 
-
     elif y_distance < 0:
         # Up
         for step in range(abs(y_distance)):
             y_current += 1
             house.add_cable_segment((x_current, y_current))
 
-   # Check whether we need to go left or right
+    # Check whether we need to go left or right
     if x_distance > 0:
         # Left
         for step in range(x_distance):
