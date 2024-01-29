@@ -4,7 +4,9 @@ import copy
 import time
 
 from halo import Halo
-from code.algorithms.run import *
+from code.algorithms.run import run_greedy_assignment_shortest_walk, \
+    run_random_assignment_shortest_distance_with_capacity, \
+    run_random_assignment_shortest_distance
 from code.visualisation.visualize import plot_output
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
@@ -15,28 +17,51 @@ from code.algorithms.breadth_first import BreadthFirst
 
 
 def load_JSON_output(filename: str) -> list:
-    """ Returns JSON data as a list
-        pre: takes a filename argument as a string
-        post: returns a list containing JSON objects as dictionaries"""
+    """ Return JSON data as a list
+        Params:
+            filename    (str): filename
+        Returns:
+            (list) list of json file data
+    """
+
     with open(filename, "r") as f:
         return json.load(f)
 
-def write_data_to_JSON(data: list, file_name: str, district_number: int, runs: int) -> None:
-    """Write data to output JSON file in output/."""
+
+def write_data_to_JSON(data: list, file_name: str,
+                       district_number: int, runs: int) -> None:
+    """ Write data list to output JSON file in output/
+        Params:
+            data            (list):data list
+            file_name       (str): filename to which data is written
+            district_number (int): district number
+            runs            (int): number of runs of data
+        Returns:
+            (list) list of json file data
+    """
+
     # Craft file path
-    file_path = f"output/JSON/{file_name}-district_{district_number}-runs_{runs}-output.json"
+    file_path = f"output/JSON/{file_name}\
+    -district_{district_number}-runs_{runs}-output.json"
 
     # Open file path in WRITE mode and write data
     with open(file_path, "w") as outfile:
         json.dump(data, outfile, indent=4)
 
+
 def print_helpmsg_methods():
+    """ Print help messages methods
+        Returns:
+            none
+            prints help messages
+    """
+
     print("\n\u001b[32mGeneral Methods:\u001b[0m")
     print("  help:\t\t Display help manual")
     print("  load:\t\t Load a JSON file from output/JSON")
     print("  format:\t Display formatted output")
-    # print("  histo[gram]:\t Get histogram of N runs of random assignment Manhattan distance algorithm.")
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
+<<<<<<< HEAD
     print("  randrwalk:\t Randomly assigns houses to batteries. " + \
                         "Creates cable path through randomly taking random steps until destination is reached.")
     print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t(Manhattan Distance)")
@@ -51,13 +76,32 @@ def print_helpmsg_methods():
     print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
     print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
 
+=======
+    print("  randrwalk:\t Randomly assigns houses to batteries. " +
+          "Creates cable path through randomly taking random \
+          steps until destination is reached.")
+    print("  randmanh:\t Randomly assigns houses to batteries.\
+    \t\t\t\t(Manhattan Distance)")
+    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries.\
+    \t\t(Manhattan Distance)")
+    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped\
+    batteries. \t(Manhattan Distance) ")
+>>>>>>> ee8a18f7e7db8bde53525b223a5da5e1a596c978
     print("  exit:\t\t Stop running main.\n")
 
+
 def print_helpmsg_output():
+    """ Print help messages output
+        Returns:
+            none
+            prints help messages
+    """
+
     print("\n\u001b[32mOptions:\u001b[0m")
     print("  h | histo[gram]:\t Get histogram of N runs of chosen algorithm.")
     print("  f | figure:\t\t Create a figure of the .")
     print("  JSON:\t Get histogram of N runs of chosen algorithm.")
+
 
 def print_possibilities(possibilities: list[str]) -> None:
 
@@ -76,8 +120,8 @@ def get_method_input() -> str:
         elif method in {"help", "--help"}:
             print_helpmsg_methods()
             method = ""
-        elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimb", "beamsearch", "simulated",
+        elif method not in {"format", "load", "randmanh", "randmanhcap",                            
+                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
                             "closest", "depthfirst", "breadthfirst"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
@@ -182,12 +226,6 @@ def run_general_method(method: str):
             print_possibilities(possibilities)
             file = get_load_file(possibilities)
             data.append(load_JSON_output(f"output/JSON/{file}"))
-            # file_content = load_JSON_output(f"output/JSON/{file}")
-            # if isinstance(file_content[0], dict):
-            #     data.append(file_content)
-            #     print(data)
-            # else:
-            #     data = file_content
         else:
             print("No load options. Try running an algorithm first.")
     return data
@@ -232,7 +270,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
             district_copy = copy.deepcopy(district)
             data.append(run_greedy_assignment_shortest_walk(district_copy, method))
 
-    elif method == "hillclimb":
+    elif method == "hillclimber":
         """
         Here we apply a Hillclimber algorithm. We start with a random configuration
         of house-battery connections by Manhattan distance. We change one house-battery
@@ -245,7 +283,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
-    elif method == "simulated":
+    elif method == "simulatedannealing":
         simul = Simulatedannealing(district, 10000) 
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 

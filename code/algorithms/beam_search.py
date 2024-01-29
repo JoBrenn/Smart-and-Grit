@@ -1,4 +1,4 @@
-""" Beam Search algorithm.
+""" Beam Search algorithm
 
 File: beam_search.py
 
@@ -6,13 +6,15 @@ Authors:    Jonas Brenninkmeijer
 
 Date: 22/01/24 (23/01/24)
 
-Description:    The implementation of a Beam Search (BS) algorithm.
-                Beam Search works by selecting the best N (Beam) states
-                and pruning the rest. The Beam specified at 1 makes this
-                algorithm Greedy, Beam of INF makes it Breadth First.
+Description:
+The implementation of a Beam Search (BS) algorithm.
+Beam Search works by selecting the best N (Beam) states
+and pruning the rest. The Beam specified at 1 makes this
+algorithm Greedy, Beam of INF makes it Breadth First.
 
 Usage:  from algorithms.beam_search import BeamSearch
 """
+
 from copy import deepcopy
 from random import randint, seed
 from .manhattan_distance import create_cable
@@ -28,11 +30,12 @@ class BeamSearch:
         Params:
             district    (District): District object containing grid information
             beam        (int): The amount of branches to be included in the search.
-                                When 1 -> Greedy, when inf -> Breadth First Search
+                               When 1 -> Greedy, when inf -> Breadth First Search
         Returns:
             None
             Initialized BeamSearch object
         """
+
         # Create deepcopies of (empty) district
         self.district = deepcopy(district)
         self.houses = deepcopy(district.houses)
@@ -53,6 +56,7 @@ class BeamSearch:
             None
             Updates self.states
         """
+
         # Select house for all states to incorporate
         house = self.random_avaliable_house()
         N_start_states = len(self.states)
@@ -69,16 +73,10 @@ class BeamSearch:
                 house_new = deepcopy(house)
                 battery = district.batteries[index]
 
-                # print("Battery left:", battery.left_over_capacity)
-                # print("House output:", house_new.output)
-
-
                 if battery.left_over_capacity - house_new.output >= 0:
                     battery.add_house(house_new)
                     create_cable(house_new, (battery.row, battery.column))
                     new_states.append(district)
-
-        # print(new_states)
 
         # Override old with new states
         if new_states:
@@ -90,7 +88,9 @@ class BeamSearch:
         Returns:
             House object, removed from self.houses
         """
+
         random_index = randint(0,len(self.houses)-1)
+
         return self.houses.pop(random_index)
 
     def select_best(self) -> None:
@@ -100,6 +100,7 @@ class BeamSearch:
             None
             Keeps best states, removes rest
         """
+
         # List for costs of states
         costs = []
 
@@ -108,13 +109,13 @@ class BeamSearch:
             costs.append(state.return_cost())
 
         # Zip the costs and states together in a list
-        # Sort list according to the cost
         costs_states = list(zip(costs, self.states))
+
+        # Sort list according to the cost
         sorted_states = sorted(costs_states, key = lambda x: x[0])
 
         # Keep the states from the start of the list until beam index
         self.states = [state for index, state in sorted_states[0:self.beam]]
-        # print("Selected best. Current best:", self.states[0].return_cost())
 
 
     def run(self) -> District | None:
@@ -124,13 +125,13 @@ class BeamSearch:
         Returns:
             None
         """
+
         # While there are still avaliable houses
         while self.houses:
             # Update states
             self.update_states()
 
-            # If there are more states than the beam:
-            # select best
+            # If there are more states than the beam: select best
             if len(self.states) > self.beam:
                 self.select_best()
 

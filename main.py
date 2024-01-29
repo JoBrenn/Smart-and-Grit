@@ -1,4 +1,4 @@
-""" Main to run the code in this repository.
+""" Main to run the code in this repository
 
 File: main.py
 
@@ -31,6 +31,7 @@ if __name__ == "__main__":
     # General Methods LOAD and Format
     if method in {"format", "load"}:
         data = hlp.run_general_method(method)
+
     # Algo Methods:
     else:
         # Select district between 1 - 3
