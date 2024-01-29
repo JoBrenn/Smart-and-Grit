@@ -180,7 +180,8 @@ class Simulatedannealing(HillClimber):
                     district_work = self.one_switch_iteration(district_work)
                 else:
                     district_work = self.one_change_iteration(district_work)
-
+                print(district_work.return_cost())
+                print(previous_district.return_cost())
                 # If output is unchanged, add one to count
                 if previous_district.return_output() ==\
                    district_work.return_output():

@@ -15,6 +15,7 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.breadth_first import BreadthFirst
+from code.modules.district import District
 
 
 def load_JSON_output(filename: str) -> list:

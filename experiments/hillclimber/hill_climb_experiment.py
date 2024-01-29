@@ -7,7 +7,6 @@ Author:    Kathy Molenaar
 Date: 26/01/24
 
 Description:
-
 Contains functions in which experiments concerning Hill Climber
 happen.
 
