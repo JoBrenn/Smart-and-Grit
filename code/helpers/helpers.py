@@ -15,6 +15,7 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.breadth_first import BreadthFirst
+from code.modules.district import District
 
 
 def load_JSON_output(filename: str) -> list:
@@ -68,14 +69,13 @@ def print_helpmsg_methods():
     print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t(Manhattan Distance)")
     print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
 
-    #print("  hillclimb:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
-    #print("  simlutaled:\t ")
-    #print("  beamsearch:\t ")
-
     print("  closest:\t Assigns a house to its closest battery that has capacity left\t ")
     print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
     print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
-
+    print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
+batteries. \t(Manhattan Distance) ")
+    print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
+houses to capped batteries. \t(Manhattan Distance) ")
     print("  exit:\t\t Stop running main.\n")
 
 
@@ -302,7 +302,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "simulatedannealing":
-        simul = Simulatedannealing(district, 10000)
+        simul = Simulatedannealing(district)
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":

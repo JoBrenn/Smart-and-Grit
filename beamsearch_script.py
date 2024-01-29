@@ -25,7 +25,16 @@ import sys
 
 class BeamSearchTuning:
 
-    def __init__(self, district_number: int, runs: int, max_beam: int):
+    def __init__(self, district_number: int, runs: int, max_beam: int) -> None:
+        """ Initialize beamsearch tuning
+        Params:
+            district_number    (int): district number
+            runs               (int): number of runs 
+            max_beam           (int): maximum beam width
+        Returns:
+            none
+        """
+
         self.district_number = district_number
         self.district = District(district_number, "costs-own")
         self.runs = runs
