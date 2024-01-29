@@ -33,6 +33,7 @@ class DepthFirst:
         return_next_state()         returns the next item in the stack
         valid_capacity(district)    determines whether each battery has exceeded their capacity
     """
+    
     def __init__(self, district: District, depth: int = 5)-> None:
         """ Initialize Depth First class
         Params:
@@ -66,7 +67,7 @@ class DepthFirst:
 
                 # Will run if the 
                 if self.house_num - len(state.houses) < self.depth:
-                    print(self.house_num - len(state.houses))
+                    
                     house = state.houses.pop()
                     
                     for n, battery in enumerate(state.batteries):

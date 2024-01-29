@@ -30,7 +30,7 @@ class Closest:
 
     """
     
-    def __init__(self, old_district: District, max_runs: int):
+    def __init__(self, old_district: District, max_runs: int = 10):
         """ Initialize Closest class
         Params:
             district    (District): Distrisct object
