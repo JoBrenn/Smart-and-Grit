@@ -3,3 +3,4 @@ matplotlib
 json
 sys
 mplcursor
+halo

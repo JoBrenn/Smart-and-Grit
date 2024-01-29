@@ -9,6 +9,7 @@ In order to do this, there are a couple of requirements, namely:
 
 # Usage
 ## Requirements
+All needed requirements can be installed by running: pip install -r requirements.txt
 ## Run
 Running of: python3 main.py gives the following option screen:
 ![Main menu](images/main_screen.png)
@@ -23,7 +24,15 @@ Where in the function simulannealing_temp_comparison different temperatures are 
 This comparison can then be visualized via either the function simulannealing_temp_comparison_mean_graph() or 
 simulannealing_temp_comparison_lowest_graph. Where the mean cost and the lowest cost are compared respectively.
 
-# Structure
+## Structure
+Here the most imported directories are stated:
+- /code: constains all code (.py files)
+    - /algorithms: contains all algorithms
+    - /helpers: contains all helpers
+    - /modules: contains all classes
+    - /visualisation: contains all code concerning the visualisations
+- /experiments: contains all code for the experiments
+- /results: contains all found results
 
 # Authors
 - Jonas Brenninkmeijer
