@@ -1,10 +1,11 @@
 from code.algorithms.hill_climber import *
 from code.modules.district import District
-from code.visualisation.visualize import plot_output
+from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.combine_cables import *
 from code.algorithms.simulatedannealing import *
 from experiments.hillclimber.hill_climb_experiment import *
 from experiments.simulatedannealing.simulatedannealing_experiment import *
+import matplotlib.pyplot as plt
 import json
 district = District(1, "costs-own")
 #print(district.return_cost())
@@ -14,8 +15,8 @@ district = District(1, "costs-own")
 #one_change_iteration(district)
 #hill = HillClimber(district)
 #dishil = hill.run_hill_climber(district, 1, 1000)
-#simul = Simmulatedannealing(district, 10000)
-#district = simul.run_hill_climber(district, 500, 1000)
+#simul = Simulatedannealing(district, 10000)
+#district = simul.run_hill_climber(district, 1, 1000)
 #district = run_hill_climber_2(district, 500, 1000)
 #print(district.return_cost())
 #print(check_valid(district))
@@ -27,11 +28,16 @@ district = District(1, "costs-own")
 #    test_output = copy.deepcopy(json.load(f))
 #test_output = copy.deepcopy(test_output)
 #filename2 = f"output/JSON/output_samenvoegvoorbeeld_presentatie - Copy.json"
-filename = f"output/JSON/output_samenvoegvoorbeeld_presentatie.json"
+filename = "output/csv/hillclimber/hillclimber_1000_1.csv"
+
 #with open(filename, "r") as f2:
 #    output = run(json.load(f2), 10)
 
 #plot_output(output, "Voorbeeld", 1, "Voorbeeld")
 
-simulannealing_temp_comparison(district)
-simulannealing_temp_comparison_mean_graph()
+#simulatedannealing_temp_comparison(district)
+#simulatedannealing_temp_comparison_mean_graph()
+#simulatedannealing_temp_comparison_lowest_graph()
+#simulatedannealing_one_climb(district)
+#simulatedannealing_one_climb_graph_penalty()
+#simulatedannealing_tuning(district)

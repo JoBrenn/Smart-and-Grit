@@ -8,12 +8,11 @@ Authors:    Jesper Vreugde
 Date: 10/01/24 (19/01/24)
 
 Description:
-
 Depending on input gives a vizualization of data.
 
 Usage:  python3 main.py
 """
-import json
+
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,20 +22,37 @@ import matplotlib.colors as colors
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from halo import Halo
 
-def load_icon(path: str, zoom: float):
-    """ Load an icon for batteries or houses."""
+
+def load_icon(path: str, zoom: float) -> OffsetImage:
+    """ Load an icon for batteries or houses
+        Params:
+            path    (str): filepathname
+            zoom    (float): zoom float number
+        Returns:
+            OffsetImage
+    """
+
     file = path
     image = mpimg.imread(file)
-    return OffsetImage(image, zoom = zoom)
+
+    return OffsetImage(image, zoom=zoom)
 
 def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1) -> AnnotationBbox:
     """ Create a figure box for either batteries or houses.
-    This box is placed on x and y coordinates and thus can be plotted."""
+        This box is placed on x and y coordinates and thus can be plotted
+        Params:
+            location     (str): coordinates in string form
+            imagebox    ():     
+
+        Returns:
+            none
+    """
+    """ """
+
     loc_coords = location.split(",")
     x = int(loc_coords[0])
     y = int(loc_coords[1])
-    # plt.plot(x, y, "ro", picker=True, visible=False)
-    # plt.annotate("Hello", x, y)
+
     return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order)
 
 def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
@@ -173,7 +189,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
 
     # Title includes the method and the number of runs.
     plt.title(f"Histogram: {alg_method} (n={runs})")
-    binwidth = 500
+    binwidth = 75
     # The numbers of bins is a range from the mininum value to the maximum value
     # and the step is the binwidth
     n_bins = range(min(outputs), max(outputs) + binwidth, binwidth)

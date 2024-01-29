@@ -30,6 +30,7 @@ def hillclimb_one_climb(district: District) -> None:
             none
             alters csv file with cost outputs
     """
+    
     hc = HillClimber(district)
 
     with open("results/hillclimber/hillclimber.csv", 'w', newline='') as output_file,\
@@ -72,8 +73,6 @@ def hillclimb_one_climb_graph_costs():
     
     with open("results/hillclimber/hillclimber.csv", 'r') as f:
         reader = csv.reader(f)
-        #for cost in reader:
-        #    print(cost)
         values = [int(row[0]) for row in reader]
     ax.plot(values, label='HillClimber costs (no constraint)')
     ax.set_title('Hill Climber')
@@ -81,7 +80,7 @@ def hillclimb_one_climb_graph_costs():
     ax.set_ylabel('Costs')
     fig.savefig("results/hillclimber/one_climb.png")
     plt.show()
-    
+
 def hillclimb_one_climb_graph_penalty():
     fig, ax = plt.subplots()
     

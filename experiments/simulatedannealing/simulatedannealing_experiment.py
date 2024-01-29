@@ -24,9 +24,10 @@ import matplotlib.pyplot as plt
 from copy import deepcopy
 from statistics import mean 
 
+
 def simulatedannealing_add_costs_to_list(district: District,\
                                          iterations: int = 1000,\
-                                         temp: float = 3000) -> list:
+                                         temp: float = 4000) -> list:
     """ Runs simulated annealing iteration one time and adds all costs to list
         Params:
             district         (District): District object from which we want to start
@@ -72,7 +73,7 @@ def simulatedannealing_add_costs_to_list(district: District,\
     return costs, costs_with_penalty
     
     
-def simulannealing_one_climb(district: District, iteration: int = 1000) -> None:
+def simulatedannealing_one_climb(district: District, iteration: int = 10000) -> None:
     """ Runs simulated annealing iteration one time and adds all costs to csv file
         Params:
             district         (District): District object from which we want to start
@@ -91,20 +92,20 @@ def simulannealing_one_climb(district: District, iteration: int = 1000) -> None:
         result_writer.writerows(costs)
         result_writer_penalty.writerows(costs_with_penalty)
 
-def simulannealing_one_climb_graph_costs():
-        """ Displays the costs of the iterations in a graph
+def simulatedannealing_one_climb_graph_costs():
+    """ Displays the costs of the iterations in a graph
         Params:
             district         (District): District object from which we want to start
         Returns:
             none
     """
+
     fig, ax = plt.subplots()
     
     with open("results/simulatedannealing/simulatedannealing.csv", 'r') as f:
         reader = csv.reader(f)
-        #for cost in reader:
-        #    print(cost)
         values = [int(row[0]) for row in reader]
+
     ax.plot(values, label='Simulated annealing costs (no constraint)')
     ax.set_title('Simulated annealing')
     ax.set_xlabel('Iteration')
@@ -112,7 +113,7 @@ def simulannealing_one_climb_graph_costs():
     fig.savefig("results/simulatedannealing/one_climb.png")
     plt.show()
     
-def simulannealing_one_climb_graph_penalty():
+def simulatedannealing_one_climb_graph_penalty():
     """ Displays the costs including penalties of the iterations in a graph
         Params:
             district         (District): District object from which we want to start
@@ -133,7 +134,7 @@ def simulannealing_one_climb_graph_penalty():
     fig.savefig("results/simulatedannealing/one_climb_penalty.png")
     plt.show()
     
-def simulannealing_temp_comparison(district):
+def simulatedannealing_temp_comparison(district):
     """ Runs simulated annealing for different temperatures to compare them
         Creates csv for all temperatures, where rows are mean, min, max
         Params:
@@ -144,16 +145,18 @@ def simulannealing_temp_comparison(district):
     """
     
     # Test for different temperatures
-    for temp in range(2700, 3200, 100):
+    for temp in range(3800, 4200, 100):
         all_costs = []
         all_costs_penalty = []
+
         # Repeat simulated annealing 100 times
         for n in range(100):
             print(f"Running Simulated {n}")
-            costs_it, costs_it_penalty = simulatedannealing_add_costs_to_list(district, 500, temp)
+            costs_it, costs_it_penalty\
+            = simulatedannealing_add_costs_to_list(district, 100, temp)
             all_costs.append(costs_it)
             all_costs_penalty.append(costs_it_penalty)
-        #print(all_costs)
+
         results = []
         
         # Add for all iterations mean, minimum and maximum
@@ -167,7 +170,7 @@ def simulannealing_temp_comparison(district):
             for result in results:
                 result_writer.writerow(result)
                 
-def simulannealing_temp_comparison_mean_graph():
+def simulatedannealing_temp_comparison_mean_graph():
     """ Displays the mean costs of the iterations for all temperatures
         in one graph
         Params:
@@ -180,13 +183,13 @@ def simulannealing_temp_comparison_mean_graph():
     mean_costs = []
     
     # Read in mean costs for all temperatures for all iterations
-    for temp in range(2700, 3200, 100):
+    for temp in range(3800, 4200, 100):
         with open(f"results/simulatedannealing/simulatedannealing_temp_{temp}.csv", 'r') as f:
             reader = csv.reader(f)
             mean_costs.append([float(row[0]) for row in reader])
     
     # Add for all temperatures graph 
-    for temp, mean_cost in zip(range(2700, 3200, 100), mean_costs):
+    for temp, mean_cost in zip(range(3800, 4200, 100), mean_costs):
         ax.plot(mean_cost, label=f'Temperature {temp}')
         
     ax.legend(loc='upper right')
@@ -196,8 +199,8 @@ def simulannealing_temp_comparison_mean_graph():
     fig.savefig("results/simulatedannealing/simulatedannealing_temp_mean.png")
     plt.show()
     
-def simulannealing_temp_comparison_lowest_graph():
-        """ Displays the lowest costs of the iterations for all temperatures
+def simulatedannealing_temp_comparison_lowest_graph():
+    """ Displays the lowest costs of the iterations for all temperatures
         in one graph
         Params:
             district         (District): District object from which we want to start
@@ -209,13 +212,13 @@ def simulannealing_temp_comparison_lowest_graph():
     lowest_costs = []
     
     # Read in mean costs for all temperatures for all iterations
-    for temp in range(2700, 3200, 100):
+    for temp in range(3800, 4200, 100):
         with open(f"results/simulatedannealing/simulatedannealing_temp_{temp}.csv", 'r') as f:
             reader = csv.reader(f)
             lowest_costs.append([float(row[1]) for row in reader])
     
     # Add for all temperatures graph 
-    for temp, lowest_cost in zip(range(2700, 3200, 100), lowest_costs):
+    for temp, lowest_cost in zip(range(3800, 4200, 100), lowest_costs):
         ax.plot(lowest_cost, label=f'Temperature {temp}')
         
     ax.legend(loc='upper right')
@@ -224,3 +227,24 @@ def simulannealing_temp_comparison_lowest_graph():
     ax.set_ylabel('Costs')
     fig.savefig("results/simulatedannealing/simulatedannealing_temp_lowest.png")
     plt.show()
+    
+def simulatedannealing_tuning(district: District, n: int):
+    """ Tunes the simulated annealing parameters
+        Creates n simulated annealing run for all combinations
+        Adds best to csv file
+        Params:
+            district         (District): District object from which we want to start
+        Returns:
+            none
+    """
+    
+    with open(f"results/simulatedannealing/simulatedannealing_tuning.csv", 'w', newline='') as f:
+        result_writer = csv.writer(f, delimiter=',')    
+        for temp in range(3800, 4200, 100):
+            for iterations in range(8000, 14000, 2000):
+                print(f"Running simulated annealing for\
+                temp = {temp} and iterations = {iterations}")
+                simul = Simulatedannealing(district, iterations, temp)
+                district_work = simul.run_hill_climber(district, n, 1000)
+                result_writer.writerow([district_work.return_cost()])
+            

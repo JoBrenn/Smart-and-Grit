@@ -1,4 +1,4 @@
-""" Main to run the code in this repository.
+""" Main to run the code in this repository
 
 File: main.py
 
@@ -8,12 +8,14 @@ Authors:    Kathy Molenaar
 
 Date: 10/01/24 (11/01/24)
 
-Description:   Depending on input gives a vizualization of data.
+Description:
+Depending on input gives a vizualization of data.
 
 Usage:  python3 main.py [argument 1]
         argument 1:     - format:   returns output-format.json vizualization
                         - 1-3:      returns specified district vizualization
 """
+
 import code.helpers.helpers as hlp
 
 
@@ -29,6 +31,7 @@ if __name__ == "__main__":
     # General Methods LOAD and Format
     if method in {"format", "load"}:
         data = hlp.run_general_method(method)
+
     # Algo Methods:
     else:
         # Select district between 1 - 3
