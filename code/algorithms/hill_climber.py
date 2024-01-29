@@ -367,14 +367,12 @@ class HillClimber:
         with open(file, 'w', newline='') as filecsv:
             writer = csv.writer(filecsv)
             writer.writerow([district_work.return_cost()])
-        #print(district_work.return_cost())
         for i in range(n - 1):
             print(i)
             previous_district = deepcopy(district_work)
             district_work = self.one_entire_iteration(district_empty, N)
             old_cost = self.return_total_cost(previous_district)
             new_cost = self.return_total_cost(district_work)
-            #print(district_work.return_cost())
             with open(file, 'a', newline='') as filecsv:
                 writer = csv.writer(filecsv)
                 writer.writerow([district_work.return_cost()])

@@ -8,12 +8,14 @@ Authors:    Kathy Molenaar
 
 Date: 10/01/24 (11/01/24)
 
-Description:   Depending on input gives a vizualization of data.
+Description:
+Depending on input gives a vizualization of data.
 
 Usage:  python3 main.py [argument 1]
         argument 1:     - format:   returns output-format.json vizualization
                         - 1-3:      returns specified district vizualization
 """
+
 import code.helpers.helpers as hlp
 
 

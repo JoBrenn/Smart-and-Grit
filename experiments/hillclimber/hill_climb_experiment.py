@@ -30,6 +30,7 @@ def hillclimb_one_climb(district: District) -> None:
             none
             alters csv file with cost outputs
     """
+    
     hc = HillClimber(district)
 
     with open("results/hillclimber/hillclimber.csv", 'w', newline='') as output_file,\
