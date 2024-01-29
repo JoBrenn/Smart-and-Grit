@@ -69,14 +69,13 @@ def print_helpmsg_methods():
     print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t(Manhattan Distance)")
     print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
 
-    #print("  hillclimb:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
-    #print("  simlutaled:\t ")
-    #print("  beamsearch:\t ")
-
     print("  closest:\t Assigns a house to its closest battery that has capacity left\t ")
     print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
     print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
-
+    print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
+batteries. \t(Manhattan Distance) ")
+    print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
+houses to capped batteries. \t(Manhattan Distance) ")
     print("  exit:\t\t Stop running main.\n")
 
 
