@@ -55,7 +55,7 @@ class BeamSearch:
         """
         # Select house for all states to incorporate
         house = self.random_avaliable_house()
-        N_start_states = len(self.states)
+        # N_start_states = len(self.states)
 
         # List to save new states
         new_states = []
