@@ -69,7 +69,7 @@ class DepthFirst:
             if self.valid_capacity(state) is True:
 
                 if self.house_num - len(state.houses) < self.depth:
-                    print(self.house_num - len(state.houses))
+                    
                     house = state.houses.pop()
 
                     for n, battery in enumerate(state.batteries):

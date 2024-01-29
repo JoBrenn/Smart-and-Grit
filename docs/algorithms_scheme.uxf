@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>100</x>
-      <y>680</y>
+      <y>690</y>
       <w>310</w>
       <h>140</h>
     </coordinates>
@@ -74,7 +74,7 @@ valid_capacity(district: District) -&gt; bool</panel_attributes>
       <x>140</x>
       <y>480</y>
       <w>270</w>
-      <h>190</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>BeamSearch
 (district: District, beam: int)
@@ -87,7 +87,8 @@ states: list[District]
 update_states() -&gt; None
 random_available_house() -&gt; House
 select_best() -&gt; None
-run(self) -&gt; list[District]</panel_attributes>
+run() -&gt; list[District]
+filter_valid_states() -&gt; None</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -108,15 +109,15 @@ iterations: int
 iteration_total: int
 --
 random_start_state(district: District) -&gt; District
-random_change(district: District, costs_type: str) -&gt; District:          
-random_switch(district: District, costs_type: str) -&gt; District:    
-return_penalty(battery: Battery) -&gt; float:       
-return_total_cost(district: District) -&gt; float:
-check_valid(district: District) -&gt; bool:
-one_change_iteration(district: District) -&gt; District:
-one_switch_iteration(district: District) -&gt; District:
-one_entire_iteration(istrict: District, N: int) -&gt; District:
-run_hill_climber( district: District, n: int, N: int) -&gt; District:</panel_attributes>
+random_change(district: District, costs_type: str) -&gt; District          
+random_switch(district: District, costs_type: str) -&gt; District    
+return_penalty(battery: Battery) -&gt; float      
+return_total_cost(district: District) -&gt; float
+check_valid(district: District) -&gt; bool
+one_change_iteration(district: District) -&gt; District
+one_switch_iteration(district: District) -&gt; District
+one_entire_iteration(district: District, N: int) -&gt; District
+run_hill_climber(district: District, n: int, N: int) -&gt; District</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -135,8 +136,8 @@ temp: float
 --
 linear_temperature_change -&gt; None
 one_change_iteration(district: District) -&gt; District
-one_switch_iteration(district: District) -&gt; District:
-one_entire_iteration(district: District, N: int) -&gt; District:</panel_attributes>
+one_switch_iteration(district: District) -&gt; District
+one_entire_iteration(district: District, N: int) -&gt; District</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

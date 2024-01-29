@@ -12,6 +12,9 @@ from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.simulatedannealing import Simulatedannealing
 from code.modules.district import District
+from code.algorithms.closest import Closest
+from code.algorithms.depth_first import DepthFirst
+from code.algorithms.breadth_first import BreadthFirst
 
 
 def load_JSON_output(filename: str) -> list:
@@ -59,6 +62,9 @@ def print_helpmsg_methods():
     print("  load:\t\t Load a JSON file from output/JSON")
     print("  format:\t Display formatted output")
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
+    print("  closest:\t Assigns a house to its closest battery that has capacity left\t ")
+    print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
+    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
     print("  randrwalk:\t Randomly assigns houses to batteries. " +
           "Creates cable path through randomly taking random \
           steps until destination is reached.")
@@ -105,8 +111,9 @@ def get_method_input() -> str:
         elif method in {"help", "--help"}:
             print_helpmsg_methods()
             method = ""
-        elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing"}:
+        elif method not in {"format", "load", "randmanh", "randmanhcap",                            
+                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
+                            "closest", "depthfirst", "breadthfirst"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -149,6 +156,38 @@ def get_beam():
             print("\nPlease choose a beam of 1 or higher.")
             beam = 0
     return int(beam)
+
+def get_max_runs():
+    runs = 0
+    while not runs and runs != "":
+        runs = input("\n\u001b[33mMax runs:\u001b[0m ")
+        if runs == "exit":
+            print("\nExiting main.\n")
+            exit()
+        elif runs == "":
+            runs = 10
+            print("\nMax runs are set at a default of 10")
+        elif not runs.isnumeric() or int(runs) < 1:
+            print("\nPlease choose a max amount of runs")
+            runs = 0
+    return int(runs)
+
+def get_max_depth(house_count):
+    depth = 0
+    while not depth and depth != "":
+        depth = input("\n\u001b[33mMax depth:\u001b[0m ")
+        if depth == "exit":
+            print("\nExiting main.\n")
+            exit()
+        elif depth == "":
+            depth = 4
+            print("\nMax depth are set at a default of 4")
+        elif int(depth) > house_count:
+            print(f"\nDepth exceeds the amount of houses in district ({house_count})")
+        elif not depth.isnumeric() or int(depth) < 1:
+            print("\nPlease choose which layer to end at")
+            depth = 0
+    return int(depth)
 
 def get_load_file(possibilities: list[str]):
     file = ""
@@ -260,6 +299,36 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         # """
     #     print("Run are not taken into account.")
     #     data.append(run_alg_manh(district, cost_type))
+        
+    elif method == "closest":  
+        spinner.stop()
+        max_runs = get_max_runs()
+        spinner.start()
+        closest = Closest(district, max_runs)
+        best_state = closest.run()
+        data.append(best_state.return_output())
+
+    elif method == "depthfirst":
+        spinner.stop()
+        max_depth = get_max_depth(len(district.houses))
+        spinner.start()
+        depthfirst = DepthFirst(district, max_depth)
+        #print(depthfirst.run())
+        best_state = depthfirst.run()
+        data.append(best_state.return_output())
+        
+
+    elif method == "breadthfirst":
+        spinner.start()
+        max_depth = get_max_depth(len(district.houses))
+        spinner.stop()
+
+        breadthfirst = BreadthFirst(district, max_depth)
+        best_state = breadthfirst.run()
+        data.append(best_state.return_output())
+
+
+
     spinner.stop()
     end_time = time.time()
     print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
