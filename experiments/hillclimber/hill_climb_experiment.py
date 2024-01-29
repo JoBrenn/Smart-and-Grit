@@ -83,7 +83,7 @@ def hillclimb_one_climb_graph_costs():
 
 def hillclimb_one_climb_graph_penalty():
     fig, ax = plt.subplots()
-    
+
     with open("results/hillclimber/hillclimber_penalty.csv", 'r') as f:
         reader = csv.reader(f)
         #for cost in reader:

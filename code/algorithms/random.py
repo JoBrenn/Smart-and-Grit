@@ -1,53 +1,70 @@
-import random
-from code.algorithms.manhattan_distance import get_cable_points, create_cable
+""" Random algorithm
+
+File: random..py
+
+Author:    Kathy Molenaar
+
+Date: 19/01/24
+
+Description:
+Here a random configuration is created for a given district
+
+Usage:  from code.algorithms.random import ...
+"""
+
+from random import choice, shuffle
 
 
-def random_assignment(district):#batteries: list, houses: list) -> dict:
+def random_assignment(district) -> dict:
     """ Randomly assign houses to batteries, not taking capacity into account
     Creates dictionary, where houses are keys and batteries values
     Params:
-        district: District instance containing Battery and House instances
+        district    (District): district object
     Returns:
         (dict) houses as keys and batteries as values
     """
-    
+
     connection_dict = {}
     for house in district.houses:
-        connection_dict[house] = random.choice(district.batteries)
+        connection_dict[house] = choice(district.batteries)
         connection_dict[house].add_house(house)
 
     return connection_dict
+
 
 def random_assignment_capacity(district) -> dict:
     """ Randomly assigns houses to batteries, taking capacity into account
         Adds this to dictionary with house as key and battery as value
     Params:
-        district: District instance containing Battery and House instances
+        district    (District): district object
     Returns:
         (dict) houses as keys and batteries as values
     """
+
     connection_dict = {}
     for house in district.houses:
         # Randomize the batteries list for every house
-        random.shuffle(district.batteries)
+        shuffle(district.batteries)
+
         # Walk through elements of list an check capacity
         for battery in district.batteries:
             if battery.left_over_capacity - house.output >= 0:
                 battery.add_house(house)
                 connection_dict[house] = battery
+
                 # Stop when we have found a battery with enough capacity
                 break
 
     return connection_dict
 
+
 def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
-    """ returns list of the surrounding points given x and y coordinates of a point"""
-    """ Randomly assigns houses to batteries, taking capacity into account
-        Adds this to dictionary with house as key and battery as value
+    """ Get surrounding points of a given coordinate
     Params:
-        district: District instance containing Battery and House instances
+        coordinates (tuple[int]):   tuple of coordinates
+        grid_size   (int):          grid size integer
     Returns:
-        (dict) houses as keys and batteries as values
+        (list) list of border points of given point
     """
 
     border_points = []
@@ -68,16 +85,25 @@ def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     return border_points
 
 
-def random_walk(house: tuple[int], battery: tuple[int], grid_size: int) -> list:
-    """ Takes a random walk from the house, stops when battery is reached
-        adds all visited points to list"""
+def random_walk(house: tuple[int], battery: tuple[int],
+                grid_size: int) -> list:
+    """ Take a random walk from the house, stops when battery is reached
+        adds all visited points to list
+    Params:
+        house   (tuple[int]):    tuple of house coordinates
+        battery (tuple[int]):    tuple of battery coordinates
+        grid_size   (int):       grid size integer
+    Returns:
+        (list) list of points visited in random walk
+    """
 
     # Initialize current location at the house
     current_location = house
     points_visited = [current_location]
 
     while current_location != battery:
-        new_point = random.choice(get_surrounding_points(current_location, grid_size))
+        new_point = choice(get_surrounding_points(current_location,
+                                                  grid_size))
         current_location = new_point
         points_visited.append(current_location)
 
