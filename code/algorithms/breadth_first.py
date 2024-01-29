@@ -6,9 +6,10 @@ Author:    Jesper Vreugde
 
 Date: 26/01/24
 
-Description:    This subclass inherits its properties from the DepthFirst class
-                Instead of the next state being chosen from a stack, it is 
-                picked from a queue
+Description:
+This subclass inherits its properties from the DepthFirst class
+Instead of the next state being chosen from a stack, it is
+picked from a queue
 
 Usage:  from code.algorithms.breadth_first import BreadthFirst
 """
@@ -16,13 +17,15 @@ Usage:  from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.modules.district import District
 
+
 class BreadthFirst(DepthFirst):
     """ BreadthFirst algorithm classes
         Subclass of DepthFirst
 
-    Methods:            
+    Methods:
         return_next_state()         returns the next item in the queue
     """
+
     def __init__(self, district, depth) -> None:
         """ Initializes the BreadthFirst class
             Params:
@@ -32,7 +35,7 @@ class BreadthFirst(DepthFirst):
             Returns
                 None
         """
-        
+
         super().__init__(district, depth)
 
     def return_next_state(self) -> District:
@@ -40,4 +43,5 @@ class BreadthFirst(DepthFirst):
             Returns:
                 District object removed from the beginning of the states list
         """
+
         return self.states.pop(0)

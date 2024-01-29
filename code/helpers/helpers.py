@@ -11,6 +11,7 @@ from code.visualisation.visualize import plot_output
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.simulatedannealing import Simulatedannealing
+
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.breadth_first import BreadthFirst
@@ -61,7 +62,6 @@ def print_helpmsg_methods():
     print("  load:\t\t Load a JSON file from output/JSON")
     print("  format:\t Display formatted output")
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
-<<<<<<< HEAD
     print("  randrwalk:\t Randomly assigns houses to batteries. " + \
                         "Creates cable path through randomly taking random steps until destination is reached.")
     print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t(Manhattan Distance)")
@@ -76,17 +76,6 @@ def print_helpmsg_methods():
     print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
     print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
 
-=======
-    print("  randrwalk:\t Randomly assigns houses to batteries. " +
-          "Creates cable path through randomly taking random \
-          steps until destination is reached.")
-    print("  randmanh:\t Randomly assigns houses to batteries.\
-    \t\t\t\t(Manhattan Distance)")
-    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries.\
-    \t\t(Manhattan Distance)")
-    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped\
-    batteries. \t(Manhattan Distance) ")
->>>>>>> ee8a18f7e7db8bde53525b223a5da5e1a596c978
     print("  exit:\t\t Stop running main.\n")
 
 

@@ -228,10 +228,10 @@ def simulatedannealing_temp_comparison_lowest_graph():
     fig.savefig("results/simulatedannealing/simulatedannealing_temp_lowest.png")
     plt.show()
     
-def simulatedannealing_tuning(district: District):
+def simulatedannealing_tuning(district: District, n: int):
     """ Tunes the simulated annealing parameters
-        Creates one simulated annealing run for all combinations
-        Adds these to csv file
+        Creates n simulated annealing run for all combinations
+        Adds best to csv file
         Params:
             district         (District): District object from which we want to start
         Returns:
@@ -245,6 +245,6 @@ def simulatedannealing_tuning(district: District):
                 print(f"Running simulated annealing for\
                 temp = {temp} and iterations = {iterations}")
                 simul = Simulatedannealing(district, iterations, temp)
-                district_work = simul.run_hill_climber(district, 1, 1000)
+                district_work = simul.run_hill_climber(district, n, 1000)
                 result_writer.writerow([district_work.return_cost()])
             
