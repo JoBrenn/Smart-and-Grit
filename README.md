@@ -27,14 +27,17 @@ All needed requirements can be installed by running:
 
         pip install -r requirements.txt
 ## Run
-Running of: python3 main.py gives the following option screen:
-![Main menu](images/main_screen.png)
+Running of: python3 main.py gives the following option screen:\
+
+<img src="images/main_screen.png" width="400">
+
 
 Where typing help in the method option gives a description of the possible methods.
 
 Typing 'combine' in the method option shows a list of output files. Selecting one of these
 indices runs the combine_cables algorithm on said output file. This creates a 'costs-shared'
- configuration from the selected 'costs-own' configuration.
+ configuration from the selected 'costs-own' configuration.\
+ 
 <img src="images/combine.png" width="400">
 ## Experiments
 
