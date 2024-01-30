@@ -7,7 +7,7 @@ from halo import Halo
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
     run_random_assignment_shortest_distance_with_capacity, \
     run_random_assignment_shortest_distance
-from code.visualisation.visualize import plot_output
+from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.simulatedannealing import Simulatedannealing
@@ -15,6 +15,7 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.breadth_first import BreadthFirst
+from code.algorithms.combine_cables import run as combine
 from code.modules.district import District
 
 
@@ -44,7 +45,7 @@ def write_data_to_JSON(data: list, file_name: str,
 
     # Craft file path
     file_path = f"output/JSON/{file_name}\
-    -district_{district_number}-runs_{runs}-output.json"
+-district_{district_number}-runs_{runs}-output.json"
 
     # Open file path in WRITE mode and write data
     with open(file_path, "w") as outfile:
@@ -57,30 +58,37 @@ def print_helpmsg_methods():
             none
             prints help messages
     """
-
+    # General methods: help, load, format and exit
+    # \u001b[32m gives color GREEN in terminal
     print("\n\u001b[32mGeneral Methods:\u001b[0m")
     print("  help:\t\t Display help manual")
     print("  load:\t\t Load a JSON file from output/JSON")
     print("  format:\t Display formatted output")
+    print("  exit:\t\t Stop running main.(Useable at every input.)\n")
+
+    # Algorithm methods: randrwalk, randmanh, randmanhcap, greedmanh,
+    # greedmanhcap, closest, depthfirst, breadthfirst, hillclimber,
+    # simulatedannealing, beamsearch.
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
     print("  randrwalk:\t Randomly assigns houses to batteries. " + \
                         "Creates cable path through randomly taking random steps until destination is reached.")
-    print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t(Manhattan Distance)")
-    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t(Manhattan Distance)")
-    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
-
-    print("  closest:\t Assigns a house to its closest battery that has capacity left\t ")
-    print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
-    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
+    print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t\t\t\t\t\t(Manhattan Distance)")
+    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t\t\t\t\t\t(Manhattan Distance)")
+    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t\t\t\t\t\t(Manhattan Distance) ")
+    print("  closest:\t Assigns a house to its closest battery that has capacity left \t\t\t\t\t\t(Manhattan Distance) ")
+    print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
+    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
     print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
-batteries. \t(Manhattan Distance) ")
+batteries. \t\t\t\t\t(Manhattan Distance) ")
     print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
-houses to capped batteries. \t(Manhattan Distance) ")
-    print("  exit:\t\t Stop running main.\n")
+houses to capped batteries. \t\t\t(Manhattan Distance) ")
+    print("  beamsearch:\t Searches state space breadth first with a width (beam).\
+N (beam) states are kept at every iteration.\t(Manhattan Distance) ")
+
 
 
 def print_helpmsg_output():
-    """ Print help messages output
+    """ Print help messages output.
         Returns:
             none
             prints help messages
@@ -95,11 +103,29 @@ def print_helpmsg_output():
 def print_possibilities(possibilities: list[str]) -> None:
 
     print("\n\u001b[32mPossible Load Files:\u001b[0m")
-    for index, file in enumerate(sorted(possibilities)):
+    for index, file in enumerate(possibilities):
         print(f"{index+1}.  {file}")
 
 
 def get_method_input() -> str:
+    """ Get input for method.
+    Asks the user to input one of the methods.
+    General Methods:
+        format:                 A format of the district.
+        load:                   Load a figure of a JSON file.
+        combine:                Combine the cables from a JSON file.
+    Algorithm Methods:
+        randmanh:               Randomly chooses a house and connects it to battery with Manhattan Distance (NO CAPACITY constraint)
+        randmanhcap:            Randomly chooses a house and connects it to battery with free capacity with Manhattan Distance
+        randrwalk:              Randomly chooses direction for cable from house until battery is found.
+        greedmanh:              Random house is assigned to battery with most capacity.
+        hillclimber:
+        beamsearch:             Creates states from randomly starting houses at prunes according to defined beam
+        simulatedannealing:
+        closest:
+        depthfirst:
+        breadthfirst:
+    """
     method = ""
     while not method:
         method = input("\u001b[33mMethod:\u001b[0m ").lower()
@@ -109,14 +135,17 @@ def get_method_input() -> str:
         elif method in {"help", "--help"}:
             print_helpmsg_methods()
             method = ""
-        elif method not in {"format", "load", "randmanh", "randmanhcap",                            
-                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
-                            "closest", "depthfirst", "breadthfirst"}:
+        elif method not in {"format", "load", "combine", "randmanh", "randmanhcap",
+                            "randrwalk", "greedmanh", "hillclimber", "beamsearch",
+                            "simulatedannealing", "closest", "depthfirst", "breadthfirst"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
 
 def get_district_input() -> int:
+    """ Get input for district.
+    A district between 1 and 3 can be chosen.
+    Data can be found in data/"""
     district = 0
     while not district:
         district = input("\n\u001b[33mDistrict Number:\u001b[0m ")
@@ -129,6 +158,7 @@ def get_district_input() -> int:
     return int(district)
 
 def get_runs_input() -> int:
+    """ Get input for amount of runs."""
     runs = 0
     if runs == "format":
         runs = 1
@@ -144,6 +174,9 @@ def get_runs_input() -> int:
     return int(runs)
 
 def get_beam():
+    """ Get input for beam for Beam Search.
+    Beam defines how many states are saved after every iteration.
+    Code for Beam Search can be found in code/algorithms/beam_search.py"""
     beam = 0
     while not beam:
         beam = input("\n\u001b[33mBeam:\u001b[0m ")
@@ -156,6 +189,7 @@ def get_beam():
     return int(beam)
 
 def get_max_runs():
+    """ Get input for maximum runs."""
     runs = 0
     while not runs and runs != "":
         runs = input("\n\u001b[33mMax runs:\u001b[0m ")
@@ -171,6 +205,7 @@ def get_max_runs():
     return int(runs)
 
 def get_max_depth(house_count):
+    """ Get input for maximum depth for Depth First Search."""
     depth = 0
     while not depth and depth != "":
         depth = input("\n\u001b[33mMax depth:\u001b[0m ")
@@ -187,7 +222,9 @@ def get_max_depth(house_count):
             depth = 0
     return int(depth)
 
-def get_load_file(possibilities: list[str]):
+def get_file_input(possibilities: list[str]) -> str:
+    """ Get input for the desired file to be loaded.
+    Files need to be in output/JSON/"""
     file = ""
     while not file:
         file = input("\n\u001b[33mFile:\u001b[0m ")
@@ -206,17 +243,33 @@ def get_load_file(possibilities: list[str]):
         return file
 
 def run_general_method(method: str):
+    """ Run a general method."""
     data = []
     if method == "format":
         data.append(load_JSON_output("output/output-format.json"))
-    elif method == "load":
-        possibilities = os.listdir("output/JSON/")
+    elif method in {"load", "combine"}:
+        possibilities = sorted(os.listdir("output/JSON/"))
         if possibilities:
             print_possibilities(possibilities)
-            file = get_load_file(possibilities)
-            data.append(load_JSON_output(f"output/JSON/{file}"))
+            file = get_file_input(possibilities)
+            # print(file)
+            # exit()
+            json_data = load_JSON_output(f"output/JSON/{file}")
+            if method == "load":
+                if len(json_data) == 6 and isinstance(json_data, list):
+                    data.append(json_data)
+                else:
+                    for outcome in json_data:
+                        data.append(outcome)
+            else:
+                if len(json_data) == 6 and isinstance(json_data, list):
+                    runs = get_runs_input()
+                    filename = file.split(".")[0]
+                    data.append(combine(json_data, runs, filename))
+                elif isinstance(json_data, dict):
+                    get_
         else:
-            print("No load options. Try running an algorithm first.")
+            print("No options in output/JSON/. Try running an algorithm first.")
     return data
 
 
@@ -273,7 +326,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "simulatedannealing":
-        simul = Simulatedannealing(district) 
+        simul = Simulatedannealing(district)
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":
@@ -297,8 +350,8 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         # """
     #     print("Run are not taken into account.")
     #     data.append(run_alg_manh(district, cost_type))
-        
-    elif method == "closest":  
+
+    elif method == "closest":
         spinner.stop()
         max_runs = get_max_runs()
         spinner.start()
@@ -314,7 +367,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         #print(depthfirst.run())
         best_state = depthfirst.run()
         data.append(best_state.return_output())
-        
+
 
     elif method == "breadthfirst":
         spinner.start()

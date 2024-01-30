@@ -29,7 +29,7 @@ if __name__ == "__main__":
     method = hlp.get_method_input()
 
     # General Methods LOAD and Format
-    if method in {"format", "load"}:
+    if method in {"format", "load", "combine"}:
         data = hlp.run_general_method(method)
 
     # Algo Methods:
