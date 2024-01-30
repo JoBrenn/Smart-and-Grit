@@ -152,7 +152,7 @@ class Simulatedannealing(HillClimber):
     def one_entire_iteration(self, district: District, N: int) -> District:
         """ Run one iteration of simulated annealing
         Chooses random begin state.
-        Stops when N times not improved or after self.iterations
+        Stops after self.iterations, since N same iterations will never happen
         Params:
             district    (District): District object
             N           (int):      maximum repeat number
@@ -171,28 +171,14 @@ class Simulatedannealing(HillClimber):
         for iteration in range(self.iterations_total + 1):
             self.iterations += 1
 
-            # Stop when the state hasn't improved N times
-            if unchanged_count == N - 1:
-                # Reset iterations
-                self.iterations = self.iterations_total
-                return district_work
+            previous_district = deepcopy(district_work)
+
+            # Go over to switch when we have a valid solution
+            if self.check_valid(previous_district) is True:
+                district_work = self.one_switch_iteration(district_work)
             else:
-                previous_district = deepcopy(district_work)
+                district_work = self.one_change_iteration(district_work)
 
-                # Go over to switch when we have a valid solution
-                if self.check_valid(previous_district) is True:
-                    district_work = self.one_switch_iteration(district_work)
-                else:
-                    district_work = self.one_change_iteration(district_work)
-
-                # If output is unchanged, add one to count
-                if previous_district.return_output() ==\
-                   district_work.return_output():
-                    unchanged_count += 1
-                else:
-                    unchanged_count = 0
-            print(district_work.return_cost())
-            print(previous_district.return_cost())
         # Reset iterations and temperature
         self.iterations = 0
         self.temp = self.temp_0

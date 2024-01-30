@@ -340,7 +340,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = copy.deepcopy(district)
-            data.append(run_random_assignment_shortest_distance(district_copy, method))
+            data.append(run_random_assignment(district_copy, method))
 
     elif method == "randmanhcap":
         """
@@ -350,7 +350,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = copy.deepcopy(district)
-            data.append(run_random_assignment_shortest_distance_with_capacity(district_copy, method))
+            data.append(run_random_assignment_with_capacity(district_copy, method))
 
     elif method == "greedmanh":
         """
