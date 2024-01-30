@@ -25,7 +25,7 @@ from typing import Any
 
 
 def runs_algorithms_to_costs(district_number: int, runs: int,
-                             alg_method: str) -> list[int]:
+                             alg_method: str) -> list[int] | int:
     """ Create list of outputs, used for mpl histogram
         Creates connections via Manhattan distance
         Params:
@@ -54,7 +54,8 @@ def runs_algorithms_to_costs(district_number: int, runs: int,
     return outputs
 
 
-def run_random_assignment_random_walk(district: District) -> list:
+def run_random_assignment_random_walk(district: District) \
+                                      -> list[dict[str, Any]]:
     """ Randomly assigns the first house in a district to a battery and
         lays a connection along the Manhattan distance.
         Plots the grid
@@ -87,7 +88,7 @@ def run_random_assignment_random_walk(district: District) -> list:
 
 
 def run_random_assignment(district: District,
-                          costs_type: str) -> list[dict[Any]]:
+                          costs_type: str) -> list[dict[str, Any]]:
     """ Randomly assigns the houses in a district to batteries and
         lays connections along the Manhattan distance.
         Plots the grid
@@ -113,8 +114,8 @@ def run_random_assignment(district: District,
     return output
 
 
-def run_random_assignment_with_capacity(district: District,
-                                        costs_type) -> list:
+def run_random_assignment_with_capacity(district: District, costs_type: str) \
+                                        -> list[dict[str, Any]]:
     """ Randomly assigns the houses in a district to batteries with enough
         capacity and lays connections along the shortest Manhattan distance.
         Plots the grid
@@ -137,8 +138,8 @@ def run_random_assignment_with_capacity(district: District,
     return output
 
 
-def run_greedy_assignment_shortest_walk(district: District,
-                                        costs_type: str) -> list:
+def run_greedy_assignment_shortest_walk(district: District, costs_type: str) \
+                                        -> list[dict[str, Any]]:
     """ Creates cables between houses and batteries that have
         been assigned using the greedy algorithm and plots this.
         Starts at a random house.
@@ -183,7 +184,7 @@ def run_greedy_assignment_shortest_walk(district: District,
 
 
 def run_alg_manh(district: District, assign_method, merge: bool,
-                 costs_type: str) -> list:
+                 costs_type: str) -> list[dict[str, Any]]:
     """ TODO!!!
     """
 

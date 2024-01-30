@@ -15,17 +15,25 @@ it is not given a battery still has leftover capacity.
 Usage:  from code.algorithms.greedy import ...
 """
 
+from code.modules.house import House
+from code.modules.battery import Battery
+from code.modules.district import District
+
 from random import shuffle
 
 
-def greedy_assignment(district) -> None:
-    """ Adds each house to the battery with the most capacity left
-        pre: an instance of the District class and an optional starting
-        house position can be passed as an int"""
+def greedy_assignment(district: District) -> dict[House, Battery]:
+    """ Add each house to the battery with the most capacity left
+        Create dictionary indicating these connections
+        Params:
+            district    (District): District object from which we want to start
+        Returns:
+            (dict) dictionary where house objects are keys and batteries values
+    """
 
     connection_dict = {}
 
-    max_capacity = 0
+    max_capacity = 0.0
 
     houses = district.houses
     shuffle(houses)
@@ -33,7 +41,7 @@ def greedy_assignment(district) -> None:
     for house in houses:
         # Determines battery with most capacity
         max_battery = None
-        max_capacity = 0
+        max_capacity = 0.0
 
         for battery in district.batteries:
             if battery.left_over_capacity > max_capacity and \
