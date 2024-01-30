@@ -260,6 +260,30 @@ def get_file_input(possibilities: list[str]) -> str:
     else:
         return file
 
+def load_method(json_data: list):
+    data = []
+    if len(json_data) == 6 and isinstance(json_data, list):
+        data.append(json_data)
+    else:
+        for outcome in json_data:
+            data.append(outcome)
+    return data
+
+def combine_method(json_data, filename):
+    data = []
+    runs = get_runs_input()
+    filename = file.split(".")[0]
+    if len(json_data) == 6 and isinstance(json_data, list):
+        data.append(combine(json_data, runs, filename))
+    elif isinstance(json_data, dict):
+        dictkeys = list(json_data.keys())
+        dictkey = get_dictkey_input(dictkeys)
+        data.append(combine(json_data[dictkey], runs, filename))
+    elif len(json_data) == 1 and len(json_data[0]) == 6:
+        data.append(combine(json_data[0], runs, filename))
+    return data
+
+
 def run_general_method(method: str):
     """ Run a general method."""
     data = []
@@ -272,22 +296,9 @@ def run_general_method(method: str):
             file = get_file_input(possibilities)
             json_data = load_JSON_output(f"output/JSON/{file}")
             if method == "load":
-                if len(json_data) == 6 and isinstance(json_data, list):
-                    data.append(json_data)
-                else:
-                    for outcome in json_data:
-                        data.append(outcome)
+                data = load_method(json_data)
             else:
-                runs = get_runs_input()
-                filename = file.split(".")[0]
-                if len(json_data) == 6 and isinstance(json_data, list):
-                    data.append(combine(json_data, runs, filename))
-                elif isinstance(json_data, dict):
-                    dictkeys = list(json_data.keys())
-                    dictkey = get_dictkey_input(dictkeys)
-                    data.append(combine(json_data[dictkey], runs, filename))
-                elif len(json_data) == 1 and len(json_data[0]) == 6:
-                    data.append(combine(json_data[0], runs, filename))
+                data = combine_method(json_data, filename)
         else:
             print("No options in output/JSON/. Try running an algorithm first.")
     return data
@@ -403,14 +414,23 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
     print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
     return data
 
-def plot_data(data, method, runs: int = 1, district_number: str = "Graph"):
+def plot_data(data, method: str, runs: int = 1, district_number: str = "Graph") -> None:
+    """ Determine how data should be plotted and plot."""
+    # Data error, when no data.
     if not data:
         print("Data Error.")
         exit()
+
+    # If data list contains 1 item, plot figure
     elif len(data) == 1:
         plot_output(data[0])
+
+    # If data list contains multiple items, plot histogram
     else:
-        outputs = []
+        # Extract all outcome costs from data
+        outcomes = []
         for district in data:
-            outputs.append(district[0]["costs-own"])
-        plot_output_histogram(outputs, method, runs, district_number)
+            outcomes.append(district[0]["costs-own"])
+
+        # Plot histogram from outcomes
+        plot_output_histogram(outcomes, method, runs, district_number)
