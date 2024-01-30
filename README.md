@@ -35,7 +35,7 @@ Where typing help in the method option gives a description of the possible metho
 Typing 'combine' in the method option shows a list of output files. Selecting one of these
 indices runs the combine_cables algorithm on said output file. This creates a 'costs-shared'
  configuration from the selected 'costs-own' configuration.
-![Main menu](images/combine.png =250x)
+<img src="images/combine.png" width="200">
 ## Experiments
 
 ### Simulated Annealing
