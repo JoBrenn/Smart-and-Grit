@@ -5,8 +5,8 @@ import time
 
 from halo import Halo
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
-    run_random_assignment_shortest_distance_with_capacity, \
-    run_random_assignment_shortest_distance
+    run_random_assignment_with_capacity, \
+    run_random_assignment
 from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
