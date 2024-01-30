@@ -28,7 +28,7 @@ class Battery:
         add_house_cables():     add cables of house to battery cable network
     """
 
-    def __init__(self, battery_id: int, coordinate: tuple[int],
+    def __init__(self, battery_id: int, coordinate: tuple[int, int],
                  capacity: float, price: int) -> None:
         """ Initialize Battery object
         Params:
@@ -46,15 +46,15 @@ class Battery:
         self.price = price
 
         # List of houses connected to battery
-        self.houses = []
-        self.cables = set()
+        self.houses: list[House] = []
+        self.cables: set[tuple[int, int]] = set()
 
         # Initialize battery dictionary
         self.battery_dict = {"location": self.get_coordinate((self.row,
                                                               self.column)),
                              "capacity": float(self.capacity), "houses": []}
 
-    def get_coordinate(self, coordinate: tuple[int]) -> str:
+    def get_coordinate(self, coordinate: tuple[int, int]) -> str:
         """ Return string form of given coordinate
         Params:
             coordinate    (tuple[int]): given coordinate
@@ -101,7 +101,7 @@ class Battery:
 
         return self.left_over_capacity
 
-    def add_house_cables(self, house) -> None:
+    def add_house_cables(self, house: House) -> None:
         """ Add cables of house to battery cable network
         Params:
             house    (House): house class object
