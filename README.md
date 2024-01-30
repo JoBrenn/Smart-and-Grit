@@ -56,6 +56,6 @@ Here the most imported directories are stated:
 - /results: contains all found results
 
 # Authors
-- Jonas Brenninkmeijer
-- Kathy Molenaar
-- Jesper Vreugde
+- Jonas Brenninkmeijer (JoBrenn)
+- Kathy Molenaar (kathymolenaar)
+- Jesper Vreugde (JesVre)

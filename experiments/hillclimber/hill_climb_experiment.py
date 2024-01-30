@@ -47,28 +47,25 @@ def hillclimb_one_climb(district: District) -> None:
 
         unchanged_count = 0
 
-        for iteration in range(hc.iterations_total + 1):
-            # Stop when the state hasn't improved N times
-            if unchanged_count == 1000 - 1:
-                return district_work
+        # Keep going until the state hasn't improved N times
+        while unchanged_count < 1000 - 1:
+            previous_district = deepcopy(district_work)
+
+            # Go over to switch when we have a valid solution
+            if hc.check_valid(previous_district) is True:
+                district_work = hc.one_switch_iteration(district_work)
             else:
-                previous_district = deepcopy(district_work)
+                district_work = hc.one_change_iteration(district_work)
+            result_writer.writerow([district_work.return_cost()])
+            result_writer_penalty.writerow([hc.return_total_cost
+                                           (district_work)])
 
-                # Go over to switch when we have a valid solution
-                if hc.check_valid(previous_district) is True:
-                    district_work = hc.one_switch_iteration(district_work)
-                else:
-                    district_work = hc.one_change_iteration(district_work)
-                result_writer.writerow([district_work.return_cost()])
-                result_writer_penalty.writerow([hc.return_total_cost
-                                                (district_work)])
-
-                # If output is unchanged, add one to count
-                if previous_district.return_output()\
-                   == district_work.return_output():
-                    unchanged_count += 1
-                else:
-                    unchanged_count = 0
+            # If output is unchanged, add one to count
+            if previous_district.return_output() \
+               == district_work.return_output():
+                unchanged_count += 1
+            else:
+                unchanged_count = 0
 
 
 def hillclimb_one_climb_graph_costs():

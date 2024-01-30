@@ -4,7 +4,7 @@ File: beam_search.py
 
 Authors:    Jonas Brenninkmeijer
 
-Date: 22/01/24 (23/01/24)
+Date: 22/01/24 (30/01/24)
 
 Description:    The implementation of a Beam Search (BS) algorithm.
                 Beam Search works by selecting the best N (Beam) states
