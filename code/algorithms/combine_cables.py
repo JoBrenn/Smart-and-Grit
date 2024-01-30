@@ -156,6 +156,6 @@ def run(output: list, n: int, filename: str) -> list:
 
     filepath = f"output/JSON/{filename}-combined.json"
     with open(filepath, "w") as f:
-        f.write(json.dumps(output_best))
+        json.dump(output_best, f, indent=4)
 
     return output_best
