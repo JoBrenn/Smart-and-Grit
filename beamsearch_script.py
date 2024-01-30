@@ -14,6 +14,7 @@ Usage:  python3 beamsearch_script.py [district] [runs] [maximum beam]
 
 from code.algorithms.beam_search import BeamSearch
 from code.modules.district import District
+
 from random import seed
 from json import dump
 from time import time

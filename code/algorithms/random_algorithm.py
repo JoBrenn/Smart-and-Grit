@@ -12,10 +12,14 @@ Here a random configuration is created for a given district
 Usage:  from code.algorithms.random import ...
 """
 
+from code.modules.district import District
+from code.modules.house import House
+from code.modules.battery import Battery
+
 from random import choice, shuffle
 
 
-def random_assignment(district) -> dict:
+def random_assignment(district: District) -> dict[House, Battery]:
     """ Randomly assign houses to batteries, not taking capacity into account
     Creates dictionary, where houses are keys and batteries values
     Params:
@@ -32,7 +36,7 @@ def random_assignment(district) -> dict:
     return connection_dict
 
 
-def random_assignment_capacity(district) -> dict:
+def random_assignment_capacity(district: District) -> dict[House, Battery]:
     """ Randomly assigns houses to batteries, taking capacity into account
         Adds this to dictionary with house as key and battery as value
     Params:
@@ -58,7 +62,8 @@ def random_assignment_capacity(district) -> dict:
     return connection_dict
 
 
-def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
+def get_surrounding_points(coordinates: tuple[int, int],
+                           grid_size: int) -> list[tuple[int, int]]:
     """ Get surrounding points of a given coordinate
     Params:
         coordinates (tuple[int]):   tuple of coordinates
@@ -85,8 +90,8 @@ def get_surrounding_points(coordinates: tuple[int], grid_size: int) -> list:
     return border_points
 
 
-def random_walk(house: tuple[int], battery: tuple[int],
-                grid_size: int) -> list:
+def random_walk(house: tuple[int, int], battery: tuple[int, int],
+                grid_size: int) -> list[tuple[int, int]]:
     """ Take a random walk from the house, stops when battery is reached
         adds all visited points to list
     Params:

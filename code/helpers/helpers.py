@@ -5,8 +5,8 @@ import time
 
 from halo import Halo
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
-    run_random_assignment_shortest_distance_with_capacity, \
-    run_random_assignment_shortest_distance
+    run_random_assignment_with_capacity, \
+    run_random_assignment
 from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
@@ -105,6 +105,9 @@ def print_possibilities(possibilities: list[str]) -> None:
     print("\n\u001b[32mPossible Load Files:\u001b[0m")
     for index, file in enumerate(possibilities):
         print(f"{index+1}.  {file}")
+
+def print_dictkeys(min_dictkey: int, max_dictkey) -> None:
+    print(f"\n\u001b[32mPossible DictKeys: \u001b[0m {min_dictkey} - {max_dictkey}")
 
 
 def get_method_input() -> str:
@@ -207,12 +210,12 @@ def get_max_runs():
 def get_max_depth(house_count):
     """ Get input for maximum depth for Depth First Search."""
     depth = 0
-    while not depth and depth != "":
+    while not depth:
         depth = input("\n\u001b[33mMax depth:\u001b[0m ")
         if depth == "exit":
             print("\nExiting main.\n")
             exit()
-        elif depth == "":
+        elif not depth:
             depth = 4
             print("\nMax depth are set at a default of 4")
         elif int(depth) > house_count:
@@ -221,6 +224,21 @@ def get_max_depth(house_count):
             print("\nPlease choose which layer to end at")
             depth = 0
     return int(depth)
+
+def get_dictkey_input(dictkeys):
+    dictkey = 0
+    max_dictkey = int(max(dictkeys))
+    min_dictkey = int(min(dictkeys))
+    if max_dictkey == min_dictkey:
+        dictkey = str(min_dictkey)
+
+    while not dictkey:
+        print_dictkeys(min_dictkey, max_dictkey)
+        dictkey = input("\n\u001b[33mSelect dictionary key:\u001b[0m ")
+        if not dictkey.isnumeric() or not min_dictkey <= int(dictkey) <= max_dictkey:
+            print(f"\nPlease choose a key between {min_dictkey} and {max_dictkey}.")
+            dictkey = 0
+    return dictkey
 
 def get_file_input(possibilities: list[str]) -> str:
     """ Get input for the desired file to be loaded.
@@ -252,8 +270,6 @@ def run_general_method(method: str):
         if possibilities:
             print_possibilities(possibilities)
             file = get_file_input(possibilities)
-            # print(file)
-            # exit()
             json_data = load_JSON_output(f"output/JSON/{file}")
             if method == "load":
                 if len(json_data) == 6 and isinstance(json_data, list):
@@ -262,18 +278,18 @@ def run_general_method(method: str):
                     for outcome in json_data:
                         data.append(outcome)
             else:
+                runs = get_runs_input()
+                filename = file.split(".")[0]
                 if len(json_data) == 6 and isinstance(json_data, list):
-                    runs = get_runs_input()
-                    filename = file.split(".")[0]
                     data.append(combine(json_data, runs, filename))
                 elif isinstance(json_data, dict):
-                    get_
+                    dictkeys = list(json_data.keys())
+                    dictkey = get_dictkey_input(dictkeys)
+                    data.append(combine(json_data[dictkey], runs, filename))
         else:
             print("No options in output/JSON/. Try running an algorithm first.")
     return data
 
-
-# @Halo(text='Running method', spinner='dots')
 def run_algo_method(method: str, district_number: int, runs: int) -> list:
     start_time = time.time()
     spinner = Halo(text='Running method', spinner='dots')

@@ -25,7 +25,7 @@ class House:
         delete_cables():        delete house cable
     """
 
-    def __init__(self, house_id: int, coordinate: tuple[int],
+    def __init__(self, house_id: int, coordinate: tuple[int, int],
                  max_output: float) -> None:
         """ Initialize House object
         Params:
@@ -38,8 +38,8 @@ class House:
         self.row = coordinate[0]
         self.column = coordinate[1]
         self.output = max_output
-        self.cables = []
-        self.str_cables = []
+        self.cables: list[tuple[int, int]] = []
+        self.str_cables: list[str] = []
 
         # Initialize house dictionary
         self.house_dict = {"location": self.get_coordinate((self.row,
@@ -47,7 +47,7 @@ class House:
                            "output": float(self.output),
                            "cables": self.str_cables}
 
-    def get_coordinate(self, coordinate: tuple[int]) -> str:
+    def get_coordinate(self, coordinate: tuple[int, int]) -> str:
         """ Return string form of given coordinate
         Params:
             coordinate    (tuple[int]): given coordinate
@@ -57,7 +57,7 @@ class House:
 
         return str(coordinate[0]) + "," + str(coordinate[1])
 
-    def add_cable_segment(self, coordinate: tuple[int]) -> None:
+    def add_cable_segment(self, coordinate: tuple[int, int]) -> None:
         """ Add a cable coordinate to the house
         Creates cable point for house
         Params:

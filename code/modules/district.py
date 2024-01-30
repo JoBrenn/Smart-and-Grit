@@ -17,6 +17,7 @@ Usage:  from modules.district import District
 from code.modules.battery import Battery
 from code.modules.house import House
 
+from typing import Any
 import json
 
 
@@ -44,7 +45,7 @@ class District:
         self.batteries: list[Battery] = []
         self.houses: list[House] = []
         self.district_dict = {"district": self.district, f"{costs_type}": 0}
-        self.output: list[dict] = [self.district_dict]
+        self.output: list[dict[str, Any]] = [self.district_dict]
 
         # Load the houses and batteries
         f_house = f"data/district_{district}/district-{district}_houses.csv"
@@ -117,7 +118,7 @@ class District:
 
         return cost
 
-    def return_output(self) -> list:
+    def return_output(self) -> list[dict[str, Any]]:
         """ Return output in list format
         Returns:
             (list) output

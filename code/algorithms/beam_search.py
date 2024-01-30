@@ -129,7 +129,9 @@ class BeamSearch:
         self.filter_valid_states()
 
         if self.states:
-            print(f"\n{index if index else ''}. beam {self.beam} found: {self.states[0].return_cost()}", end=" ")
+            best_cost = self.states[0].return_cost()
+            self.states[0].district_dict["costs-own"] = best_cost
+            print(f"\n{index if index else None}. beam {self.beam} found: {best_cost}", end=" ")
             return self.states[0]
         else:
             print(".", end="", flush=True)
