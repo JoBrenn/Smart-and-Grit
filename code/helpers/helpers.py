@@ -5,8 +5,8 @@ import time
 
 from halo import Halo
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
-    run_random_assignment_with_capacity, \
-    run_random_assignment
+    run_random_assignment_shortest_distance_with_capacity, \
+    run_random_assignment_shortest_distance
 from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
@@ -286,6 +286,8 @@ def run_general_method(method: str):
                     dictkeys = list(json_data.keys())
                     dictkey = get_dictkey_input(dictkeys)
                     data.append(combine(json_data[dictkey], runs, filename))
+                elif len(json_data) == 1 and len(json_data[0]) == 1:
+                    data.append(combine(json_data[0], runs, filename))
         else:
             print("No options in output/JSON/. Try running an algorithm first.")
     return data
