@@ -5,7 +5,7 @@ In order to do this, there are a couple of requirements, namely:
 - No battery can be connected to another battery, also not via a houses.
 - No house can be connected to two batteries.
 - There can be multiple cables along a grid segments. However, they are considered different cables. 
-- At first, all houses must have their own cable to a battery.
+- At first, all houses must have their own cable to a battery (indicated by 'costs-own'). A shared cables configuration is indicated by 'costs-shared'.
 
 ## Object Function
 SmartGrid is a minimalisation problem. We need to minimalise the amount of cable segments we use. The amount of batteries is given. The costs of one piece are as following:
@@ -32,6 +32,10 @@ Running of: python3 main.py gives the following option screen:
 
 Where typing help in the method option gives a description of the possible methods.
 
+Typing 'combine' in the method option shows a list of output files. Selecting one of these
+indices runs the combine_cables algorithm on said output file. This creates a 'costs-shared'
+ configuration from the selected 'costs-own' configuration.
+![Main menu](images/combine.png)
 ## Experiments
 
 ### Simulated Annealing

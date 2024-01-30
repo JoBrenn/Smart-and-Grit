@@ -16,8 +16,8 @@ Usage:  from code.algorithms.run import ...
 """
 
 from code.modules.district import District
-from code.algorithms.random_algorithm import random_walk, \
-    random_assignment, random_assignment_capacity
+from code.algorithms.random_algorithm import random_assignment, \
+    random_assignment_capacity
 from code.algorithms.greedy import greedy_assignment
 from code.algorithms.manhattan_distance import create_cable
 
