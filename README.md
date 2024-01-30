@@ -58,12 +58,30 @@ Here the most imported directories are stated:
 ## Experiment
 In /experiments/, tuning experiments can be conducted by running the script functions in /simulatedannealing/, /beamsearch/ and /hillclimber/.
 
+### Simulated Annealing
+The file simulatedannealing_experiment contains multiple functions.\
+Where in the function simulannealing_temp_comparison different temperatures are compared.
+This comparison can then be visualized via either the function simulannealing_temp_comparison_mean_graph() or 
+simulannealing_temp_comparison_lowest_graph. Where the mean cost and the lowest cost are compared respectively.
+
+### Beam search
+The file beamsearschscript.py contains a BeamSearchTuning class. 
+After creating an instance of this class by specifying the district number, \
+the amount of runs and the largest allowed beam. The run_tuning() method can be executed \
+after which the results will be written to a csv and the best result will be stored as a .json file
+
+
+
+
+
+### Timed experments
+
 A timed experiment can be ran using:
 
 `python3 time_scripts.py <method>`
 
 where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
-In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder.
+In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
 
 # Authors
 - Jonas Brenninkmeijer (JoBrenn)
