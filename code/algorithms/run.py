@@ -2,6 +2,8 @@ from code.modules.district import District
 from code.algorithms.random import *
 from code.algorithms.greedy import *
 
+from code.algorithms.manhattan_distance import create_cable
+
 def runs_algorithms_to_costs(district_number: int, runs: int, alg_method: str) -> list[int]:
     """ Create list of outputs, used for mpl histogram."""
     outputs = []
