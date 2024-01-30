@@ -14,8 +14,6 @@ it to a random battery. When we have reached a good solution
 we change our small change to choosing two random houses and swapping
 their battery connections.
 This change is only accepted when the state remains a good solution.
-Iterations in this class are only relevant when used in simulatedannealing.py,
-here we want to quit after N times no change.
 
 Usage:  from code.algorithms.hill_climber import HillClimber
 """
@@ -45,22 +43,18 @@ class HillClimber:
         run_hill_climber():         runs one entire iteration n times
     """
 
-    def __init__(self, district: District, iterations: int = 100000) -> None:
+    def __init__(self, district: District) -> None:
         """ Initialize HillClimber
             Number of iterations is not relevant here,
             since we want to stop after N times no change
         Params:
             district    (District): district
-            iterations  (int):      number of iterations
         """
 
         self.district_empty = deepcopy(district)
         self.district = deepcopy(district)
         self.total_cost = self.return_total_cost(district)
 
-        # Initialize iterations
-        self.iterations = 0
-        self.iterations_total = iterations
 
     def random_start_state(self, district: District) -> District:
         """ Randomly assign houses to batteries,
@@ -307,7 +301,7 @@ class HillClimber:
     def one_entire_iteration(self, district: District, N: int) -> District:
         """ Run one iteration of HillClimber
         Chooses random begin state.
-        Stops when N times not improved or after self.iterations
+        Stops when N times not improved
         Params:
             district    (District): District object
             N           (int):      maximum repeat number
@@ -323,26 +317,22 @@ class HillClimber:
 
         unchanged_count = 0
 
-        for iteration in range(self.iterations_total + 1):
-            self.iterations += 1
-            # Stop when the state hasn't improved N times
-            if unchanged_count == N - 1:
-                # Reset iterations
-                self.iterations = self.iterations_total
-                return district_work
+        # Keep going until the state hasn't improved N times
+        while unchanged_count < N - 1:
+            previous_district = deepcopy(district_work)
+
+            # Go over to switch when we have a valid solution
+            if self.check_valid(previous_district) is True:
+                district_work = self.one_switch_iteration(district_work)
             else:
-                previous_district = deepcopy(district_work)
-                # Go over to switch when we have a valid solution
-                if self.check_valid(previous_district) is True:
-                    district_work = self.one_switch_iteration(district_work)
-                else:
-                    district_work = self.one_change_iteration(district_work)
-                # If output is unchanged, add one to count
-                if previous_district.return_output()\
-                   == district_work.return_output():
-                    unchanged_count += 1
-                else:
-                    unchanged_count = 0
+                district_work = self.one_change_iteration(district_work)
+
+            # If output is unchanged, add one to count
+            if previous_district.return_output() \
+                == district_work.return_output():
+                unchanged_count += 1
+            else:
+                unchanged_count = 0
 
         return district_work
 

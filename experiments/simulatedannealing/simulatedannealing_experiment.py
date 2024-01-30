@@ -25,7 +25,8 @@ from statistics import mean
 
 def simulatedannealing_add_costs_to_list(district: District,
                                          iterations: int = 1000,
-                                         temp: float = 4100) -> list:
+                                         temp: float = 4100) \
+                                            -> tuple[list, list]:
     """ Runs simulated annealing iteration one time and adds all costs to list
         Params:
             district    (District): District object from which we want to start
@@ -44,27 +45,19 @@ def simulatedannealing_add_costs_to_list(district: District,
     # Initialize a random district configuration
     district_work = deepcopy(sim.random_start_state(district_empty))
 
-    unchanged_count = 0
-
     for iteration in range(sim.iterations_total + 1):
-        # Stop when the state hasn't improved N times
-        if unchanged_count == 1000 - 1:
-            return district_work
+        sim.iterations += 1
+
+        previous_district = deepcopy(district_work)
+
+        # Go over to switch when we have a valid solution
+        if sim.check_valid(previous_district) is True:
+            district_work = sim.one_switch_iteration(district_work)
         else:
-            previous_district = deepcopy(district_work)
-            # Go over to switch when we have a valid solution
-            if sim.check_valid(previous_district) is True:
-                district_work = sim.one_switch_iteration(district_work)
-            else:
-                district_work = sim.one_change_iteration(district_work)
-            costs.append([district_work.return_cost()])
-            costs_with_penalty.append([sim.return_total_cost(district_work)])
-            # If output is unchanged, add one to count
-            if previous_district.return_output()\
-               == district_work.return_output():
-                unchanged_count += 1
-            else:
-                unchanged_count = 0
+            district_work = sim.one_change_iteration(district_work)
+        costs.append([district_work.return_cost()])
+        costs_with_penalty.append([sim.return_total_cost(district_work)])
+
     # Reset iterations and temperature
     sim.iterations = 0
     sim.temp = sim.temp_0

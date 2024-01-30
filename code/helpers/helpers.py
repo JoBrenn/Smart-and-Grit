@@ -505,7 +505,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "beamsearch":
         """
-        
+
 
         """
         # Stop spinner, because interference with input()
