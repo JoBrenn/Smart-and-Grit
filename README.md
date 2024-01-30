@@ -7,7 +7,7 @@ In order to do this, there are a couple of requirements, namely:
 - There can be multiple cables along a grid segments. However, they are considered different cables. 
 - At first, all houses must have their own cable to a battery.
 
-## Object Function
+## Objective Function
 SmartGrid is a minimalisation problem. We need to minimalise the amount of cable segments we use. The amount of batteries is given. The costs of one piece are as following:
 - Battery (B): 5000
 - Cable (C): 9

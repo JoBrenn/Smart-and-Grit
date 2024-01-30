@@ -120,7 +120,6 @@ def get_method_input() -> str:
     Algorithm Methods:
         randmanh:               Randomly chooses a house and connects it to battery with Manhattan Distance (NO CAPACITY constraint)
         randmanhcap:            Randomly chooses a house and connects it to battery with free capacity with Manhattan Distance
-        randrwalk:              Randomly chooses direction for cable from house until battery is found.
         greedmanh:              Random house is assigned to battery with most capacity.
         hillclimber:
         beamsearch:             Creates states from randomly starting houses at prunes according to defined beam
@@ -139,8 +138,8 @@ def get_method_input() -> str:
             print_helpmsg_methods()
             method = ""
         elif method not in {"format", "load", "combine", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimber", "beamsearch",
-                            "simulatedannealing", "closest", "depthfirst", "breadthfirst"}:
+                            "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
+                            "closest", "depthfirst", "breadthfirst"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -304,9 +303,32 @@ def run_general_method(method: str):
     return data
 
 def run_algo_method(method: str, district_number: int, runs: int) -> list:
+    """ Run the specified algorithm method.
+    Methods (get_method_input for further reference):
+        randmanh:               Random Manhattan Distance
+        randmanhcap:            Random Manhattan Distance with capacity
+        greedmanh:              Connect to battery with most capacity
+        hillclimber:            Take step and accept if improvement
+        beamsearch:             Search states, breadth first with beam
+        simulatedannealing:     Take step and accept if improvement or deteration within temperature
+        closest:                Assign house to closest battery
+        depthfirst:             Search states, depth first
+        breadthfirst:           Search states, breadth first
+    Params:
+        method          (str): Algorithm method
+        district_number (int): Number of district
+        runs            (int): Amount of runs to be done
+    Returns:
+        data            (list): List with one or more district output (through .return_output())
+    """
+    # Start time for measuring run time
     start_time = time.time()
+
+    # Start Halo spinner to give visual indication of running
     spinner = Halo(text='Running method', spinner='dots')
     spinner.start()
+
+    # Initialize data and district
     data = []
     district = District(district_number, "costs-own")
 
@@ -359,26 +381,19 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         data.append(simul.run_hill_climber(district, runs, 1000).return_output())
 
     elif method == "beamsearch":
+        # Stop spinner, because interference with input()
         spinner.stop()
+
+        # Get beam input
         beam = get_beam()
+
+        # Start spinner again
         spinner.start()
+
+        # Initialize BeamSearch
         beamsearch = BeamSearch(district, beam)
         best_state = beamsearch.run()
         data.append(best_state.return_output())
-        # print("Best state:", best_state.return_cost())
-
-    # Does not work yet.
-    # elif method == "randrwalk":
-        # """
-        # Here we apply a random assignment of houses to batteries,
-        # not taking the capacity into account. Furthermore is a
-        # random walk used for the connections between house and
-        # batttery.
-        # Takes quite some time and is really messy in visualisation,
-        # so we only take the first house into account.
-        # """
-    #     print("Run are not taken into account.")
-    #     data.append(run_alg_manh(district, cost_type))
 
     elif method == "closest":
         spinner.stop()
@@ -393,7 +408,6 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         max_depth = get_max_depth(len(district.houses))
         spinner.start()
         depthfirst = DepthFirst(district, max_depth)
-        #print(depthfirst.run())
         best_state = depthfirst.run()
         data.append(best_state.return_output())
 
@@ -407,11 +421,13 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         best_state = breadthfirst.run()
         data.append(best_state.return_output())
 
-
-
+    # Stop spinner
     spinner.stop()
+
+    # End timer and print to terminal
     end_time = time.time()
     print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
+
     return data
 
 def plot_data(data, method: str, runs: int = 1, district_number: str = "Graph") -> None:

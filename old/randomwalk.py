@@ -93,3 +93,16 @@ def run_random_assignment_random_walk(district: District) \
     output = district.return_output()
 
     return output
+
+# Helper call function
+# elif method == "randrwalk":
+    # """
+    # Here we apply a random assignment of houses to batteries,
+    # not taking the capacity into account. Furthermore is a
+    # random walk used for the connections between house and
+    # batttery.
+    # Takes quite some time and is really messy in visualisation,
+    # so we only take the first house into account.
+    # """
+#     print("Run are not taken into account.")
+#     data.append(run_alg_manh(district, cost_type))
