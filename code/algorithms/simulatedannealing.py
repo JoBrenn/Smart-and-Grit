@@ -41,13 +41,17 @@ class Simulatedannealing(HillClimber):
         """
 
         # Use init of the HillClimber class
-        super().__init__(district, iterations)
+        super().__init__(district)
 
         # Starting temperature
         self.temp_0 = temperature
 
         # Current temperature
         self.temp = temperature
+
+        # Initialize iterations
+        self.iterations = 0
+        self.iterations_total = iterations
 
     def linear_temperature_change(self) -> None:
         """ Linearly alter the temperature
@@ -187,7 +191,8 @@ class Simulatedannealing(HillClimber):
                     unchanged_count += 1
                 else:
                     unchanged_count = 0
-
+            print(district_work.return_cost())
+            print(previous_district.return_cost())
         # Reset iterations and temperature
         self.iterations = 0
         self.temp = self.temp_0

@@ -39,9 +39,11 @@ def assign_random_house(houses: list) -> dict:
 
 def combine_cables_battery(battery_dict: dict) -> Battery:
     """ Combine cable connections associated with a single battery
-    Alter battery dictionary to new configuration
-    Returns:
-        (Battery) Battery object with altered cables in dictionary
+        Alter battery dictionary to new configuration
+        Params:
+            battery_dict  (dict):   battery dictionary
+        Returns:
+           (Battery)   Battery object with altered cables in dictionary
     """
 
     battery_x = int(battery_dict["location"].split(",")[0])
@@ -138,7 +140,8 @@ def run(output: list, n: int, filename: str) -> list:
     Gives best solution
     Params:
             output    (list):   filled output of district configuration
-            n           (int):  number of iterations
+            n         (int):    number of iterations
+            filename  (str):     filename of json output we want to combine
     Returns:
         ((list) altered cables in output with lowest cost
     """
