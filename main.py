@@ -37,7 +37,7 @@ if __name__ == "__main__":
         # Select district between 1 - 3
         district = hlp.get_district_input()
 
-        # Select runs >0
+        # Select runs > 0
         runs = hlp.get_runs_input()
 
         # Run selected algorithm
