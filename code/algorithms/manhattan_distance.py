@@ -16,8 +16,12 @@ Usage:  from code.algorithms.manhattan_distance import ...
 
 from code.modules.house import House
 
+# Create a coordinate typehint structure
+CoStructure = tuple[int, int]
 
-def get_cable_points(begin: tuple[int], end: tuple[int]) -> tuple[int]:
+
+def get_cable_points(begin: CoStructure, end: CoStructure) \
+                    -> tuple[CoStructure, CoStructure, CoStructure]:
     """ Generate 3 points between which cable must be layed
         along Manhattan distance
         From begin point first up or down then left or right
@@ -33,7 +37,7 @@ def get_cable_points(begin: tuple[int], end: tuple[int]) -> tuple[int]:
     return tuple(points)
 
 
-def return_manhattan_distance(house: House, end: tuple[int]) -> int:
+def return_manhattan_distance(house: House, end: CoStructure) -> int:
     """ Return manhattan distance from a house to a given end point
         Params:
             house         (House): House object from which we want to start
@@ -51,7 +55,7 @@ def return_manhattan_distance(house: House, end: tuple[int]) -> int:
     return distance
 
 
-def create_cable(house: House, end: tuple[int]) -> None:
+def create_cable(house: House, end: CoStructure) -> None:
     """ Creates entire cable connection between house and end point
         following shortest manhatten distance.
         Params:

@@ -21,7 +21,7 @@ Usage:  from code.algorithms.hill_climber import HillClimber
 """
 
 from code.modules.district import District
-from code.modules.district import Battery
+from code.modules.battery import Battery
 from code.algorithms.manhattan_distance import create_cable
 
 from random import choice
@@ -212,7 +212,7 @@ class HillClimber:
             (float) penalty associated with battery capacity
         """
 
-        penalty = 0
+        penalty = 0.0
 
         capacity = battery.return_capacity()
         # If capacity is negative, then we assign a penalty
@@ -230,7 +230,7 @@ class HillClimber:
             (float) cost of district
         """
 
-        penalty_cost = 0
+        penalty_cost = 0.0
 
         for battery in district.batteries:
             penalty_cost += self.return_penalty(battery)

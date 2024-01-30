@@ -133,7 +133,7 @@ def combine_district(output: list) -> list:
     return output, output_original
 
 
-def run(output: list, n: int) -> list:
+def run(output: list, n: int = 10000) -> list:
     """ Combine cable connections for entire district n times
     Gives best solution
     Params:

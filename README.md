@@ -8,7 +8,9 @@ In order to do this, there are a couple of requirements, namely:
 - At first, all houses must have their own cable to a battery.
 
 # Usage
+
 ## Requirements
+All code has been written in Python 3.10.12.\
 All needed requirements can be installed by running: pip install -r requirements.txt
 ## Run
 Running of: python3 main.py gives the following option screen:

@@ -13,7 +13,6 @@ Depending on input gives a vizualization of data.
 Usage:  python3 main.py
 """
 
-import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -29,7 +28,7 @@ def load_icon(path: str, zoom: float) -> OffsetImage:
             path    (str): filepathname
             zoom    (float): zoom float number
         Returns:
-            OffsetImage
+            (OffsetImage) image
     """
 
     file = path
@@ -37,28 +36,39 @@ def load_icon(path: str, zoom: float) -> OffsetImage:
 
     return OffsetImage(image, zoom=zoom)
 
-def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1) -> AnnotationBbox:
-    """ Create a figure box for either batteries or houses.
+
+def location_to_artist(location: str, imagebox, grid_index: int,
+                       order: int = 1) -> AnnotationBbox:
+    """ Create a figure box for either batteries or houses
         This box is placed on x and y coordinates and thus can be plotted
         Params:
-            location     (str): coordinates in string form
-            imagebox    ():     
-
+            location     (str):         coordinates in string form
+            imagebox     (imagebox):    box for image
+            grid_index   (int):         grid index
+            order        (int):         order
         Returns:
-            none
+            (AnnotationBbox) annotation box
     """
-    """ """
 
     loc_coords = location.split(",")
     x = int(loc_coords[0])
     y = int(loc_coords[1])
 
-    return AnnotationBbox(imagebox, (x, y), frameon = False, zorder=order)
+    return AnnotationBbox(imagebox, (x, y), frameon=False, zorder=order)
 
-def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
+
+def plot_cables(cables: list[str], grid_index: int, color: str) -> None:
     """ Plot cables corresponding to house.
-    Two point coordinates are defined and a line is drawn between them.
+        Two point coordinates are defined and a line is drawn between them
+        Params:
+            cables    (list[str]): list of cable coordinates in "x,y" form
+            grid_index(int):       grid index
+            color     (str):       color of cables
+        Returns:
+            (none)
+            plots cables in figure
     """
+
     for cable in range(len(cables) - 1):
         # Gets location of a cable point and its destination point
         cable1_loc = cables[cable].split(",")
@@ -71,31 +81,50 @@ def plot_cables(plt, cables: list[str], grid_index: int, color: str) -> None:
                  label=f"Grid {grid_index + 1}", zorder=1
                  )
 
-def deduplicate_legend_items(handles, labels):
-    """Find one unique handle for duplicate labels.
-    Labels (['Grid 1', 'Grid 2', ...]) correspond to one battery.
+
+def deduplicate_legend_items(handles: list,
+                             labels: list[str]) -> (list[str], list):
+    """ Find one unique handle for duplicate labels
+        Labels (['Grid 1', 'Grid 2', ...]) correspond to one battery
+        Params:
+            handles    (list):      list of line2D objects
+            labels     (list[str]): list of labels
+        Returns:
+            (list[str]) new list of labels
+            (list)      new list of line2D objects
     """
+
     newLabels, newHandles = [], []
     for handle, label in zip(handles, labels):
         if label not in newLabels:
             newLabels.append(label)
             newHandles.append(handle)
+
     return newLabels, newHandles
 
+
 @Halo(text='Loading Grid Plot', spinner='dots')
-def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot_title: str = "Graph"):
+def plot_output(data: list, alg_method: str = "", district_number: int = 0,
+                plot_title: str = "Graph") -> None:
     """ Plots and shows a grid containing the houses, batteries and cables
-        pre: takes an output list as an argument that, from the second element onwards,
-             contains battery dictinaries containing a list of house dictionaries, which in turn
-             have a list of cable coordinates
-        post: draws a figure on screen through matplotlib where they markers represent houses
-              and batteries while the cables are shown as solid lines"""
+        Params:
+            data            (list):   contains battery dictinaries from
+                                      the second element onward
+            alg_method      (str):    algorithm name
+            district_number (int):    district number
+            plot_title      (str):    title of the figure
+        Returns:
+            none
+            plots entire district configuration
+            (containing houses, batteries and cables)
+    """
+
     # Create figure and give title
     fig, ax = plt.subplots()
     plt.title(plot_title)
 
     # Define colors used in figure
-    colors = ["dodgerblue","navy","aquamarine","mediumpurple", "violet"]
+    colors = ["dodgerblue", "navy", "aquamarine", "mediumpurple", "violet"]
 
     # Points (Pt). How close the click needs to be to trigger an event.
     pickradius = 5
@@ -112,17 +141,19 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
         color = colors[grid_index]
 
         # Add battery icons
-        ax.add_artist(location_to_artist(battery['location'], battery_imagebox, grid_index, order=3))
+        ax.add_artist(location_to_artist(battery['location'],
+                      battery_imagebox, grid_index, order=3))
 
         # Loops over each house of the battery
         if battery['houses']:
             for house in battery['houses']:
                 # Add house icons
-                ab = location_to_artist(house['location'], house_imagebox, grid_index, order=2)
+                ab = location_to_artist(house['location'],
+                                        house_imagebox, grid_index, order=2)
                 ax.add_artist(ab)
 
                 # Plot cables connect to current house
-                plot_cables(plt, house['cables'], grid_index, color)
+                plot_cables(house['cables'], grid_index, color)
 
     # Grid code snippet obtained from:
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels
@@ -146,7 +177,8 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
 
     # Plot legend, located outside graph
     leg = plt.legend(unqHandles, unqLabels, fancybox=True, shadow=True,
-                     bbox_to_anchor=(1.05, 1.0), loc='upper left', title='District Legend')
+                     bbox_to_anchor=(1.05, 1.0), loc='upper left',
+                     title='District Legend')
 
     # Make legend lines clickable
     for handle in leg.get_lines():
@@ -165,36 +197,39 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
 
     # Save figure if district number is defined
     if district_number:
-        file_path = f"output/figures/{alg_method[2:]}-district_{district_number}.png"
+        file_path = \
+            f"output/figures/{alg_method[2:]}-district_{district_number}.png"
         plt.savefig(file_path, bbox_inches='tight')
 
     plt.show()
 
+
 @Halo(text='Loading Histogram Plot', spinner='dots')
-def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, district_number: int) -> None:
-    """Plot histogram.
-    Given the list of outputs, function creates histogram plot and shows it.
-    Additionally, a .png file is of the plot is created in output/histogram.
+def plot_output_histogram(outputs: list[int], alg_method: str,
+                          runs: int, district_number: int) -> None:
+    """ Plot histogram
+        Given the list of outputs, function creates histogram plot and shows it
+        Additionally, a .png file is of the plot is created in output/histogram
     Params:
-        outputs     (list[int]): List with costs of algorithm runs.
-        alg_method  (str): Used algorithm for outputs.
-        runs        (int): Amount of runs done.
+        outputs         (list[int]): List with costs of algorithm runs
+        alg_method      (str):       Used algorithm for outputs
+        runs            (int):       Amount of runs done
+        district_number (int):       District number
     Returns:
-        None
+        none
         .png in output/histogram
         plot shown
     """
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
 
     # Title includes the method and the number of runs.
     plt.title(f"Histogram: {alg_method} (n={runs})")
     binwidth = 75
-    # The numbers of bins is a range from the mininum value to the maximum value
-    # and the step is the binwidth
+    # The numbers of bins is a range from the mininum value to
+    # the maximum value and the step is the binwidth
     n_bins = range(min(outputs), max(outputs) + binwidth, binwidth)
 
-    # Source (l. 95-107): https://matplotlib.org/stable/gallery/statistics/hist.html
+    # Source (l. 95-107):
+    # https://matplotlib.org/stable/gallery/statistics/hist.html
     # Empty histogram plot is created
     N, bins, patches = plt.hist(outputs, bins=n_bins)
 
@@ -213,11 +248,12 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
     mean = round(np.average(outputs))
     median = round(np.median(outputs))
     minimum = round(np.min(outputs))
-    plt.axvline(mean, color='k', linestyle='dashed', linewidth=1.5, label=f'mean: {mean}')
-    plt.axvline(median, color='r', linestyle='-.', linewidth=1.5, label=f'median: {median}')
-    plt.axvline(minimum, color='b', linestyle='solid', linewidth=1.5, label=f'minimum: {minimum}')
-
-
+    plt.axvline(mean, color='k', linestyle='dashed', linewidth=1.5,
+                label=f'mean: {mean}')
+    plt.axvline(median, color='r', linestyle='-.', linewidth=1.5,
+                label=f'median: {median}')
+    plt.axvline(minimum, color='b', linestyle='solid', linewidth=1.5,
+                label=f'minimum: {minimum}')
 
     # Labels and legend are plotted.
     plt.xlabel("Costs")
@@ -228,17 +264,26 @@ def plot_output_histogram(outputs: list[int], alg_method: str, runs: int, distri
     plt.tight_layout()
 
     # File path is used to save the plot to output/histogram
-    file_path = f"output/histograms/{alg_method}_{runs}-district_{district_number}-histogram.png"
+    file_path = \
+        f"output/histograms/{alg_method}_{runs}-district_\
+        {district_number}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot
     plt.show()
 
+
 def on_pick(event):
-    """Reverse visibility of cables from grid.
-    Grid number corresponds to legend line clicked.
-    Usage: Click legend line to toggle visibility
+    """ Reverse visibility of cables from grid.
+        Grid number corresponds to legend line clicked.
+        Usage: Click legend line to toggle visibility
+    Params:
+        outputs         (list[int]): List with costs of algorithm runs
+    Returns:
+        none
+        draws updated figure
     """
+
     # Get selected line in legend
     selected_element = event.artist
     grid_number = selected_element.get_label()
@@ -275,11 +320,18 @@ def on_pick(event):
     # Draw updated figure
     fig.canvas.draw()
 
+
 def on_press(event):
-    """Reverse visibility of cables from grid.
-    Grid number corresponds to key pressed.
-    Usage: Press 1 to 5 to toggle visibility
+    """ Reverse visibility of cables from grid.
+        Grid number corresponds to key pressed.
+        Usage: Press 1 to 5 to toggle visibility
+    Params:
+        outputs         (list[int]): List with costs of algorithm runs
+    Returns:
+        none
+        draws updated figure
     """
+
     if not 0 <= int(event.key) <= 5:
         return
 
@@ -305,7 +357,6 @@ def on_press(event):
         else:
             map_legend_to_ax[legend_line] = [ax_line]
 
-
     # Do nothing if the source of the event is not a legend line.
     if selected_grid not in map_legend_to_ax:
         return
@@ -322,13 +373,3 @@ def on_press(event):
 
     # Draw updated figure
     fig.canvas.draw()
-
-
-
-if __name__ == "__main__":
-    #Loads JSON whose path is specified as the first command line argument
-    if len(sys.argv) == 2:
-        json_data = load_JSON_output(sys.argv[1])
-        plot_output(json_data)
-    else:
-        print("Usage: python3 visualize_output.py filename.json")
