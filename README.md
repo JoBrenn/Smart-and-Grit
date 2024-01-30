@@ -55,6 +55,16 @@ Here the most imported directories are stated:
     - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
+## Experiment
+In /experiments/, tuning experiments can be conducted by running the script functions in /simulatedannealing/, /beamsearch/ and /hillclimber/.
+
+A timed experiment can be ran using:
+
+`python3 time_scripts.py <method>`
+
+where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
+In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder.
+
 # Authors
 - Jonas Brenninkmeijer (JoBrenn)
 - Kathy Molenaar (kathymolenaar)
