@@ -286,7 +286,7 @@ def run_general_method(method: str):
                     dictkeys = list(json_data.keys())
                     dictkey = get_dictkey_input(dictkeys)
                     data.append(combine(json_data[dictkey], runs, filename))
-                elif len(json_data) == 1 and len(json_data[0]) == 1:
+                elif len(json_data) == 1 and len(json_data[0]) == 6:
                     data.append(combine(json_data[0], runs, filename))
         else:
             print("No options in output/JSON/. Try running an algorithm first.")
