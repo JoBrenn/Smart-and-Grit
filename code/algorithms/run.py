@@ -54,39 +54,6 @@ def runs_algorithms_to_costs(district_number: int, runs: int,
     return outputs
 
 
-def run_random_assignment_random_walk(district: District) \
-                                      -> list[dict[str, Any]]:
-    """ Randomly assigns the first house in a district to a battery and
-        lays a connection along the Manhattan distance.
-        Plots the grid
-        Params:
-            district    (District): district object
-        Returns:
-            (list) output list
-    """
-
-    connections = random_assignment(district)
-    house_1 = list(connections.keys())[0]
-    battery = connections[house_1]
-    battery.add_house(house_1)
-    points_walked = random_walk((int(house_1.row), int(house_1.column)),
-                                (int(battery.row), int(battery.column)), 50)
-
-    # Add a cable segment between all the points visited in the random walk
-    for i in range(len(points_walked) - 1):
-        house_1.add_cable_segment(points_walked[i])
-
-    # Temp fix
-    battery.battery_dict["houses"] = [battery.battery_dict["houses"][0]]
-
-    district.output = [district.output[0]]
-    district.output.append(battery.battery_dict)
-
-    output = district.return_output()
-
-    return output
-
-
 def run_random_assignment(district: District,
                           costs_type: str) -> list[dict[str, Any]]:
     """ Randomly assigns the houses in a district to batteries and
