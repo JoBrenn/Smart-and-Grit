@@ -42,7 +42,7 @@ def location_to_artist(location: str, imagebox, grid_index: int, order: int = 1)
         This box is placed on x and y coordinates and thus can be plotted
         Params:
             location     (str): coordinates in string form
-            imagebox    ():     
+            imagebox    ():
 
         Returns:
             none
@@ -155,10 +155,6 @@ def plot_output(data: list, alg_method: str = "", district_number: int = 0, plot
     # Define interaction events
     fig.canvas.mpl_connect('pick_event', on_pick)
     fig.canvas.mpl_connect('key_press_event', on_press)
-
-    # ax.annotate('local max', xy=(2, 1), xytext=(36, 30),
-    #             arrowprops=dict(facecolor='black', shrink=0.05),
-    #             )
 
     # Tight plot for better look
     plt.tight_layout()

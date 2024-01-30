@@ -7,9 +7,21 @@ In order to do this, there are a couple of requirements, namely:
 - There can be multiple cables along a grid segments. However, they are considered different cables. 
 - At first, all houses must have their own cable to a battery.
 
+## Object Function
+SmartGrid is a minimalisation problem. We need to minimalise the amount of cable segments we use. The amount of batteries is given. The costs of one piece are as following:
+- Battery (B): 5000
+- Cable (C): 9
+
+The Object Function of this problem can thus be stated:
+
+    Z = B * 5000 + C * 9
+
+
 # Usage
 ## Requirements
-All needed requirements can be installed by running: pip install -r requirements.txt
+All needed requirements can be installed by running: 
+        
+        pip install -r requirements.txt
 ## Run
 Running of: python3 main.py gives the following option screen:
 ![Main menu](images/main_screen.png)
@@ -18,11 +30,14 @@ Where typing help in the method option gives a description of the possible metho
 
 ## Experiments
 
-### Simulated annealing
+### Simulated Annealing
 The file simulatedannealing_experiment contains multiple functions.\
 Where in the function simulannealing_temp_comparison different temperatures are compared.
 This comparison can then be visualized via either the function simulannealing_temp_comparison_mean_graph() or 
 simulannealing_temp_comparison_lowest_graph. Where the mean cost and the lowest cost are compared respectively.
+
+### Beam Search
+
 
 ## Structure
 Here the most imported directories are stated:
@@ -36,5 +51,5 @@ Here the most imported directories are stated:
 
 # Authors
 - Jonas Brenninkmeijer
-- Jesper Vreugde
 - Kathy Molenaar
+- Jesper Vreugde

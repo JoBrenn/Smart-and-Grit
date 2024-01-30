@@ -2,5 +2,13 @@ numpy
 matplotlib
 json
 sys
-mplcursor
 halo
+pickle
+json
+csv
+copy
+time
+random
+pytest
+statistics
+typing

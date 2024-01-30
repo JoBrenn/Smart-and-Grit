@@ -7,7 +7,7 @@ from halo import Halo
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
     run_random_assignment_shortest_distance_with_capacity, \
     run_random_assignment_shortest_distance
-from code.visualisation.visualize import plot_output
+from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.simulatedannealing import Simulatedannealing
@@ -15,6 +15,7 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.breadth_first import BreadthFirst
+from code.algorithms.combine_cables import run as combine
 from code.modules.district import District
 
 
@@ -44,7 +45,7 @@ def write_data_to_JSON(data: list, file_name: str,
 
     # Craft file path
     file_path = f"output/JSON/{file_name}\
-    -district_{district_number}-runs_{runs}-output.json"
+-district_{district_number}-runs_{runs}-output.json"
 
     # Open file path in WRITE mode and write data
     with open(file_path, "w") as outfile:
@@ -57,26 +58,33 @@ def print_helpmsg_methods():
             none
             prints help messages
     """
-
+    # General methods: help, load, format and exit
+    # \u001b[32m gives color GREEN in terminal
     print("\n\u001b[32mGeneral Methods:\u001b[0m")
     print("  help:\t\t Display help manual")
     print("  load:\t\t Load a JSON file from output/JSON")
     print("  format:\t Display formatted output")
+    print("  exit:\t\t Stop running main.(Useable at every input.)\n")
+
+    # Algorithm methods: randrwalk, randmanh, randmanhcap, greedmanh,
+    # greedmanhcap, closest, depthfirst, breadthfirst, hillclimber,
+    # simulatedannealing, beamsearch.
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
     print("  randrwalk:\t Randomly assigns houses to batteries. " + \
                         "Creates cable path through randomly taking random steps until destination is reached.")
-    print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t(Manhattan Distance)")
-    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t(Manhattan Distance)")
-    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t(Manhattan Distance) ")
-
-    print("  closest:\t Assigns a house to its closest battery that has capacity left\t ")
-    print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached")
-    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached")
+    print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t\t\t\t\t\t(Manhattan Distance)")
+    print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t\t\t\t\t\t(Manhattan Distance)")
+    print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t\t\t\t\t\t(Manhattan Distance) ")
+    print("  closest:\t Assigns a house to its closest battery that has capacity left \t\t\t\t\t\t(Manhattan Distance) ")
+    print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
+    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
     print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
-batteries. \t(Manhattan Distance) ")
+batteries. \t\t\t\t\t(Manhattan Distance) ")
     print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
-houses to capped batteries. \t(Manhattan Distance) ")
-    print("  exit:\t\t Stop running main.\n")
+houses to capped batteries. \t\t\t(Manhattan Distance) ")
+    print("  beamsearch:\t Searches state space breadth first with a width (beam).\
+N (beam) states are kept at every iteration.\t(Manhattan Distance) ")
+
 
 
 def print_helpmsg_output():
@@ -95,7 +103,7 @@ def print_helpmsg_output():
 def print_possibilities(possibilities: list[str]) -> None:
 
     print("\n\u001b[32mPossible Load Files:\u001b[0m")
-    for index, file in enumerate(sorted(possibilities)):
+    for index, file in enumerate(possibilities):
         print(f"{index+1}.  {file}")
 
 
@@ -105,6 +113,7 @@ def get_method_input() -> str:
     General Methods:
         format:                 A format of the district.
         load:                   Load a figure of a JSON file.
+        combine:                Combine the cables from a JSON file.
     Algorithm Methods:
         randmanh:               Randomly chooses a house and connects it to battery with Manhattan Distance (NO CAPACITY constraint)
         randmanhcap:            Randomly chooses a house and connects it to battery with free capacity with Manhattan Distance
@@ -126,9 +135,9 @@ def get_method_input() -> str:
         elif method in {"help", "--help"}:
             print_helpmsg_methods()
             method = ""
-        elif method not in {"format", "load", "randmanh", "randmanhcap",
-                            "randrwalk", "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
-                            "closest", "depthfirst", "breadthfirst"}:
+        elif method not in {"format", "load", "combine", "randmanh", "randmanhcap",
+                            "randrwalk", "greedmanh", "hillclimber", "beamsearch",
+                            "simulatedannealing", "closest", "depthfirst", "breadthfirst"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
     return method
@@ -213,7 +222,7 @@ def get_max_depth(house_count):
             depth = 0
     return int(depth)
 
-def get_load_file(possibilities: list[str]):
+def get_file_input(possibilities: list[str]) -> str:
     """ Get input for the desired file to be loaded.
     Files need to be in output/JSON/"""
     file = ""
@@ -238,14 +247,29 @@ def run_general_method(method: str):
     data = []
     if method == "format":
         data.append(load_JSON_output("output/output-format.json"))
-    elif method == "load":
-        possibilities = os.listdir("output/JSON/")
+    elif method in {"load", "combine"}:
+        possibilities = sorted(os.listdir("output/JSON/"))
         if possibilities:
             print_possibilities(possibilities)
-            file = get_load_file(possibilities)
-            data.append(load_JSON_output(f"output/JSON/{file}"))
+            file = get_file_input(possibilities)
+            # print(file)
+            # exit()
+            json_data = load_JSON_output(f"output/JSON/{file}")
+            if method == "load":
+                if len(json_data) == 6 and isinstance(json_data, list):
+                    data.append(json_data)
+                else:
+                    for outcome in json_data:
+                        data.append(outcome)
+            else:
+                if len(json_data) == 6 and isinstance(json_data, list):
+                    runs = get_runs_input()
+                    filename = file.split(".")[0]
+                    data.append(combine(json_data, runs, filename))
+                elif isinstance(json_data, dict):
+                    get_
         else:
-            print("No load options. Try running an algorithm first.")
+            print("No options in output/JSON/. Try running an algorithm first.")
     return data
 
 
