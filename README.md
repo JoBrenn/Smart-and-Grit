@@ -41,17 +41,6 @@ indices runs the combine_cables algorithm on said output file. This creates a 'c
 <img src="images/combine.png" width="400">
 
 
-## Experiments
-
-### Simulated Annealing
-The file simulatedannealing_experiment contains multiple functions.\
-Where in the function simulannealing_temp_comparison different temperatures are compared.
-This comparison can then be visualized via either the function simulannealing_temp_comparison_mean_graph() or 
-simulannealing_temp_comparison_lowest_graph. Where the mean cost and the lowest cost are compared respectively.
-
-### Beam Search
-
-
 ## Structure
 Here the most imported directories are stated:
 - /code: constains all code (.py files)
@@ -60,6 +49,10 @@ Here the most imported directories are stated:
     - /modules: contains all classes
     - /visualisation: contains all code concerning the visualisations
 - /experiments: contains all code for the experiments
+    - /hillclimber: contains hillclimber experiment script
+    - /simulatedannealing: contains simulatedannealing experiment script
+    - /beamsearch: 
+    - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
 # Authors
