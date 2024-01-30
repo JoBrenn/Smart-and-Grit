@@ -191,8 +191,8 @@ class Simulatedannealing(HillClimber):
                     unchanged_count += 1
                 else:
                     unchanged_count = 0
-            print(district_work.return_cost())
-            print(previous_district.return_cost())
+            #print(district_work.return_cost())
+            #print(previous_district.return_cost())
         # Reset iterations and temperature
         self.iterations = 0
         self.temp = self.temp_0

@@ -83,12 +83,12 @@ class Closest:
             elif self.max_runs == 0:
                 print("Max runs reached. Solution is not valid")
 
-            else:
+            """else:
                 self.max_runs -= 1
                 print(f"HOUSE ON ({house.row}, {house.column}) NOT ASSIGNED."
                       + f" Retries left: {self.max_runs}")
-                self.district = self.run()
-                
+                self.district = self.run()"""
+
         if self.district != None:
             self.district.district_dict["costs-own"] = self.district.return_cost()
 
