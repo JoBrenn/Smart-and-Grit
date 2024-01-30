@@ -133,14 +133,15 @@ def combine_district(output: list) -> list:
     return output, output_original
 
 
-def run(output: list, n: int) -> list:
+def run(output: list, n: int, filename: str) -> list:
     """ Combine cable connections for entire district n times
     Gives best solution
     Params:
             output    (list):   filled output of district configuration
             n           (int):  number of iterations
     Returns:
-        ((list) altered cables in output with lowest cost"""
+        ((list) altered cables in output with lowest cost
+    """
 
     output_original = copy.deepcopy(output)
     lowest_cost = output_original[0]["costs-own"]
@@ -153,8 +154,8 @@ def run(output: list, n: int) -> list:
         if cost < lowest_cost:
             output_best = copy.deepcopy(output)
 
-    filename = "output/JSON/combined_cables.json"
-    with open(filename, "w") as f:
+    filepath = f"output/JSON/{filename}-combined.json"
+    with open(filepath, "w") as f:
         f.write(json.dumps(output_best))
 
     return output_best
