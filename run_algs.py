@@ -14,10 +14,12 @@ import csv
 district = District(1, "costs-own")
 
 #closest = Closest(district, 10)
-
+print("hi")
 hillclimb = HillClimber(district)
 
 state = hillclimb.run_hill_climber(district, 10, 1000)
+print(state)
+print("hi2")
 
 succeeded = 0
 
