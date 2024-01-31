@@ -148,10 +148,13 @@ class BeamSearch:
         for state in self.states:
             for battery in state.batteries:
                 included_houses += len(battery.houses)
+
             # 150 included houses is valid.
             if included_houses == 150:
                 valid_states.append(state)
+
             # Reset for next state
             included_houses = 0
+
         # Assign valid_states to self.states
         self.states = valid_states

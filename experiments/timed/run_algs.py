@@ -1,3 +1,17 @@
+""" Script to run different algorithms
+
+File: run_algs.py
+
+Authors:    Jesper Vreugde
+
+Date: 26/01/24 (31/01/24)
+
+Description:
+This is a script to run different algorithms and load them in csv file
+
+Usage:  called by time_script.py, no independent usage
+"""
+
 from code.modules.district import District
 
 from code.algorithms.closest import Closest
