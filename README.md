@@ -84,16 +84,15 @@ In this script, the algortihm will be run continuously for 2700 seconds. The cos
 ## Tests
 To run tests, run the following code:
 
-        python3 -m pytest code/<directory>
+        python3 -m pytest code/<directory>/
+
+example:
+        python3 -m pytest code/modules/
 
 Specify the directory to be tested. The following directories contain tests:
 - /code (always to be specified)
     - /algorithms
-    - /helpers
     - /modules
-    - /visualisation
-
-
 
 # Authors
 - Jonas Brenninkmeijer (JoBrenn)
