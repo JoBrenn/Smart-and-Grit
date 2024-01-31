@@ -401,13 +401,18 @@ def get_experiment_input():
     return experiment_input
 
 
-def run_experiment(district_number: int):
+def run_experiment(district_number: int) -> None:
     selected_experiment = get_experiment_input()
     district = District(district_number, "costs-own")
 
+    spinner = Halo(text='Running method', spinner='dots')
+    spinner.start()
+
     if selected_experiment == "beamsearch":
+        spinner.stop()
         max_beam = get_beam_input()
         runs = get_runs_input()
+        spinner.start()
         beam = BeamSearchTuning(district_number, runs, max_beam)
         beam.run_tuning()
     elif selected_experiment == "hillclimber":
@@ -416,6 +421,7 @@ def run_experiment(district_number: int):
         run_simulatedannealing_experiments(district)
     elif selected_experiment == "timed":
         return True
+    spinner.stop()
 
 
 def run_general_method(method: str) -> list:
@@ -562,10 +568,10 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "closest":
         """
-        Runs a greedy type algorithm where each house is assigned to the 
+        Runs a greedy type algorithm where each house is assigned to the
         battery that closest to the battery, the distance between which
         is calculated through the Manhattan distance. Each run can result in
-        an invalid solution, and will be run again until it either finds a 
+        an invalid solution, and will be run again until it either finds a
         valid solution or the max_runs has been reached.
         """
         # Stop spinner, because interference with input()
@@ -599,7 +605,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
         # Start spinner again
         spinner.start()
-        
+
         # Initialize depth first
         depthfirst = DepthFirst(district, max_depth)
         best_state = depthfirst.run()
