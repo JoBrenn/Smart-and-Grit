@@ -48,6 +48,8 @@ from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
     run_random_assignment_with_capacity, \
     run_random_assignment
+from code.algorithms.random_algorithm import random_assignment, \
+    random_assignment_capacity
 
 # Algorithms inmported
 from code.algorithms.hill_climber import HillClimber
@@ -497,7 +499,9 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_greedy_assignment_shortest_walk(district_copy, method))
+            temp = run_greedy_assignment_shortest_walk(district_copy, method)
+            data.append(temp)
+            print(temp[0])
 
     elif method == "hillclimber":
         """
@@ -518,8 +522,11 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "beamsearch":
         """
-
-
+        Beamsearch algorithm. The beam specified is the amount of states saved between
+        every iteration. An iteration is where the previous states are replaced by
+        new states that have one more connected house. In every state the same randomly
+        chosen house is connected to all batteries with enough capacity. A number
+        of best states are then kept according to the beam        
         """
         # Stop spinner, because interference with input()
         spinner.stop()

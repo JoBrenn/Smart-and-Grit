@@ -36,6 +36,10 @@ def test_sequence_of_methods():
     assert battery.left_over_capacity == 3
     assert battery.return_capacity() == 3
 
+def test_battery_id():
+    """ Test if battery id is correct."""
+    battery = Battery(1, (2,2), 3, 1000)
+    assert battery.battery_id == 1
 
 def test_convert_coordinate_correct():
     """ Test if coordinates are converted correctly. """
