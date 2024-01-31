@@ -532,27 +532,68 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         data.append(best_state.return_output())
 
     elif method == "closest":
+        """
+        Runs a greedy type algorithm where each house is assigned to the 
+        battery that closest to the battery, the distance between which
+        is calculated through the Manhattan distance. Each run can result in
+        an invalid solution, and will be run again until it either finds a 
+        valid solution or the max_runs has been reached.
+        """
+        # Stop spinner, because interference with input()
         spinner.stop()
+
+        # Get max runs input
         max_runs = get_max_runs()
+
+        # Start spinner again
         spinner.start()
+
+        # Initialize closest
         closest = Closest(district, max_runs)
         best_state = closest.run()
         data.append(best_state.return_output())
 
     elif method == "depthfirst":
+        """
+        A depth first algorithm that goes through each state. The max
+        depth, or assigned houses, can be given so the amount of states
+        can be reduced. The state trees where a battery has its capacity
+        exceeded will be pruned as well. A standard district of 150 houses
+        and 5 batteries would too long to reasonably complete, so specifying a
+        max depth or running a smaller district is advised
+        """
+        # Stop spinner, because interference with input()
         spinner.stop()
+
+        # Get max runs input
         max_depth = get_max_depth(len(district.houses))
+
+        # Start spinner again
         spinner.start()
+        
+        # Initialize depth first
         depthfirst = DepthFirst(district, max_depth)
         best_state = depthfirst.run()
         data.append(best_state.return_output())
 
 
     elif method == "breadthfirst":
-        spinner.start()
-        max_depth = get_max_depth(len(district.houses))
+        """
+        Works similarly to depth first, but goes through each state, layer by
+        layer instead. The runtime of the algorithm with a standard district is
+        as long as depthfirst at minimum, so the districts and depth should be
+        chosen with similar consideration.
+        """
+        # Stop spinner, because interference with input()
         spinner.stop()
 
+        # Get max runs input
+        max_depth = get_max_depth(len(district.houses))
+
+        # Start spinner again
+        spinner.start()
+
+        # Initialize breadth first
         breadthfirst = BreadthFirst(district, max_depth)
         best_state = breadthfirst.run()
         data.append(best_state.return_output())
