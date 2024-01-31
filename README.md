@@ -22,7 +22,7 @@ The Objective Function of this problem, and thus the costs of a district configu
 
 ## Requirements
 
-All code has been written in Python 3.10.12.\
+All code has been written in Python 3.10.12.
 
 All needed requirements can be installed by running: 
 
@@ -33,7 +33,7 @@ Running of: python3 main.py gives the following option screen:
 <img src="images/main_screen.png" width="400">
 
 
-Where typing help in the method option gives a description of the possible methods.
+Where typing 'help' in the method option gives a description of the possible methods.
 
 Typing 'combine' in the method option shows a list of output files. Selecting one of these
 indices runs the combine_cables algorithm on said output file. This creates a 'costs-shared'
@@ -53,7 +53,7 @@ Here the most imported directories are stated:
     - /hillclimber: contains hillclimber experiment script
     - /simulatedannealing: contains simulatedannealing experiment script
     - /beamsearch: contains beamsearch experiment script
-    - /times: 
+    - /times: contains all timed experiment scripts 
     - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
