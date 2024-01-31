@@ -407,9 +407,10 @@ def get_algorithm_input():
     while not algorithm_input:
         algorithm_input = input("\n\u001b[33mAlgorithm Method:\u001b[0m ")
         if algorithm_input not in {"closest", "beamsearch",\
-                                    "hillclimber", "simulated", "depthfirst"}:
+                                    "hillclimber", "simulated", "depthfirst", "randomcap"}:
             print("Please chooses between:")
-            print("closest\n", "beamsearch\n" "hillclimber\n", "simulated\n", "depthfirst\n")
+            print("closest\n", "beamsearch\n" "hillclimber\n", "simulated\n", 
+                  "depthfirst\n", "randomcap\n")
             algorithm_input = ""
 
     return algorithm_input

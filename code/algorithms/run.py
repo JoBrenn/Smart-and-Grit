@@ -102,7 +102,7 @@ def run_random_assignment_with_capacity(district: District, costs_type: str) \
         create_cable(house, (battery.row, battery.column))
 
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
-    output = district.return_output()
+    output = district
 
     return output
 

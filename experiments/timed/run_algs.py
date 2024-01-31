@@ -5,6 +5,7 @@ from code.algorithms.depth_first import DepthFirst
 from code.algorithms.beam_search import BeamSearch
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.simulatedannealing import Simulatedannealing
+from code.algorithms.run import run_random_assignment_with_capacity
 
 from code.visualisation.visualize import plot_output
 
@@ -29,7 +30,12 @@ district = District(1, "costs-own")
 
 algorithm = sys.argv[1]
 
-if algorithm == "closest":
+if algorithm == "randomcap":
+    result = run_random_assignment_with_capacity(district, "costs-own")
+    append_to_csv(result, algorithm)
+
+
+elif algorithm == "closest":
     closest = Closest(district, 10)
     result = closest.run()
     append_to_csv(result, algorithm)
