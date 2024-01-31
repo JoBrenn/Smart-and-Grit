@@ -9,10 +9,10 @@ def run_time_script(method: str) -> None:
         Returns:
             None
     """
-    start = time.time()
+    start = time()
     n_runs = 0
 
-    while time.time() - start < 2700:
+    while time() - start < 2700:
         print(f"run: {n_runs}")
         call(["timeout", "500", "python3", "-m", "experiments.timed.run_algs",\
                f"{method}"])

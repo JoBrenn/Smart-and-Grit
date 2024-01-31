@@ -419,14 +419,9 @@ def run_experiment(district_number: int):
     selected_experiment = get_experiment_input()
     district = District(district_number, "costs-own")
 
-    spinner = Halo(text='Running method', spinner='dots')
-    spinner.start()
-
     if selected_experiment == "beamsearch":
-        spinner.stop()
         max_beam = get_beam_input()
         runs = get_runs_input()
-        spinner.start()
         beam = BeamSearchTuning(district_number, runs, max_beam)
         beam.run_tuning()
     elif selected_experiment == "hillclimber":
