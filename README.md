@@ -73,20 +73,18 @@ the amount of runs and the largest allowed beam. The run_tuning() method can be 
 after which the results will be written to a csv and the best result will be stored as a .json file
 
 ### Timed experiment
-The file time_scripts.py contains a script to run different algorithms for a certain amount of time. This file 
-can be used to compare the different algorithms. However, this timed experiment can be called via python3 main.py, bij 
-indicating experiments as method and then "timed". This being able to run it via main has however made the elements 
+The file time_scripts.py contains a script to run different algorithms for a certain amount of time. 
+In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
+This file can be used to compare the different algorithms. However, this timed experiment can be called via python3 main.py, by
+indicating 'experiments' as method and then 'timed'. This being able to run it via main has however made the elements 
 within time_scripts.py slower. The results in results_timed.md have therefore been run straight from the root for optimal
 comparison.
-
-### Timed experments
 
 A timed experiment can be ran using:
 
         python3 time_scripts.py <method>
 
 where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
-In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
 
 ## Tests
 To run tests, run the following code:
