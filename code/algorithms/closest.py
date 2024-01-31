@@ -95,9 +95,11 @@ class Closest:
                 a bool that shows whether the solution is valid or not
                 prints the amount of unassigned houses
         """
+        if self.district is None:
+            return False
 
         # Returns false if house has not been assigned
-        if len(self.district.houses) != 0 or self.district is None:
+        if self.district.houses:
             invalid_batteries = 0
             for battery in self.district.batteries:
                 if battery.left_over_capacity < 0:

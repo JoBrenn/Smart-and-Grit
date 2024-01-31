@@ -1,4 +1,4 @@
-""" Module of District class
+""" Module of District class.
 
 File: district.py
 
