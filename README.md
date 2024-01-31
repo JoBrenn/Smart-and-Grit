@@ -54,7 +54,7 @@ Here the most imported directories are stated:
     - /simulatedannealing: contains simulatedannealing experiment script
     - /beamsearch: contains beamsearch experiment script
     - /times: contains all timed experiment scripts 
-    - results_timed.md: contains the results of the timed experiment for all algorithms
+        - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
 ## Experiment
