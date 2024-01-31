@@ -33,6 +33,7 @@ class DepthFirst:
         return_next_state()         return the next item in the stack
         valid_capacity(district)    determine whether each
                                     battery has exceeded their capacity
+        state_to_csv(district)      saves costs of state to csv file
     """
 
     def __init__(self, district: District, depth: int = 5) -> None:
@@ -67,7 +68,7 @@ class DepthFirst:
             state = self.return_next_state()
 
             # Prunes branches where a battery's capacity has been exceeded
-            if self.valid_capacity(state) is True:
+            if self.valid_capacity(state) is True:# or self.valid_capacity(state) is False:
 
                 if self.house_num - len(state.houses) < self.depth:
                     house = state.houses.pop()
@@ -78,17 +79,21 @@ class DepthFirst:
                         create_cable(house_add, (battery.row, battery.column))
                         child.batteries[n].add_house(house_add)
                         child.assigned_houses += 1
-                        self.state_to_csv(state)
+                        
                         self.states.append(child)
 
                 # A state at the desired depth has been found and can compare
                 else:
                     state.district_dict[f"{state.costs_type}"] \
                         = state.return_cost()
+                    
+                    self.state_to_csv(state)
 
                     if state.district_dict[state.costs_type] < lowest_costs:
                         lowest_costs = state.district_dict[state.costs_type]
                         lowest_costs_state = deepcopy(state)
+
+                print(f"{len(state.houses)} | {state.assigned_houses} | {len(self.states)}")
 
         return lowest_costs_state
 
@@ -117,13 +122,14 @@ class DepthFirst:
         return True
 
     def state_to_csv(self, state: District) -> None:
-        """ Appends a state to a csv
+        """ Appends state costs to a csv
         Params:
             state    (District): district object
         Returns:
-            appends state to csv
+            appends state to csv file containing a the costs
+            of all the final states in the run
         """
 
-        with open("output/csv/simulated.csv", "a", newline="") as outfile:
+        with open("output/csv/depth.csv", "a", newline="") as outfile:
             writer = csv.writer(outfile, delimiter=';')
             writer.writerow([state.return_cost()])

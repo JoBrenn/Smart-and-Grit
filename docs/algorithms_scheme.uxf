@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>100</x>
-      <y>690</y>
+      <y>700</y>
       <w>310</w>
       <h>140</h>
     </coordinates>
@@ -54,7 +54,7 @@ return_next_state()</panel_attributes>
       <x>100</x>
       <y>10</y>
       <w>310</w>
-      <h>150</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>DepthFirst
 district: District, depth: int = 5
@@ -65,14 +65,15 @@ house_num: int = len(district.houses)
 --
 run() -&gt; District
 return_next_state() -&gt; District
-valid_capacity(district: District) -&gt; bool</panel_attributes>
+valid_capacity(district: District) -&gt; bool
+costs_to_csv(district: District) -&gt; None</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>140</x>
-      <y>480</y>
+      <y>490</y>
       <w>270</w>
       <h>200</h>
     </coordinates>
@@ -95,7 +96,7 @@ filter_valid_states() -&gt; None</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>170</y>
+      <y>180</y>
       <w>380</w>
       <h>300</h>
     </coordinates>
@@ -124,7 +125,7 @@ run_hill_climber(district: District, n: int, N: int) -&gt; District</panel_attri
     <id>UMLClass</id>
     <coordinates>
       <x>530</x>
-      <y>170</y>
+      <y>180</y>
       <w>380</w>
       <h>150</h>
     </coordinates>
@@ -144,7 +145,7 @@ one_entire_iteration(district: District, N: int) -&gt; District</panel_attribute
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>170</y>
+      <y>180</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
