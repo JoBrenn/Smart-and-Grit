@@ -1,4 +1,4 @@
-from code.modules.district import District
+from .code.modules.district import District
 
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
@@ -20,7 +20,12 @@ district = District(1, "costs-own")
 
 algorithm = sys.argv[1]
 
-if algorithm == "closest":
+if algorithm == "random":
+    simulated = Simulatedannealing(district)
+    result = simulated.run_hill_climber(district, 1)
+    append_to_csv(result, algorithm)
+
+elif algorithm == "closest":
     closest = Closest(district, 10)
     result = closest.run()
     append_to_csv(result, algorithm)

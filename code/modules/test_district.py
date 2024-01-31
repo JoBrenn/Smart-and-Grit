@@ -12,9 +12,10 @@ Date: 31/01/24 (31/01/24)
 Description:
 Tests to check the functionality of different parts of the District class.
 
-Usage:  python3 -m pytest code/modules
+Usage:  python3 -m pytest code/modules/
     NOTE: run from root of depository
 """
+
 from code.modules.district import District
 
 def test_load_houses_batteries():

@@ -1,4 +1,25 @@
-from .hill_climber import HillClimber, Battery, District
+""" Tests for HillClimber class.
+
+File:           test_hill_climber.py
+Tested file:    hill_climber.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 31/01/24 (31/01/24)
+
+Description:
+Tests to check the functionality of testable parts of the 
+HillClimber algorithm class.
+
+Usage:  python3 -m pytest code/algorithms/
+    NOTE: run from root of depository
+"""
+
+from .hill_climber import HillClimber
+from code.modules.battery import Battery
+from code.modules.district import District
 
 def test_return_costs():
     """ Here we test that within the HillClimber class

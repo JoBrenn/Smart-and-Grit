@@ -15,6 +15,7 @@ Tests to check the functionality of different parts of the Battery class.
 Usage:  python3 -m pytest code/modules/
     NOTE: run from root of depository
 """
+
 from code.modules.battery import Battery
 from code.modules.house import House
 

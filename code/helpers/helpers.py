@@ -389,7 +389,7 @@ def combine_method(json_data: list, file: str) -> list:
 
 def get_experiment_input():
     print(listdir("experiments/"))
-    print(list(filter(isdir(), listdir("experiments/"))))
+    print(list(filter(isdir, listdir("experiments/"))))
     print(next(walk('.'))[1])
     print(isdir("experiments/beamsearch"))
     return None

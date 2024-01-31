@@ -1,5 +1,25 @@
+""" Tests for manhattan distance file.
+
+File:           test_manhattan_distance.py
+Tested file:    manhattan_distance.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 31/01/24 (31/01/24)
+
+Description:
+Tests to check the functionality of testable parts of the 
+manhattan distance determination and cable creation.
+
+Usage:  python3 -m pytest code/algorithms/
+    NOTE: run from root of depository
+"""
+
 from .manhattan_distance import get_cable_points, \
-    return_manhattan_distance, create_cable, House
+    return_manhattan_distance, create_cable
+from code.modules.house import House
 
 
 def test_get_cable_points():

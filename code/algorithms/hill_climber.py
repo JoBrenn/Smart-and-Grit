@@ -354,8 +354,8 @@ class HillClimber:
         district_work = self.one_entire_iteration(district_empty, N)
         file = f"output/csv/costs_hc_{district.district}_{n}.csv"
         with open(file, 'w', newline='') as filecsv:
-            writer = writer(filecsv)
-            writer.writerow([district_work.return_cost()])
+            writer_ = writer(filecsv)
+            writer_.writerow([district_work.return_cost()])
         for i in range(n - 1):
             print(i)
             previous_district = deepcopy(district_work)
@@ -365,8 +365,8 @@ class HillClimber:
 
             # Write to csv file
             with open(file, 'a', newline='') as filecsv:
-                writer = writer(filecsv)
-                writer.writerow([district_work.return_cost()])
+                writer_ = writer(filecsv)
+                writer_.writerow([district_work.return_cost()])
             if new_cost > old_cost:
                 district_work = previous_district
 
