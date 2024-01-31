@@ -21,7 +21,7 @@ The Object Function of this problem can thus be stated:
 
 ## Requirements
 
-All code has been written in Python 3.10.12.\
+All code has been written in Python 3.10.12.
 
 All needed requirements can be installed by running: 
 
