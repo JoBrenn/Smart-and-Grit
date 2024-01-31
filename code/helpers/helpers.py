@@ -395,7 +395,7 @@ def get_experiment_input():
     while not experiment_input:
         experiment_input = input("\n\u001b[33mExperiment Method:\u001b[0m ")
         if experiment_input not in {"beamsearch", "simulatedannealing", "hillclimber", "timed"}:
-            print("Please chooses between:")
+            print("Please choose between:")
             print(" beamsearch\n", "simulatedannealing\n", "hillclimber\n", "timed")
             experiment_input = ""
 
@@ -409,8 +409,8 @@ def get_algorithm_input():
         if algorithm_input not in {"closest", "beamsearch",\
                                     "random", "hillclimber", \
                                     "simulated", "depthfirst"}:
-            print("Please chooses between:")
-            print("closest\n", "beamsearch\n", "random\n", "hillclimber\n", "simulated\n", "depthfirst\n")
+            print("Please choose between:")
+            print("closest\n", "beamsearch\n", "random\n", "hillclimber\n", "simulated\n", "depthfirst")
             algorithm_input = ""
 
     return algorithm_input
