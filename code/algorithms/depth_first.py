@@ -34,6 +34,7 @@ class DepthFirst:
         valid_capacity(district)    determine whether each
                                     battery has exceeded their capacity
         state_to_csv(district)      saves costs of state to csv file
+        handle_final_state(state)   compares state to lowest costs
     """
 
     def __init__(self, district: District, depth: int = 5,\
@@ -45,7 +46,7 @@ class DepthFirst:
                                will be. Set at the max as default
         Returns:
             none
-       """
+        """
 
         self.depth = depth
         self.states = [district]
@@ -113,12 +114,14 @@ class DepthFirst:
         return True
 
     def handle_final_state(self, state: District) -> None:
-        """ Adds the final
+        """ Compares the final state to the lowest costs state.
         Params:
             district    (District): district object
         Returns:
-            a bool that that determines whether or not a battery
-            has exceeded its maximum capacity
+            None
+            Stores the state if it is has current lowest costs and 
+            writes to a csv if wanted
+
         """
         state.district_dict[f"{state.costs_type}"] \
             = state.return_cost()
