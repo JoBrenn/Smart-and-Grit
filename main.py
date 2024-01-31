@@ -39,11 +39,8 @@ if __name__ == "__main__":
         # Select district between 1 - 3
         district = hlp.get_district_input()
 
-        # Get experiment method
-        method_experiment = hlp.get_method_input()
-
         # Run wanted experiment
-        run_experiment(district)
+        hlp.run_experiment(district)
 
     # Algo Methods:
     else:

@@ -1,4 +1,4 @@
-from .code.modules.district import District
+from code.modules.district import District
 
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
@@ -44,7 +44,7 @@ elif algorithm == "hillclimber":
     result = hillclimber.run_hill_climber(district, 1)
     append_to_csv(result, algorithm)
 
-elif algorithm == "simulated":
+elif algorithm == "simulatedannealing":
     simulated = Simulatedannealing(district)
     result = simulated.run_hill_climber(district, 1)
     append_to_csv(result, algorithm)
