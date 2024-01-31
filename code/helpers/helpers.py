@@ -48,6 +48,8 @@ from code.visualisation.visualize import plot_output, plot_output_histogram
 from code.algorithms.run import run_greedy_assignment_shortest_walk, \
     run_random_assignment_with_capacity, \
     run_random_assignment
+from code.algorithms.random_algorithm import random_assignment, \
+    random_assignment_capacity
 
 # Algorithms inmported
 from code.algorithms.hill_climber import HillClimber
@@ -465,7 +467,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_random_assignment_shortest_distance(district_copy, method))
+            data.append(random_assignment(district_copy, method))
 
     elif method == "randmanhcap":
         """
@@ -475,7 +477,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_random_assignment_shortest_distance_with_capacity(district_copy, method))
+            data.append(random_assignment_capacity(district_copy, method))
 
     elif method == "greedmanh":
         """
@@ -486,7 +488,9 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_greedy_assignment_shortest_walk(district_copy, method))
+            temp = run_greedy_assignment_shortest_walk(district_copy, method)
+            data.append(temp)
+            print(temp[0])
 
     elif method == "hillclimber":
         """
@@ -507,7 +511,6 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "beamsearch":
         """
-
 
         """
         # Stop spinner, because interference with input()
