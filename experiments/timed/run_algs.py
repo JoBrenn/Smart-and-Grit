@@ -1,4 +1,11 @@
-from .code.modules.district import District
+import sys
+
+sys.path.append('../../code')
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+
+from code.modules.district import District
 
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
@@ -9,7 +16,7 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.visualisation.visualize import plot_output
 
 import csv
-import sys
+
 
 def append_to_csv(state, algorithm):
     with open(f"output/csv/{algorithm}.csv", "a", newline="") as outfile:

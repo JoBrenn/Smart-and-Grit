@@ -107,7 +107,7 @@ def run_random_assignment_with_capacity(district: District, costs_type: str) \
     return output
 
 
-def run_greedy_assignment_shortest_walk(district: District, costs_type: str) \
+def run_greedy_assignment_shortest_walk(district: District) \
                                         -> list[dict[str, Any]]:
     """ Creates cables between houses and batteries that have
         been assigned using the greedy algorithm and plots this.
@@ -118,7 +118,7 @@ def run_greedy_assignment_shortest_walk(district: District, costs_type: str) \
         Returns:
             (list[dict]) output list
     """
-
+    """
     # Uses greedy algorithm to assign houses to batteries
     connections = greedy_assignment(district)
 
@@ -147,6 +147,20 @@ def run_greedy_assignment_shortest_walk(district: District, costs_type: str) \
                     print(f"House: {n}, Cable {o}, Coord: {cable_2}")
 
         battery.add_house_cables(house)
+    district.district_dict[f"{district.costs_type}"] = district.return_cost()
+    output = district.return_output()
+
+    return output"""
+    # Create connection dictionary that assigns batteries to houses
+    connections = greedy_assignment(district)
+
+    # Loops over each house in the district that has a battery assigned
+    # for n, house in enumerate(connections):
+    for house in connections:
+        battery = connections[house]
+        battery.add_house(house)
+        create_cable(house, (battery.row, battery.column))
+
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
     output = district.return_output()
 
