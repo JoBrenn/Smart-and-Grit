@@ -19,7 +19,7 @@ class House:
     """ House class
 
     Methods:
-        get_coordinate():       return coordinates in string form "x,y"
+        convert_coordinate_to_str():       return coordinates in string form "x,y"
         add_cable_segment():    add coordinate to cable connection of house
         return_cable_length():  return length of house cable
         delete_cables():        delete house cable
@@ -42,12 +42,12 @@ class House:
         self.str_cables: list[str] = []
 
         # Initialize house dictionary
-        self.house_dict = {"location": self.get_coordinate((self.row,
+        self.house_dict = {"location": self.convert_coordinate_to_str((self.row,
                                                             self.column)),
                            "output": float(self.output),
                            "cables": self.str_cables}
 
-    def get_coordinate(self, coordinate: tuple[int, int]) -> str:
+    def convert_coordinate_to_str(self, coordinate: tuple[int, int]) -> str:
         """ Return string form of given coordinate
         Params:
             coordinate    (tuple[int]): given coordinate
@@ -67,7 +67,7 @@ class House:
             adds coordinate to cables list of house
         """
 
-        self.str_cables.append(self.get_coordinate((coordinate[0],
+        self.str_cables.append(self.convert_coordinate_to_str((coordinate[0],
                                                     coordinate[1])))
         self.cables.append(coordinate)
 

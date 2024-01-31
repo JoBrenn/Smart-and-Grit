@@ -21,7 +21,7 @@ class Battery:
     """ Battery class
 
     Methods:
-        get_coordinate():       return coordinates in string form "x,y"
+        convert_coordinate_to_str():       return coordinates in string form "x,y"
         add_house():            add house to battery connection
         delete_house():         delete house from battery connection
         return_capacity():      return battery capacity
@@ -50,11 +50,11 @@ class Battery:
         self.cables: set[tuple[int, int]] = set()
 
         # Initialize battery dictionary
-        self.battery_dict = {"location": self.get_coordinate((self.row,
+        self.battery_dict = {"location": self.convert_coordinate_to_str((self.row,
                                                               self.column)),
                              "capacity": float(self.capacity), "houses": []}
 
-    def get_coordinate(self, coordinate: tuple[int, int]) -> str:
+    def convert_coordinate_to_str(self, coordinate: tuple[int, int]) -> str:
         """ Return string form of given coordinate
         Params:
             coordinate    (tuple[int]): given coordinate
