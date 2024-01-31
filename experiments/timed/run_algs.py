@@ -1,10 +1,3 @@
-import sys
-
-sys.path.append('../../code')
-from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-
 from code.modules.district import District
 
 from code.algorithms.closest import Closest
@@ -16,9 +9,18 @@ from code.algorithms.simulatedannealing import Simulatedannealing
 from code.visualisation.visualize import plot_output
 
 import csv
+import sys
 
 
-def append_to_csv(state, algorithm):
+def append_to_csv(state: District, algorithm: str) -> None:
+    """ Appends the state costs to a csv
+        Pararms:
+            state(District)     The district whose costs will be appended
+            algorithm(str)      The name of the algorithm
+        Returns
+            None
+            Appends the costs to a csv with the same name as the algorithm
+    """
     with open(f"output/csv/{algorithm}.csv", "a", newline="") as outfile:
         writer = csv.writer(outfile, delimiter=';')
         writer.writerow([state.return_cost()])
@@ -27,12 +29,7 @@ district = District(1, "costs-own")
 
 algorithm = sys.argv[1]
 
-if algorithm == "random":
-    simulated = Simulatedannealing(district)
-    result = simulated.run_hill_climber(district, 1)
-    append_to_csv(result, algorithm)
-
-elif algorithm == "closest":
+if algorithm == "closest":
     closest = Closest(district, 10)
     result = closest.run()
     append_to_csv(result, algorithm)
@@ -51,7 +48,7 @@ elif algorithm == "hillclimber":
     result = hillclimber.run_hill_climber(district, 1)
     append_to_csv(result, algorithm)
 
-elif algorithm == "simulated":
+elif algorithm == "simulatedannealing":
     simulated = Simulatedannealing(district)
     result = simulated.run_hill_climber(district, 1)
     append_to_csv(result, algorithm)

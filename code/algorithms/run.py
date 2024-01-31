@@ -118,62 +118,8 @@ def run_greedy_assignment_shortest_walk(district: District) \
         Returns:
             (list[dict]) output list
     """
-    """
-    # Uses greedy algorithm to assign houses to batteries
-    connections = greedy_assignment(district)
-
-    for n, house in enumerate(connections):
-        battery = connections[house]
-        if n == 0:
-            create_cable(house, (battery.row, battery.column))
-
-        else:
-            shortest = tuple([battery.row, battery.column])
-            shortest_dist = (abs(shortest[0] - house.row) +
-                             abs(shortest[1] - house.column))
-            for cable in battery.cables:
-                distance = (abs(cable[0] - house.row) +
-                            abs(cable[1] - house.column))
-                if distance < shortest_dist:
-                    shortest = tuple([cable[0], cable[1]])
-
-            create_cable(house, shortest)
-
-            for o, cable_2 in enumerate(house.cables):
-                if o < len(house.cables) - 1 and tuple([battery.row,
-                                                        battery.column]) \
-                                                            == cable_2:
-                    print("-----------ERROR-----------")
-                    print(f"House: {n}, Cable {o}, Coord: {cable_2}")
-
-        battery.add_house_cables(house)
-    district.district_dict[f"{district.costs_type}"] = district.return_cost()
-    output = district.return_output()
-
-    return output"""
     # Create connection dictionary that assigns batteries to houses
     connections = greedy_assignment(district)
-
-    # Loops over each house in the district that has a battery assigned
-    # for n, house in enumerate(connections):
-    for house in connections:
-        battery = connections[house]
-        battery.add_house(house)
-        create_cable(house, (battery.row, battery.column))
-
-    district.district_dict[f"{district.costs_type}"] = district.return_cost()
-    output = district.return_output()
-
-    return output
-
-
-def run_alg_manh(district: District, assign_method, merge: bool,
-                 costs_type: str) -> list[dict[str, Any]]:
-    """ TODO!!!
-    """
-
-    # Create connection dictionary that assigns batteries to houses
-    connections = assign_method(district)
 
     # Loops over each house in the district that has a battery assigned
     # for n, house in enumerate(connections):

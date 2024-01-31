@@ -65,6 +65,7 @@ from code.modules.district import District
 from experiments.beamsearch.beamsearch_script import BeamSearchTuning
 from experiments.hillclimber.hill_climb_experiment import run_hillclimber_experiments
 from experiments.simulatedannealing.simulatedannealing_experiment import run_simulatedannealing_experiments
+from experiments.timed.time_scripts import run_time_script
 
 
 def load_JSON_output(filename: str) -> list:
@@ -401,6 +402,19 @@ def get_experiment_input():
     return experiment_input
 
 
+def get_algorithm_input():
+    algorithm_input = ""
+    while not algorithm_input:
+        algorithm_input = input("\n\u001b[33mAlgorithm Method:\u001b[0m ")
+        if algorithm_input not in {"closest", "beamsearch",\
+                                    "hillclimber", "simulated", "depthfirst"}:
+            print("Please chooses between:")
+            print("closest\n", "beamsearch\n" "hillclimber\n", "simulated\n", "depthfirst\n")
+            algorithm_input = ""
+
+    return algorithm_input
+
+
 def run_experiment(district_number: int):
     selected_experiment = get_experiment_input()
     district = District(district_number, "costs-own")
@@ -415,7 +429,8 @@ def run_experiment(district_number: int):
     elif selected_experiment == "simulatedannealing":
         run_simulatedannealing_experiments(district)
     elif selected_experiment == "timed":
-        return True
+        selected_algorithm = get_algorithm_input()
+        run_time_script(selected_algorithm)
 
 
 def run_general_method(method: str) -> list:
@@ -519,7 +534,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_greedy_assignment_shortest_walk(district_copy, method))
+            data.append(run_greedy_assignment_shortest_walk(district_copy))
 
     elif method == "hillclimber":
         """
