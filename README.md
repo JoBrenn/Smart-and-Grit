@@ -58,7 +58,7 @@ Here the most imported directories are stated:
 - /results: contains all found results
 
 ## Algorithms
-Here you find short description of the different algorithms one can find in /code/algorithms. 
+Here you find short descriptions of the different algorithms one can find in /code/algorithms. 
 
 ### Random
 Random algorithm where houses are randomly assigned to batteries, taking capacity into account.
@@ -72,9 +72,8 @@ we change our small change to choosing two random houses and swapping
 their battery connections. This change is only accepted when the state remains a good solution.
 
 ### Simulated annealing
-Runs the HillClimber algorithm on a given district,
-where changes have been made to make it a simulatedannealing algorithm. Temperature changes linearly.
-And probability is equal to 2**(old - new)/temperature.
+Runs the hillclimber algorithm on a given district,
+where changes have been made to make it a simulatedannealing algorithm. Temperature changes linearly and probability is equal to 2**(old - new)/temperature.
 
 ### Beam search
 Beam Search works by selecting the best N (Beam) states
@@ -96,7 +95,7 @@ Instead of the next state being chosen from a stack, it is
 picked from a queue
 
 ### Closest
-This is more of an heuristic, where each house is connected to the by Manhattan distance closest battery. This algorithm will can be
+This is more of a heuristic, where each house is connected to the by Manhattan distance closest battery. This algorithm will can be
 run again until a solution has been found where the maximum capacity
 of each battery has not been exceeded.
 
