@@ -39,7 +39,7 @@ def runs_algorithms_to_costs(district_number: int, runs: int,
 
     outputs = []
 
-    for run in range(runs):
+    for _ in range(runs):
         district = District(district_number, "costs-own")
 
         # Check for different methods
