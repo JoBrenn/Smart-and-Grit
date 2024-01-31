@@ -29,8 +29,21 @@ if __name__ == "__main__":
     method = hlp.get_method_input()
 
     # General Methods LOAD and Format
-    if method in {"format", "load", "combine", "experiment"}:
+    if method in {"format", "load", "combine"}:
         data = hlp.run_general_method(method)
+
+        # Plot data
+        hlp.plot_data(data, method, runs, district)
+
+    elif method == "experiment":
+        # Select district between 1 - 3
+        district = hlp.get_district_input()
+
+        # Get experiment method
+        method_experiment = hlp.get_method_input()
+
+        # Run wanted experiment
+        run_experiment(district)
 
     # Algo Methods:
     else:
@@ -46,5 +59,5 @@ if __name__ == "__main__":
         # Write data to JSON
         hlp.write_data_to_JSON(data, method, district, runs)
 
-    # Plot data
-    hlp.plot_data(data, method, runs, district)
+        # Plot data
+        hlp.plot_data(data, method, runs, district)

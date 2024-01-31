@@ -63,6 +63,8 @@ from code.algorithms.combine_cables import run as combine
 from code.modules.district import District
 
 from experiments.beamsearch.beamsearch_script import BeamSearchTuning
+from experiments.hillclimber.hill_climb_experiment import run_hillclimber_experiments
+from experiments.simulatedannealing.simulatedannealing_experiment import run_simulatedannealing_experiments
 
 
 def load_JSON_output(filename: str) -> list:
@@ -392,10 +394,24 @@ def get_experiment_input():
     print(list(filter(isdir, listdir("experiments/"))))
     print(next(walk('.'))[1])
     print(isdir("experiments/beamsearch"))
+
     return None
 
-def run_experiment():
+def run_experiment(district_number: int):
     selected_experiment = get_experiment_input()
+    district = District(district_number, "costs-own")
+
+    if selected_experiment == "beamsearch":
+        max_beam = get_beam_input()
+        runs = get_runs_input()
+        beam = BeamSearchTuning(district_number, runs, max_beam)
+        beam.run_tuning()
+    elif selected_experiment == "hillclimber":
+        run_hillclimber_experiments(district)
+    elif selected_experiment == "simulatedannealing":
+        run_simulatedannealing_experiments(district)
+    elif selected_experiment == "timed":
+        return True
 
 def run_general_method(method: str) -> list:
     """ Run a general method.
@@ -436,12 +452,6 @@ def run_general_method(method: str) -> list:
         else:
             # No files in output/JSON/
             print("No options in output/JSON/. Try running an algorithm first.")
-    elif method == "experiment":
-        data = run_experiment()
-        print("it worked")
-        exit()
-        tuning = BeamSearchTuning(1,1,1)
-        print("Its alive!")
 
     return data
 

@@ -259,8 +259,7 @@ def simulatedannealing_tuning(district: District, n: int = 100):
                 district_work = simul.run_hill_climber(district, n, 1000)
                 result_writer.writerow([district_work.return_cost()])
 
-def run_simulatedannealing_experiments(district_number: int) -> None:
-    district = District(district_number, "costs-own")
+def run_simulatedannealing_experiments(district: District) -> None:
     district_copy = deepcopy(district)
     simulatedannealing_one_climb(district_copy)
     simulatedannealing_one_climb_graph_costs()
