@@ -135,7 +135,7 @@ def simulatedannealing_one_climb_graph_penalty():
     plt.show()
 
 
-def simulatedannealing_temp_comparison(district):
+def simulatedannealing_temp_comparison(district: District):
     """ Runs simulated annealing for different temperatures to compare them
         Creates csv for all temperatures, where rows are mean, min, max
         Params:
@@ -238,7 +238,7 @@ def simulatedannealing_temp_comparison_lowest_graph():
     plt.show()
 
 
-def simulatedannealing_tuning(district: District, n: int):
+def simulatedannealing_tuning(district: District, n: int = 100):
     """ Tunes the simulated annealing parameters
         Creates n simulated annealing run for all combinations
         Adds best to csv file
@@ -258,3 +258,15 @@ def simulatedannealing_tuning(district: District, n: int):
                 simul = Simulatedannealing(district, iterations, temp)
                 district_work = simul.run_hill_climber(district, n, 1000)
                 result_writer.writerow([district_work.return_cost()])
+
+def run_simulatedannealing_experiments(district_number: int) -> None:
+    district = District(district_number, "costs-own")
+    district_copy = deepcopy(district)
+    simulatedannealing_one_climb(district_copy)
+    simulatedannealing_one_climb_graph_costs()
+    simulatedannealing_one_climb_graph_penalty()
+    simulatedannealing_temp_comparison(district_copy)
+    simulatedannealing_temp_comparison_mean_graph()
+    simulatedannealing_temp_comparison_lowest_graph()
+    simulatedannealing_tuning(district)
+    

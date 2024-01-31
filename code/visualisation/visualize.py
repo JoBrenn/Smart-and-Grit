@@ -262,7 +262,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str,
     # File path is used to save the plot to output/histogram
     file_path = \
         f"output/histograms/{alg_method}_{runs}-district_\
-        {district_number}-histogram.png"
+{district_number}-histogram.png"
     plt.savefig(file_path, bbox_inches='tight')
 
     # Show the plot

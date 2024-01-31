@@ -1,4 +1,24 @@
-from .depth_first import DepthFirst, District
+""" Tests for depth first algorithm.
+
+File:           test_manhattan_distance.py
+Tested file:    manhattan_distance.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 31/01/24 (31/01/24)
+
+Description:
+Tests to check the functionality of testable parts of the 
+depth first algorithm.
+
+Usage:  python3 -m pytest code/algorithms/
+    NOTE: run from root of depository
+"""
+
+from .depth_first import DepthFirst
+from code.modules.district import District
 
 def test_valid_capacity():
     """ Here we test that the valid capacity

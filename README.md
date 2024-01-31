@@ -1,18 +1,19 @@
 # Smart-and-Grit
-Nowadays, lots of houses contribute to their own energy consumption via solar panels or other installations. More often than not, these installations produce more energy than needed for own cosumption. However, the current infrastructure does not hold into account these surplusses. In able to store these surplusses, batteries need to be placed along the grid.\
+Nowadays, lots of houses contribute to their own energy consumption via solar panels or other installations. More often than not, these installations produce more energy than needed for own consumption. However, the current infrastructure does not hold into account these surplusses. In able to store these surplusses, batteries need to be placed along the grid.\
 The goal is to find the best cable configuration for three given districts. Where the location of the batteries, the location of the houses and their outputs are given.\
 In order to do this, there are a couple of requirements, namely:
-- No battery can be connected to another battery, also not via a houses.
+- No battery can be connected to another battery, also not via a house.
 - No house can be connected to two batteries.
 - There can be multiple cables along a grid segments. However, they are considered different cables. 
 - At first, all houses must have their own cable to a battery (indicated by 'costs-own'). A shared cables configuration is indicated by 'costs-shared'.
 
 ## Objective Function
-SmartGrid is a minimalisation problem. We need to minimalise the amount of cable segments we use. The amount of batteries is given. The costs of one piece are as following:
+SmartGrid is a minimalisation problem. The amount of cable segments needs to be minimised. The amount of batteries is given. 
+The costs of the different aspects are as follows:
 - Battery (B): 5000
 - Cable (C): 9
 
-The Object Function of this problem can thus be stated:
+The Objective Function of this problem, and thus the costs of a district configuration, can be stated as:
 
     Z = B * 5000 + C * 9
 
@@ -32,7 +33,7 @@ Running of: python3 main.py gives the following option screen:
 <img src="images/main_screen.png" width="400">
 
 
-Where typing help in the method option gives a description of the possible methods.
+Where typing 'help' in the method option gives a description of the possible methods.
 
 Typing 'combine' in the method option shows a list of output files. Selecting one of these
 indices runs the combine_cables algorithm on said output file. This creates a 'costs-shared'
@@ -51,8 +52,9 @@ Here the most imported directories are stated:
 - /experiments: contains all code for the experiments
     - /hillclimber: contains hillclimber experiment script
     - /simulatedannealing: contains simulatedannealing experiment script
-    - /beamsearch: 
-    - results_timed.md: contains the results of the timed experiment for all algorithms
+    - /beamsearch: contains beamsearch experiment script
+    - /times: contains all timed experiment scripts 
+        - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
 ## Experiment
@@ -86,13 +88,13 @@ To run tests, run the following code:
 
         python3 -m pytest code/<directory>/
 
-example:
-        python3 -m pytest code/modules/
-
 Specify the directory to be tested. The following directories contain tests:
 - /code (always to be specified)
     - /algorithms
     - /modules
+
+Example:
+        python3 -m pytest code/modules/
 
 # Authors
 - Jonas Brenninkmeijer (JoBrenn)
