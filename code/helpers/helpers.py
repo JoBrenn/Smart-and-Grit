@@ -388,14 +388,21 @@ def combine_method(json_data: list, file: str) -> list:
     return data
 
 def get_experiment_input():
-    print(listdir("experiments/"))
-    print(list(filter(isdir, listdir("experiments/"))))
-    print(next(walk('.'))[1])
-    print(isdir("experiments/beamsearch"))
-    return None
+    experiment_input = ""
+    while not experiment_input:
+        experiment_input = input("\n\u001b[33mExperiment Method:\u001b[0m ")
+        if experiment_input not in {"beamsearch", "simulatedannealing", "hillclimber", "timed"}:
+            print("Please chooses between:")
+            print(" beamsearch\n", "simulatedannealing\n", "hillclimber\n", "timed")
+            experiment_input = ""
+    return experiment_input
 
 def run_experiment():
     selected_experiment = get_experiment_input()
+
+
+
+
 
 def run_general_method(method: str) -> list:
     """ Run a general method.
