@@ -72,16 +72,28 @@ after which the results will be written to a csv and the best result will be sto
 
 
 
-
-
 ### Timed experments
 
 A timed experiment can be ran using:
 
-`python3 time_scripts.py <method>`
+        python3 time_scripts.py <method>
 
 where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
 In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
+
+## Tests
+To run tests, run the following code:
+
+        python3 -m pytest code/<directory>
+
+Specify the directory to be tested. The following directories contain tests:
+- /code (always to be specified)
+    - /algorithms
+    - /helpers
+    - /modules
+    - /visualisation
+
+
 
 # Authors
 - Jonas Brenninkmeijer (JoBrenn)

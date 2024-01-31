@@ -4,7 +4,7 @@ File: simulatedannealing.py
 
 Author:    Kathy Molenaar
 
-Date: 23/01/24
+Date: 23/01/24 (31/01/24)
 
 Description:
 This class runs the HillClimber algorithm on a given district,

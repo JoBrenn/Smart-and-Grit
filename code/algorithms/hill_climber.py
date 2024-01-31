@@ -4,7 +4,7 @@ File: hill_climber.py
 
 Author:    Kathy Molenaar
 
-Date: 19/01/24
+Date: 19/01/24 (31/01/24)
 
 Description:
 This HillClimber class runs the HillClimber algorithm on a given district.
@@ -25,7 +25,7 @@ from code.algorithms.manhattan_distance import create_cable
 
 from random import choice
 from copy import deepcopy
-import csv
+from csv import writer
 
 
 class HillClimber:
@@ -354,7 +354,7 @@ class HillClimber:
         district_work = self.one_entire_iteration(district_empty, N)
         file = f"output/csv/costs_hc_{district.district}_{n}.csv"
         with open(file, 'w', newline='') as filecsv:
-            writer = csv.writer(filecsv)
+            writer = writer(filecsv)
             writer.writerow([district_work.return_cost()])
         for i in range(n - 1):
             print(i)
@@ -365,7 +365,7 @@ class HillClimber:
 
             # Write to csv file
             with open(file, 'a', newline='') as filecsv:
-                writer = csv.writer(filecsv)
+                writer = writer(filecsv)
                 writer.writerow([district_work.return_cost()])
             if new_cost > old_cost:
                 district_work = previous_district

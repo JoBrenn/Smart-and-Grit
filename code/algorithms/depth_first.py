@@ -19,7 +19,7 @@ Usage:  from code.algorithms.depth_first import DepthFirst
 
 from copy import deepcopy
 from random import shuffle
-import csv
+from csv import writer
 
 from code.modules.district import District
 from code.algorithms.manhattan_distance import create_cable
@@ -120,6 +120,7 @@ class DepthFirst:
                 return False
 
         return True
+
 
     def state_to_csv(self, state: District) -> None:
         """ Appends state costs to a csv
