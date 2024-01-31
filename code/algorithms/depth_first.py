@@ -19,7 +19,7 @@ Usage:  from code.algorithms.depth_first import DepthFirst
 
 from copy import deepcopy
 from random import shuffle
-import csv
+from csv import writer
 
 from code.modules.district import District
 from code.algorithms.manhattan_distance import create_cable
@@ -116,6 +116,7 @@ class DepthFirst:
 
         return True
 
+
     def state_to_csv(self, state: District) -> None:
         """ Appends a state to a csv
         Params:
@@ -124,6 +125,6 @@ class DepthFirst:
             appends state to csv
         """
 
-        with open("output/csv/simulated.csv", "a", newline="") as outfile:
-            writer = csv.writer(outfile, delimiter=';')
+        with open(f"output/csv/simulated.csv", "a", newline="") as outfile:
+            writer = writer(outfile, delimiter=';')
             writer.writerow([state.return_cost()])

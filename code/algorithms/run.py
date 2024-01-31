@@ -6,7 +6,7 @@ Authors:    Kathy Molenaar
             Jesper Vreugde
             Jonas Brenninkmeijer
 
-Date: 10/01/24 (19/01/24)
+Date: 10/01/24 (31/01/24)
 
 Description:
 All random and greedy algorithms can be run by the functions
@@ -75,6 +75,7 @@ def run_random_assignment(district: District,
         # Create cables
         create_cable(house, (battery.row, battery.column))
 
+    # Place cost in district dictionary
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
 
     output = district.return_output()
