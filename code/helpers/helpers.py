@@ -362,6 +362,7 @@ def combine_method(json_data: list, file: str) -> list:
         list with data where cables are combined more efficiently.
         prints the amount of dictkeys if dictionary is found.
     """
+
     # Get input for runs and prepare filename for .json output
     data = []
     runs = get_runs_input()
@@ -389,6 +390,7 @@ def combine_method(json_data: list, file: str) -> list:
         data.append(combine(json_data[0], runs, filename))
 
     return data
+
 
 def get_experiment_input():
     experiment_input = ""

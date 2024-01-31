@@ -19,10 +19,10 @@ class House:
     """ House class
 
     Methods:
-        convert_coordinate_to_str():       return coordinates in string form "x,y"
-        add_cable_segment():    add coordinate to cable connection of house
-        return_cable_length():  return length of house cable
-        delete_cables():        delete house cable
+        convert_coordinate_to_str():   return coordinates in string form "x,y"
+        add_cable_segment():           add coordinate to cable connection of house
+        return_cable_length():         return length of house cable
+        delete_cables():               delete house cable
     """
 
     def __init__(self, house_id: int, coordinate: tuple[int, int],

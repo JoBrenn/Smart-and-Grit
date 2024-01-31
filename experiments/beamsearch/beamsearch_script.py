@@ -6,8 +6,9 @@ Authors:    Jonas Brenninkmeijer
 
 Date: 26/01/24 (31/01/24)
 
-Description:    BeamSearchTuning object to enable to running on
-                different 'beams' multiple times
+Description:
+BeamSearchTuning object to enable to running on
+different 'beams' multiple times
 
 Usage:  python3 beamsearch_script.py [district] [runs] [maximum beam]
 """

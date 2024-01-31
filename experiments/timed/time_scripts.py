@@ -1,3 +1,17 @@
+""" Script to run timed algorithm test
+
+File: time_scripts.py
+
+Authors:    Jesper Vreugde
+
+Date: 26/01/24 (31/01/24)
+
+Description:
+This is a script to run a timed test for different algorithms
+
+Usage:  from experiments.timed.time_script import run_time_script
+"""
+
 from subprocess import call
 from time import time
 
