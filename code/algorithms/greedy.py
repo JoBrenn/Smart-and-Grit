@@ -51,8 +51,6 @@ def greedy_assignment(district: District) -> dict[House, Battery]:
 
         # If a compatible battery has been found, the house will be added
         if max_battery is not None:
-            print(f"House {house.house_id} ->\
-            Battery {max_battery.battery_id}")
             max_battery.add_house(house)
             connection_dict[house] = max_battery
         else:

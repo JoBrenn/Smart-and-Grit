@@ -127,7 +127,7 @@ A timed experiment can be ran by using:
 
         python3 time_scripts.py <method>
 
-where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
+where the method can be one of closest, beamsearch, hillclimber, simulated, randomcap or depthfirst
 
 ## Tests
 To run tests, run the following code:
