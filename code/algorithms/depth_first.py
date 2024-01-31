@@ -33,9 +33,12 @@ class DepthFirst:
         return_next_state()         return the next item in the stack
         valid_capacity(district)    determine whether each
                                     battery has exceeded their capacity
+        state_to_csv(district)      saves costs of state to csv file
+        handle_final_state(state)   compares state to lowest costs
     """
 
-    def __init__(self, district: District, depth: int = 5) -> None:
+    def __init__(self, district: District, depth: int = 5,\
+                  write_output: bool = False) -> None:
         """ Initialize Depth First class
         Params:
             district    (District): Distrisct object
@@ -43,14 +46,19 @@ class DepthFirst:
                                will be. Set at the max as default
         Returns:
             none
-       """
+        """
 
         self.depth = depth
         self.states = [district]
         self.house_num = len(district.houses)
+        self.write_output = write_output
 
         # Randomize
         shuffle(self.states[0].houses)
+
+        # Set the initial costs
+        self.lowest_costs = float("inf")
+        self.lowest_costs_state = None
 
     def run(self) -> District:
         """ Runs the depth first algorithm
@@ -58,16 +66,12 @@ class DepthFirst:
             A district object that has the lowest found cost state
         """
 
-        # Set the initial costs
-        lowest_costs = float("inf")
-        lowest_costs_state = None
-
         # Loop over stack until it is empty
         while len(self.states) > 0:
             state = self.return_next_state()
 
             # Prunes branches where a battery's capacity has been exceeded
-            if self.valid_capacity(state) is True:
+            if self.valid_capacity(state):
 
                 if self.house_num - len(state.houses) < self.depth:
                     house = state.houses.pop()
@@ -77,20 +81,13 @@ class DepthFirst:
                         house_add = deepcopy(house)
                         create_cable(house_add, (battery.row, battery.column))
                         child.batteries[n].add_house(house_add)
-                        child.assigned_houses += 1
-                        self.state_to_csv(state)
                         self.states.append(child)
 
                 # A state at the desired depth has been found and can compare
                 else:
-                    state.district_dict[f"{state.costs_type}"] \
-                        = state.return_cost()
-
-                    if state.district_dict[state.costs_type] < lowest_costs:
-                        lowest_costs = state.district_dict[state.costs_type]
-                        lowest_costs_state = deepcopy(state)
-
-        return lowest_costs_state
+                    self.handle_final_state(state)
+                    
+        return self.lowest_costs_state
 
     def return_next_state(self) -> District:
         """ Returns next state in the stack
@@ -116,15 +113,37 @@ class DepthFirst:
 
         return True
 
+    def handle_final_state(self, state: District) -> None:
+        """ Compares the final state to the lowest costs state.
+        Params:
+            district    (District): district object
+        Returns:
+            None
+            Stores the state if it is has current lowest costs and 
+            writes to a csv if wanted
+
+        """
+        state.district_dict[f"{state.costs_type}"] \
+            = state.return_cost()
+        
+        # Write output to csv if specified
+        if self.write_output:   
+            self.state_to_csv(state)
+
+        if state.district_dict[state.costs_type] < self.lowest_costs:
+            self.lowest_costs = state.district_dict[state.costs_type]
+            self.lowest_costs_state = deepcopy(state)
+
 
     def state_to_csv(self, state: District) -> None:
-        """ Appends a state to a csv
+        """ Appends state costs to a csv
         Params:
             state    (District): district object
         Returns:
-            appends state to csv
+            appends state to csv file containing a the costs
+            of all the final states in the run
         """
 
-        with open(f"output/csv/simulated.csv", "a", newline="") as outfile:
+        with open("output/csv/depth.csv", "a", newline="") as outfile:
             writer = writer(outfile, delimiter=';')
             writer.writerow([state.return_cost()])
