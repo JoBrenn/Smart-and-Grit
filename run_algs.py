@@ -31,9 +31,8 @@ elif algorithm == "beamsearch":
     append_to_csv(result, algorithm)
 
 elif algorithm == "depthfirst":
-    depthfirst = DepthFirst(district, len(district.houses))
+    depthfirst = DepthFirst(district, len(district.houses), True)
     result = depthfirst.run()
-    plot_output(result.return_output())
 
 elif algorithm == "hillclimber":
     hillclimber = HillClimber(district)
