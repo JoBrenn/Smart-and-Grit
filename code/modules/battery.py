@@ -6,7 +6,7 @@ Authors:    Kathy Molenaar
             Jesper Vreugde
             Jonas Brenninkmeijer
 
-Date: 09/01/24 (11/01/24)
+Date: 09/01/24 (30/01/24)
 
 Description:
 This Battery class can be used to initialize a Battery object.

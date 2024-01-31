@@ -6,7 +6,7 @@ Authors:    Kathy Molenaar
             Jesper Vreugde
             Jonas Brenninkmeijer
 
-Date: 09/01/24 (11/01/24)
+Date: 09/01/24 (31/01/24)
 
 Description:
 This District class can be used to initialize a District object.
@@ -18,7 +18,7 @@ from code.modules.battery import Battery
 from code.modules.house import House
 
 from typing import Any
-import json
+from json import dumps
 
 
 class District:
@@ -43,7 +43,6 @@ class District:
         self.district = district
         self.costs_type = costs_type
         self.batteries: list[Battery] = []
-        self.assigned_houses = 0
         self.houses: list[House] = []
         self.district_dict = {"district": self.district, f"{costs_type}": 0}
         self.output: list[dict[str, Any]] = [self.district_dict]
@@ -133,7 +132,7 @@ class District:
             (str) json of output
         """
 
-        return json.dumps(self.output)
+        return dumps(self.output)
 
     def is_valid(self) -> bool:
         """ Check whether solution is valid

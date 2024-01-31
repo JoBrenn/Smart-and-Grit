@@ -6,6 +6,8 @@ from code.algorithms.beam_search import BeamSearch
 from code.algorithms.hill_climber import HillClimber
 from code.algorithms.simulatedannealing import Simulatedannealing
 
+from code.visualisation.visualize import plot_output
+
 import csv
 import sys
 
@@ -29,7 +31,7 @@ elif algorithm == "beamsearch":
     append_to_csv(result, algorithm)
 
 elif algorithm == "depthfirst":
-    depthfirst = DepthFirst
+    depthfirst = DepthFirst(district, len(district.houses), True)
     result = depthfirst.run()
 
 elif algorithm == "hillclimber":
