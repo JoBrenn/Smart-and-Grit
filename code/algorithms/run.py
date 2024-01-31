@@ -39,7 +39,7 @@ def runs_algorithms_to_costs(district_number: int, runs: int,
 
     outputs = []
 
-    for _ in range(runs):
+    for run in range(runs):
         district = District(district_number, "costs-own")
 
         # Check for different methods
@@ -102,9 +102,8 @@ def run_random_assignment_with_capacity(district: District, costs_type: str) \
         create_cable(house, (battery.row, battery.column))
 
     district.district_dict[f"{district.costs_type}"] = district.return_cost()
-    output = district
 
-    return output
+    return district
 
 
 def run_greedy_assignment_shortest_walk(district: District) \
