@@ -59,7 +59,7 @@ class House:
 
     def add_cable_segment(self, coordinate: tuple[int, int]) -> None:
         """ Add a cable coordinate to the house
-        Creates cable point for house
+            Creates cable point for house
         Params:
             coordinate    (tuple[int]): given coordinate
         Returns:

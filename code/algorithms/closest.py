@@ -31,7 +31,7 @@ class Closest:
         return_valid()    determines whether solution is valid
     """
 
-    def __init__(self, old_district: District, max_runs: int = 10):
+    def __init__(self, old_district: District, max_runs: int = 10) -> None:
         """ Initialize Closest class
         Params:
             district    (District): Distrisct object
@@ -83,14 +83,9 @@ class Closest:
             elif self.max_runs == 0:
                 print("Max runs reached. Solution is not valid")
 
-            """else:
-                self.max_runs -= 1
-                print(f"HOUSE ON ({house.row}, {house.column}) NOT ASSIGNED."
-                      + f" Retries left: {self.max_runs}")
-                self.district = self.run()"""
-
-        if self.district != None:
-            self.district.district_dict["costs-own"] = self.district.return_cost()
+        if self.district is not None:
+            self.district.district_dict["costs-own"] \
+                = self.district.return_cost()
 
         return self.district
 

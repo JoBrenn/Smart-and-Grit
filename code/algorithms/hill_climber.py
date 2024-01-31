@@ -7,8 +7,9 @@ Author:    Kathy Molenaar
 Date: 19/01/24
 
 Description:
-This HillClimber class runs the HillClimber algorithm on a given district
-Here we make use of constraint relaxation; we start with a random state.
+This HillClimber class runs the HillClimber algorithm on a given district.
+Here we make use of constraint relaxation; we start with a random state
+and add a penalty of +10 to the cost for every unit capacity exceedance.
 First our small change consists of choosing one random house and re-assigning
 it to a random battery. When we have reached a good solution
 we change our small change to choosing two random houses and swapping
@@ -45,8 +46,6 @@ class HillClimber:
 
     def __init__(self, district: District) -> None:
         """ Initialize HillClimber
-            Number of iterations is not relevant here,
-            since we want to stop after N times no change
         Params:
             district    (District): district
         """
@@ -58,8 +57,8 @@ class HillClimber:
 
     def random_start_state(self, district: District) -> District:
         """ Randomly assign houses to batteries,
-        not taking capacity into account
-        Creates connections via Manhattan distance
+            not taking capacity into account
+            Creates connections via Manhattan distance
         Params:
             district    (District): district object
         Returns:
@@ -73,6 +72,7 @@ class HillClimber:
             # Add the house to the battery connection
             battery.add_house(house)
             create_cable(house, (battery.row, battery.column))
+
         district.district_dict[f"{district.costs_type}"]\
             = district.return_cost()
 
@@ -80,7 +80,7 @@ class HillClimber:
 
     def random_change(self, district: District, costs_type: str) -> District:
         """ Randomly change one house-battery connection
-        Alters this change in all relevant structures
+            Alters this change in all relevant structures
         Params:
             district      (District):  district object
             costs_type    (str):     indication of costs-shared or costs-own
@@ -131,7 +131,7 @@ class HillClimber:
 
     def random_switch(self, district: District, costs_type: str) -> District:
         """ Randomly switch two house-battery connections
-        Alters this change in all relevant structures
+            Alters this change in all relevant structures
         Params:
             district      (District):  district object
             costs_type    (float):     indication of costs-shared or costs-own
@@ -199,7 +199,7 @@ class HillClimber:
 
     def return_penalty(self, battery: Battery) -> float:
         """ Return the penalty for a given battery object
-        Every capacity surplus is +10
+            Every capacity surplus is +10
         Params:
             battery     (Battery): Battery object in district
         Returns:
@@ -217,7 +217,7 @@ class HillClimber:
 
     def return_total_cost(self, district: District) -> float:
         """ Return the total cost associated with district
-        Adds both the cost and the penalties
+            Adds both the cost and the penalties
         Params:
             district    (District): District object
         Returns:
@@ -235,7 +235,7 @@ class HillClimber:
 
     def check_valid(self, district: District) -> bool:
         """ Check whether found configuration is valid
-        Uses comparison of costs with or without penalty
+            Uses comparison of costs with or without penalty
         Params:
             district    (District): District object
         Returns:
@@ -251,7 +251,7 @@ class HillClimber:
 
     def one_change_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random change
-        Switches change back when cost has worsened.
+            Switches change back when cost has worsened
         Params:
             district    (District): District object
         Returns:
@@ -273,7 +273,7 @@ class HillClimber:
 
     def one_switch_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random switch
-        Switches change back when cost has worsened.
+            Switches change back when cost has worsened
         Params:
             district    (District): District object
         Returns:
@@ -300,8 +300,8 @@ class HillClimber:
 
     def one_entire_iteration(self, district: District, N: int) -> District:
         """ Run one iteration of HillClimber
-        Chooses random begin state.
-        Stops when N times not improved
+            Chooses random begin state
+            Stops when N cost hasn´t improved N times
         Params:
             district    (District): District object
             N           (int):      maximum repeat number
@@ -352,7 +352,7 @@ class HillClimber:
 
         # Initialize working district
         district_work = self.one_entire_iteration(district_empty, N)
-        file = "output/csv/costs_hc.csv"
+        file = f"output/csv/costs_hc_{district.district}_{n}.csv"
         with open(file, 'w', newline='') as filecsv:
             writer = csv.writer(filecsv)
             writer.writerow([district_work.return_cost()])

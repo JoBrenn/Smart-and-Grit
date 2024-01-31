@@ -26,7 +26,7 @@ class BreadthFirst(DepthFirst):
         return_next_state()         returns the next item in the queue
     """
 
-    def __init__(self, district, depth) -> None:
+    def __init__(self, district: District, depth: int) -> None:
         """ Initializes the BreadthFirst class
             Params:
                 district    (District): Distrisct object

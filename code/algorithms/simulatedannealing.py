@@ -55,7 +55,7 @@ class Simulatedannealing(HillClimber):
 
     def linear_temperature_change(self) -> None:
         """ Linearly alter the temperature
-        Becomes zero when all iterations have passed
+            Becomes zero when all iterations have passed
         Returns:
             none
             alters self.temp
@@ -66,7 +66,7 @@ class Simulatedannealing(HillClimber):
 
     def one_change_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random change
-        Allow change with certain probability
+            Allow change with certain probability
         Params:
             district    (District): District object
         Returns:
@@ -108,7 +108,7 @@ class Simulatedannealing(HillClimber):
 
     def one_switch_iteration(self, district: District) -> District:
         """ Run one iteration of applying a random switch
-        Allow change with certain probability
+            Allow change with certain probability
         Params:
             district    (District): District object
         Returns:
@@ -151,8 +151,9 @@ class Simulatedannealing(HillClimber):
 
     def one_entire_iteration(self, district: District, N: int) -> District:
         """ Run one iteration of simulated annealing
-        Chooses random begin state.
-        Stops after self.iterations, since N same iterations will never happen
+            Chooses random begin state.
+            Stops after self.iterations, 
+            since N same iterations will never happen
         Params:
             district    (District): District object
             N           (int):      maximum repeat number
@@ -168,6 +169,7 @@ class Simulatedannealing(HillClimber):
 
         unchanged_count = 0
 
+        # Keep going for iterations
         for iteration in range(self.iterations_total + 1):
             self.iterations += 1
 

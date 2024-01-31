@@ -135,7 +135,7 @@ class BeamSearch:
             return self.states[0]
         else:
             print(".", end="", flush=True)
-            return
+            return None
 
     def filter_valid_states(self) -> None:
         """ Filter valid states from self.states.

@@ -82,7 +82,7 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
                     shortest_length = return_manhattan_distance(house, point)
                     shortest_coordinate = point
 
-                    # Delete old cable, will not need it
+                    # Delete old cable
                     house_dict["cables"].clear()
 
             # After having point shortest from all points create new cable
@@ -100,7 +100,7 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
 
 def combine_district(output: list) -> list:
     """ Combine cable connections for entire district
-    Alter district dictionary to new configuration
+        Alter district dictionary to new configuration
     Params:
             output    (list):  filled output of district configuration
     Returns:
@@ -137,7 +137,7 @@ def combine_district(output: list) -> list:
 
 def run(output: list, n: int, filename: str) -> list:
     """ Combine cable connections for entire district n times
-    Gives best solution
+        Gives best solution
     Params:
             output    (list):   filled output of district configuration
             n         (int):    number of iterations

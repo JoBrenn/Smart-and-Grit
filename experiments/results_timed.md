@@ -1,6 +1,6 @@
 # Results
 
-The following results were collected by running eah algorithm repeatedly for 2700 seconds.
+The following results were collected by running each algorithm repeatedly for 2700 seconds.
 
 The full CSV's containing the state costs of each run are located at: /experiments/timed/
 

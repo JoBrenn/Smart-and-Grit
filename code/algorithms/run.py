@@ -33,7 +33,8 @@ def runs_algorithms_to_costs(district_number: int, runs: int,
             runs               (int): number of runs wanted
             alg_method         (str): name of algorithm method
         Returns:
-            (list[int]) list of all costs
+            (list[int] or int) list of all costs or zero 
+                               when method not random
     """
 
     outputs = []
@@ -90,7 +91,7 @@ def run_random_assignment_with_capacity(district: District, costs_type: str) \
             district    (District): district object
             costs_type  (str):      either costs-own or costs-shared
         Returns:
-            (list) output list
+            (list[dict) output list
     """
 
     connections = random_assignment_capacity(district)
@@ -114,7 +115,7 @@ def run_greedy_assignment_shortest_walk(district: District, costs_type: str) \
             district    (District): district object
             costs_type  (str):      either costs-own or costs-shared
         Returns:
-            (list) output list
+            (list[dict]) output list
     """
 
     # Uses greedy algorithm to assign houses to batteries
