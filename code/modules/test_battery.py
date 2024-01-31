@@ -12,7 +12,7 @@ Date: 31/01/24 (31/01/24)
 Description:
 Tests to check the functionality of different parts of the Battery class.
 
-Usage:  python3 -m pytest code/modules
+Usage:  python3 -m pytest code/modules/
     NOTE: run from root of depository
 """
 from code.modules.battery import Battery
@@ -35,6 +35,10 @@ def test_sequence_of_methods():
     assert battery.left_over_capacity == 3
     assert battery.return_capacity() == 3
 
+def test_battery_id():
+    """ Test if battery id is correct."""
+    battery = Battery(1, (2,2), 3, 1000)
+    assert battery.battery_id == 1
 
 def test_convert_coordinate_correct():
     """ Test if coordinates are converted correctly. """

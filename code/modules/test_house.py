@@ -34,6 +34,7 @@ def test_add_and_delete():
     assert house.return_cable_length() == -1
 
 def test_house_id():
+    """ Test if house id is correct."""
     house = House(1, (1,1), 1)
     assert house.house_id == 1
 
