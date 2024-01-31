@@ -1,48 +1,46 @@
 from code.modules.district import District
 
-
-#from code.algorithms.closest import Closest
-#from code.algorithms.depth_first import DepthFirst
-#from code.algorithms.breadth_first import BreadthFirst
-#from code.algorithms.beam_search import BeamSearch
+from code.algorithms.closest import Closest
+from code.algorithms.depth_first import DepthFirst
+from code.algorithms.beam_search import BeamSearch
 from code.algorithms.hill_climber import HillClimber
-#from code.algorithms.simulatedannealing import Simulatedannealing
+from code.algorithms.simulatedannealing import Simulatedannealing
 
 import csv
+import sys
 
+def append_to_csv(state, algorithm):
+    with open(f"output/csv/{algorithm}.csv", "a", newline="") as outfile:
+        writer = csv.writer(outfile, delimiter=';')
+        writer.writerow([state.return_cost()])
 
 district = District(1, "costs-own")
 
-#closest = Closest(district, 10)
-print("hi")
-hillclimb = HillClimber(district)
+algorithm = sys.argv[1]
 
-state = hillclimb.run_hill_climber(district, 10, 1000)
-print(state)
-print("hi2")
+if algorithm == "closest":
+    closest = Closest(district, 10)
+    result = closest.run()
+    append_to_csv(result, algorithm)
 
-succeeded = 0
+elif algorithm == "beamsearch":
+    beamsearch = BeamSearch(district, 5)
+    result = beamsearch.run()
+    append_to_csv(result, algorithm)
 
-if state:
-    print(state.return_cost())
-    succeeded += 1
+elif algorithm == "depthfirst":
+    depthfirst = DepthFirst
+    result = depthfirst.run()
 
-with open(f"output/csv/test.csv", "a", newline="") as outfile:
-    writer = csv.writer(outfile, delimiter=',')
-    print(state.return_cost())
-    writer.writerow([state.return_cost()])
+elif algorithm == "hillclimber":
+    hillclimber = HillClimber(district)
+    result = hillclimber.run_hill_climber(district, 1)
+    append_to_csv(result, algorithm)
 
-print(succeeded)
-
-"""
-beamsearch = BeamSearch(district, 3)
-
-state = beamsearch.run()
-succeeded = 0
-
-if state:
-    print(state)
-    print(state.return_cost())
-    succeeded += 1
-
-print(succeeded)"""
+elif algorithm == "simulated":
+    simulated = Simulatedannealing(district)
+    result = simulated.run_hill_climber(district, 1)
+    append_to_csv(result, algorithm)
+    
+else:
+    print("Algorithm does not exist")
