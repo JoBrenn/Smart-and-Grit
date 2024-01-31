@@ -57,6 +57,50 @@ Here the most imported directories are stated:
         - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
+## Algorithms
+Here you find short description of the different algorithms one can find in /code/algorithms. 
+
+### Random
+Random algorithm where houses are randomly assigned to batteries, taking capacity into account.
+Here, a good solution is not guaranteed, since it is not given a battery still has leftover capacity.
+
+### Hillclimber
+Uses constraint relaxation, where every unit battery exceedance results in a penalty of +10.\
+First our small change consists of choosing one random house and re-assigning
+it to a random battery. When we have reached a good solution
+we change our small change to choosing two random houses and swapping
+their battery connections. This change is only accepted when the state remains a good solution.
+
+### Simulated annealing
+Runs the HillClimber algorithm on a given district,
+where changes have been made to make it a simulatedannealing algorithm. Temperature changes linearly.
+And probability is equal to 2**(old - new)/temperature.
+
+### Beam search
+Beam Search works by selecting the best N (Beam) states
+and pruning the rest.
+
+### Greedy
+Greedy in this case implies choosing the battery with the most leftover capacity.
+Here, a good solution is not guaranteed, since it is not given a battery still has leftover capacity.
+
+### Depth first
+A depth first algorithm that goes through each possible
+configuration of houses being assigned to batteries. Prunes the branches where the sum of the output
+of each house assigned to a battery exceeds the capacity of that
+battery.
+
+### Breadth first
+This subclass inherits its properties from the DepthFirst class
+Instead of the next state being chosen from a stack, it is
+picked from a queue
+
+### Closest
+This is more of an heuristic, where each house is connected to the by Manhattan distance closest battery. This algorithm will can be
+run again until a solution has been found where the maximum capacity
+of each battery has not been exceeded.
+
+
 ## Experiment
 In /experiments/, tuning experiments can be conducted by running the script functions in /simulatedannealing/, /beamsearch/ and /hillclimber/.
 
