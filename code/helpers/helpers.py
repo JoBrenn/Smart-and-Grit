@@ -113,26 +113,26 @@ def print_helpmsg_methods():
     # greedmanhcap, closest, depthfirst, breadthfirst, hillclimber,
     # simulatedannealing, beamsearch.
     print("\n\u001b[32mAlgorithms Methods:\u001b[0m")
-    print("  randrwalk:\t Randomly assigns houses to batteries. " + \
-                        "Creates cable path through randomly taking random steps until destination is reached.")
     print("  randmanh:\t Randomly assigns houses to batteries. \t\t\t\t\t\t\t\t\t(Manhattan Distance)")
     print("  greedmanh:\t Uses greedy algorithm to assign houses to batteries. \t\t\t\t\t\t\t(Manhattan Distance)")
     print("  greedmanhcap:\t Uses greedy algorithm to assign houses to capped batteries. \t\t\t\t\t\t(Manhattan Distance) ")
     print("  closest:\t Assigns a house to its closest battery that has capacity left \t\t\t\t\t\t(Manhattan Distance) ")
     print("  depthfirst:\t Assigns houses using a depth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
-    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached \t\t\t\t(Manhattan Distance)")
+    print("  breadthfirst:\t Assigns houses using a breadth first algorithm until the set depth is reached. (takes too long to try) \t\t\t\t(Manhattan Distance)")
     print("  hillclimber:\t Uses hillclimber algorithm to assign houses to capped\
-batteries. \t\t\t\t\t(Manhattan Distance) ")
+ batteries. \t\t\t\t\t(Manhattan Distance) ")
     print("  simulatedannealing:\t Uses simulated annealing algorithm to assign\
-houses to capped batteries. \t\t\t(Manhattan Distance) ")
+ houses to capped batteries. \t\t\t(Manhattan Distance) ")
     print("  beamsearch:\t Searches state space breadth first with a width (beam).\
-N (beam) states are kept at every iteration.\t(Manhattan Distance) ")
+ N (beam) states are kept at every iteration.\t(Manhattan Distance) ")
+
 
 def print_possibilities(possibilities: list[str]) -> None:
     """ Print possible files from output/JSON/"""
     print("\n\u001b[32mPossible Load Files:\u001b[0m")
     for index, file in enumerate(possibilities):
         print(f"{index+1}.  {file}")
+
 
 def print_dictkeys(min_dictkey: int, max_dictkey) -> None:
     """ Print dictionary keys from Beam Search .json output """
@@ -157,6 +157,7 @@ def get_method_input() -> str:
         depthfirst:             State space is searched, going into a state full depth first.
         breadthfirst:           State space is searched, going over states full breadth first.
     """
+
     method = ""
     # Keep asking user for valid input
     while not method:
@@ -178,6 +179,7 @@ def get_method_input() -> str:
 
     return method
 
+
 def get_district_input() -> int:
     """ Get input for district.
     A district between 1 and 3 can be chosen.
@@ -195,6 +197,7 @@ def get_district_input() -> int:
             district = 0
     return int(district)
 
+
 def get_runs_input() -> int:
     """ Get input for amount of runs."""
     runs = 0
@@ -210,6 +213,7 @@ def get_runs_input() -> int:
             runs = 0
 
     return int(runs)
+
 
 def get_beam():
     """ Get input for beam for Beam Search.
@@ -228,6 +232,7 @@ def get_beam():
             beam = 0
     return int(beam)
 
+
 def get_max_runs():
     """ Get input for maximum runs."""
     runs = 0
@@ -243,6 +248,7 @@ def get_max_runs():
             print("\nPlease choose a max amount of runs")
             runs = 0
     return int(runs)
+
 
 def get_max_depth(house_count: int) -> int:
     """ Get input for maximum depth for Depth First Search."""
@@ -261,6 +267,7 @@ def get_max_depth(house_count: int) -> int:
             print("\nPlease choose which layer to end at")
             depth = 0
     return int(depth)
+
 
 def get_dictkey_input(dictkeys: list[int]) -> str:
     """ Get input from user for dictkey.
@@ -289,6 +296,7 @@ def get_dictkey_input(dictkeys: list[int]) -> str:
             dictkey = 0
 
     return dictkey
+
 
 def get_file_input(possibilities: list[str]) -> str:
     """ Get input for the desired file to be loaded.
@@ -324,6 +332,7 @@ def get_file_input(possibilities: list[str]) -> str:
     else:
         return file
 
+
 def load_method(json_data: list) -> list:
     """ Select correct way of loading data from .json file
     from output/JSON/ for plotting.
@@ -344,6 +353,7 @@ def load_method(json_data: list) -> list:
             data.append(outcome)
 
     return data
+
 
 def combine_method(json_data: list, file: str) -> list:
     """ Combine cables in output/JSON/ .json.
@@ -427,6 +437,7 @@ def run_general_method(method: str) -> list:
 
     return data
 
+
 def run_algo_method(method: str, district_number: int, runs: int) -> list:
     """ Run the specified algorithm method.
     Methods (get_method_input for further reference):
@@ -465,7 +476,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_random_assignment_shortest_distance(district_copy, method))
+            data.append(run_random_assignment(district_copy, method))
 
     elif method == "randmanhcap":
         """
@@ -475,7 +486,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         """
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_random_assignment_shortest_distance_with_capacity(district_copy, method))
+            data.append(run_random_assignment_with_capacity(district_copy, method))
 
     elif method == "greedmanh":
         """
@@ -519,10 +530,16 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         # Start spinner again
         spinner.start()
 
-        # Initialize BeamSearch
-        beamsearch = BeamSearch(district, beam)
-        best_state = beamsearch.run()
-        data.append(best_state.return_output())
+        
+        for _ in range(runs):
+            district_copy = deepcopy(district)
+            # Initialize BeamSearch
+            beamsearch = BeamSearch(district_copy, beam)
+            best_state = beamsearch.run()
+            if best_state:
+                data.append(best_state.return_output())
+            else:
+                print("\n Did not find a valid state.")
 
     elif method == "closest":
         spinner.stop()
@@ -558,6 +575,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
     print(f"\n\u001b[32mMethod Time\u001b[0m: {round(end_time - start_time, 5)}")
 
     return data
+
 
 def plot_data(data, method: str, runs: int = 1, district_number: str = "Graph") -> None:
     """ Determine how data should be plotted and plot."""

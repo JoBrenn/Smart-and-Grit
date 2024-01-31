@@ -1,3 +1,22 @@
+""" Tests for combine cables.
+
+File:           test_combine_cables.py
+Tested file:    combine_cables.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 31/01/24 (31/01/24)
+
+Description:
+Tests to check the functionality of testable parts of combining
+cables in a district configuration.
+
+Usage:  python3 -m pytest code/algorithms/
+    NOTE: run from root of depository
+"""
+
 from .combine_cables import combine_district
 
 def test_lower_cost():

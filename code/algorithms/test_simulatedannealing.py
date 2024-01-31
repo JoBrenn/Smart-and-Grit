@@ -1,4 +1,24 @@
-from .simulatedannealing import Simulatedannealing, District
+""" Tests for Simulatedannealing class.
+
+File:           test_simulatedannealing.py
+Tested file:    simulatedannealing.py
+
+Authors:    Kathy Molenaar
+            Jesper Vreugde
+            Jonas Brenninkmeijer
+
+Date: 31/01/24 (31/01/24)
+
+Description:
+Tests to check the functionality of testable parts of the 
+Simulatedannealing algorithm class.
+
+Usage:  python3 -m pytest code/algorithms/
+    NOTE: run from root of depository
+"""
+
+from .simulatedannealing import Simulatedannealing
+from code.modules.district import District
 
 def test_temperature_change():
     """ Here we test that the linear temperature change

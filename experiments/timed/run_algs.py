@@ -1,4 +1,4 @@
-from code.modules.district import District
+from .code.modules.district import District
 
 from code.algorithms.closest import Closest
 from code.algorithms.depth_first import DepthFirst
