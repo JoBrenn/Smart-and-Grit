@@ -21,7 +21,7 @@ from random import choice, shuffle
 
 def random_assignment(district: District) -> dict[House, Battery]:
     """ Randomly assign houses to batteries, not taking capacity into account
-    Creates dictionary, where houses are keys and batteries values
+        Creates dictionary, where houses are keys and batteries values
     Params:
         district    (District): district object
     Returns:
