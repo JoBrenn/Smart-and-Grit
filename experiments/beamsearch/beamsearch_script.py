@@ -30,7 +30,7 @@ class BeamSearchTuning:
         """ Initialize beamsearch tuning
         Params:
             district_number    (int): district number
-            runs               (int): number of runs 
+            runs               (int): number of runs
             max_beam           (int): maximum beam width
         Returns:
             none
@@ -133,9 +133,9 @@ class BeamSearchTuning:
             return False
 
 
-if __name__ == "__main__":
-    beamsearch_tuning = BeamSearchTuning(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-    if beamsearch_tuning.run_tuning():
-        print("Success.")
-    else:
-        print("Failed.")
+# if __name__ == "__main__":
+#     beamsearch_tuning = BeamSearchTuning(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+#     if beamsearch_tuning.run_tuning():
+#         print("Success.")
+#     else:
+#         print("Failed.")

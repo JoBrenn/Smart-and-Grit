@@ -16,9 +16,9 @@ Functions:
     print_dictkeys:         (-> None): Print keys in dictionary
     print_possibilities:    (-> None): Print filenames in output/JSON/
     print_helpmsg_methods:  (-> None): Print possible methods
-    get_beam:               (-> int): Get user input for beam
-    get_max_runs:           (-> int): Get user input for maximum runs
-    get_max_depth:          (-> int): Get user input for maximum depth
+    get_beam_input:         (-> int): Get user input for beam
+    get_max_runs_input:     (-> int): Get user input for maximum runs
+    get_max_depth_input:    (-> int): Get user input for maximum depth
     get_method_input:       (-> str): Get user input for method
     get_file_input:         (-> str): Get user input for file
     get_runs_input:         (-> int): Get user input for runs
@@ -35,7 +35,8 @@ Functions:
 Usage:  import code.helpers.helpers as hlp
 """
 # General packages imported
-from os import listdir
+from os import listdir, walk
+from os.path import isdir
 from json import load, dump
 from time import time
 from copy import deepcopy
@@ -60,6 +61,8 @@ from code.algorithms.combine_cables import run as combine
 
 # District module imported
 from code.modules.district import District
+
+from experiments.beamsearch.beamsearch_script import BeamSearchTuning
 
 
 def load_JSON_output(filename: str) -> list:
@@ -172,7 +175,7 @@ def get_method_input() -> str:
         # Check if user selected valid method
         elif method not in {"format", "load", "combine", "randmanh", "randmanhcap",
                             "greedmanh", "hillclimber", "beamsearch", "simulatedannealing",
-                            "closest", "depthfirst", "breadthfirst"}:
+                            "closest", "depthfirst", "breadthfirst", "experiment"}:
             print("\nInvalid method. Type","\u001b[32mhelp\u001b[0m", "to see possibilities.\n")
             method = ""
 
@@ -211,7 +214,7 @@ def get_runs_input() -> int:
 
     return int(runs)
 
-def get_beam():
+def get_beam_input():
     """ Get input for beam for Beam Search.
     Beam defines how many states are saved after every iteration.
     Code for Beam Search can be found in code/algorithms/beam_search.py"""
@@ -228,7 +231,7 @@ def get_beam():
             beam = 0
     return int(beam)
 
-def get_max_runs():
+def get_max_runs_input():
     """ Get input for maximum runs."""
     runs = 0
     while not runs and runs != "":
@@ -244,7 +247,7 @@ def get_max_runs():
             runs = 0
     return int(runs)
 
-def get_max_depth(house_count: int) -> int:
+def get_max_depth_input(house_count: int) -> int:
     """ Get input for maximum depth for Depth First Search."""
     depth = 0
     while not depth:
@@ -384,6 +387,15 @@ def combine_method(json_data: list, file: str) -> list:
 
     return data
 
+def get_experiment_input():
+    print(listdir("experiments/"))
+    print(list(filter(isdir(), listdir("experiments/"))))
+    print(next(walk('.'))[1])
+    print(isdir("experiments/beamsearch"))
+    return None
+
+def run_experiment():
+    selected_experiment = get_experiment_input()
 
 def run_general_method(method: str) -> list:
     """ Run a general method.
@@ -424,6 +436,12 @@ def run_general_method(method: str) -> list:
         else:
             # No files in output/JSON/
             print("No options in output/JSON/. Try running an algorithm first.")
+    elif method == "experiment":
+        data = run_experiment()
+        print("it worked")
+        exit()
+        tuning = BeamSearchTuning(1,1,1)
+        print("Its alive!")
 
     return data
 
@@ -511,13 +529,13 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         every iteration. An iteration is where the previous states are replaced by
         new states that have one more connected house. In every state the same randomly
         chosen house is connected to all batteries with enough capacity. A number
-        of best states are then kept according to the beam        
+        of best states are then kept according to the beam
         """
         # Stop spinner, because interference with input()
         spinner.stop()
 
         # Get beam input
-        beam = get_beam()
+        beam = get_beam_input()
 
         # Start spinner again
         spinner.start()
@@ -529,7 +547,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "closest":
         spinner.stop()
-        max_runs = get_max_runs()
+        max_runs = get_max_runs_input()
         spinner.start()
         closest = Closest(district, max_runs)
         best_state = closest.run()
@@ -537,7 +555,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "depthfirst":
         spinner.stop()
-        max_depth = get_max_depth(len(district.houses))
+        max_depth = get_max_depth_input(len(district.houses))
         spinner.start()
         depthfirst = DepthFirst(district, max_depth)
         best_state = depthfirst.run()
@@ -546,7 +564,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
     elif method == "breadthfirst":
         spinner.start()
-        max_depth = get_max_depth(len(district.houses))
+        max_depth = get_max_depth_input(len(district.houses))
         spinner.stop()
 
         breadthfirst = BreadthFirst(district, max_depth)
