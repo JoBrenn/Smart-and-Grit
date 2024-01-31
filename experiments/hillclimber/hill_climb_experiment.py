@@ -108,3 +108,9 @@ def hillclimb_one_climb_graph_penalty():
     ax.set_ylabel('Costs')
     fig.savefig("results/hillclimber/one_climb_penalty.png")
     plt.show()
+
+def run_hillclimber_experiments(district_number: int) -> None:
+    district = District(district_number, "costs-own")
+    hillclimb_one_climb(district)
+    hillclimb_one_climb_graph_costs()
+    hillclimb_one_climb_graph_penalty()
