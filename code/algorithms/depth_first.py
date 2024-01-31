@@ -19,7 +19,7 @@ Usage:  from code.algorithms.depth_first import DepthFirst
 
 from copy import deepcopy
 from random import shuffle
-import csv
+from csv import writer
 
 from code.modules.district import District
 from code.algorithms.manhattan_distance import create_cable
@@ -80,7 +80,7 @@ class DepthFirst:
                         child.assigned_houses += 1
                         self.state_to_csv(state)
                         self.states.append(child)
-                        
+
 
                 # A state at the desired depth has been found and can compare
                 else:
@@ -116,7 +116,7 @@ class DepthFirst:
             if battery.left_over_capacity < 0:
                 return False
         return True
-    
+
     def state_to_csv(self, state) -> None:
         """ Appends a state to a csv
         Params:
@@ -126,6 +126,5 @@ class DepthFirst:
         """
 
         with open(f"output/csv/simulated.csv", "a", newline="") as outfile:
-            writer = csv.writer(outfile, delimiter=';')
+            writer = writer(outfile, delimiter=';')
             writer.writerow([state.return_cost()])
-

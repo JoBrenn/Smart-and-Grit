@@ -1,10 +1,10 @@
 """ Random algorithm
 
-File: random..py
+File: random.py
 
 Author:    Kathy Molenaar
 
-Date: 19/01/24
+Date: 19/01/24 (31/01/24)
 
 Description:
 Here a random configuration is created for a given district

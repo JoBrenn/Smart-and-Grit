@@ -6,10 +6,11 @@ Authors:    Jonas Brenninkmeijer
 
 Date: 22/01/24 (30/01/24)
 
-Description:    The implementation of a Beam Search (BS) algorithm.
-                Beam Search works by selecting the best N (Beam) states
-                and pruning the rest. The Beam specified at 1 makes this
-                algorithm Greedy, Beam of INF makes it Breadth First.
+Description:
+The implementation of a Beam Search (BS) algorithm.
+Beam Search works by selecting the best N (Beam) states
+and pruning the rest. The Beam specified at 1 makes this
+algorithm Greedy, Beam of INF makes it Breadth First.
 
 Usage:  from code.algorithms.beam_search import BeamSearch
 """

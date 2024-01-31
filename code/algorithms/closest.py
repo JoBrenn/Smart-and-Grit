@@ -89,7 +89,7 @@ class Closest:
                       + f" Retries left: {self.max_runs}")
                 self.district = self.run()"""
 
-        if self.district != None:
+        if self.district:
             self.district.district_dict["costs-own"] = self.district.return_cost()
 
         return self.district

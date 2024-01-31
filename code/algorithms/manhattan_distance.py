@@ -6,7 +6,7 @@ Authors:    Kathy Molenaar
             Jesper Vreugde
             Jonas Brenninkmeijer
 
-Date: 12/01/24
+Date: 12/01/24 (30/01/24)
 
 Description:
 Determines Manhattan distance and lays cables along this distance

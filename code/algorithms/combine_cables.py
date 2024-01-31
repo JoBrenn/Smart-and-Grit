@@ -13,15 +13,13 @@ can be made
 
 Usage:  from code.algorithms.combine_cables import ...
 """
-
+from random import shuffle, choice
+from copy import deepcopy
+from json import dump
 from code.modules.battery import Battery
 from code.modules.house import House
 from code.algorithms.manhattan_distance import return_manhattan_distance, \
                                                create_cable
-
-import random
-import copy
-import json
 
 
 def assign_random_house(houses: list) -> dict:
@@ -32,7 +30,7 @@ def assign_random_house(houses: list) -> dict:
             (dict) dictionary of said house object
     """
 
-    house_dict = random.choice(houses)
+    house_dict = choice(houses)
 
     return house_dict
 
@@ -62,7 +60,7 @@ def combine_cables_battery(battery_dict: dict) -> Battery:
         all_cable_points.add(point)
 
     # Randomly shuffle houses to get random order of combining
-    random.shuffle(houses_dicts)
+    shuffle(houses_dicts)
 
     for house_dict in houses_dicts:
         house_x = int(house_dict["location"].split(",")[0])
@@ -107,7 +105,7 @@ def combine_district(output: list) -> list:
         (list) altered cables in output
     """
 
-    output_original = copy.deepcopy(output)
+    output_original = deepcopy(output)
 
     cost = 0
 
@@ -146,7 +144,7 @@ def run(output: list, n: int, filename: str) -> list:
         ((list) altered cables in output with lowest cost
     """
 
-    output_original = copy.deepcopy(output)
+    output_original = deepcopy(output)
     lowest_cost = output_original[0]["costs-own"]
     output_best = output_original
 
@@ -155,10 +153,10 @@ def run(output: list, n: int, filename: str) -> list:
         output, output_original = combine_district(output_original)
         cost = output[0]["costs-shared"]
         if cost < lowest_cost:
-            output_best = copy.deepcopy(output)
+            output_best = deepcopy(output)
 
     filepath = f"output/JSON/{filename}-combined.json"
     with open(filepath, "w") as f:
-        json.dump(output_best, f, indent=4)
+        dump(output_best, f, indent=4)
 
     return output_best

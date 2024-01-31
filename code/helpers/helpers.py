@@ -5,9 +5,10 @@ File: helpers.py
 Authors:    Jonas Brenninkmeijer
             Kathy Molenaar
 
-Date: 16/01/24 (30/01/24)
+Date: 16/01/24 (31/01/24)
 
-Description:    Different helper functions, mainly used in main.py
+Description:
+Different helper functions, mainly used in main.py
 
 Functions:
     load_JSON_output        (-> list): Load JSON data from .json file in output/JSON/
@@ -68,6 +69,7 @@ def load_JSON_output(filename: str) -> list:
         Returns:
             (list) list of json file data
     """
+
     with open(filename, "r") as f:
         return load(f)
 
