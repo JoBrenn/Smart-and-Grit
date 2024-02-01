@@ -21,11 +21,11 @@ class Battery:
     """ Battery class
 
     Methods:
-        convert_coordinate_to_str():       return coordinates in string form "x,y"
-        add_house():            add house to battery connection
-        delete_house():         delete house from battery connection
-        return_capacity():      return battery capacity
-        add_house_cables():     add cables of house to battery cable network
+        convert_coordinate_to_str():  return coordinates in string form "x,y"
+        add_house():                  add house to battery connection
+        delete_house():               delete house from battery connection
+        return_capacity():            return battery capacity
+        add_house_cables():           add house cables to battery network
     """
 
     def __init__(self, battery_id: int, coordinate: tuple[int, int],

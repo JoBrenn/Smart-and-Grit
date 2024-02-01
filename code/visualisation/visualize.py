@@ -220,6 +220,7 @@ def plot_output_histogram(outputs: list[int], alg_method: str,
     # Title includes the method and the number of runs.
     plt.title(f"Histogram: {alg_method} (n={runs})")
     binwidth = 75
+
     # The numbers of bins is a range from the mininum value to
     # the maximum value and the step is the binwidth
     n_bins = range(min(outputs), max(outputs) + binwidth, binwidth)

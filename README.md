@@ -57,6 +57,49 @@ Here the most imported directories are stated:
         - results_timed.md: contains the results of the timed experiment for all algorithms
 - /results: contains all found results
 
+## Algorithms
+Here you find short descriptions of the different algorithms one can find in /code/algorithms. 
+
+### Random
+Random algorithm where houses are randomly assigned to batteries, taking capacity into account.
+Here, a good solution is not guaranteed, since it is not given a battery still has leftover capacity.
+
+### Hillclimber
+Uses constraint relaxation, where every unit battery exceedance results in a penalty of +10.\
+First our small change consists of choosing one random house and re-assigning
+it to a random battery. When we have reached a good solution
+we change our small change to choosing two random houses and swapping
+their battery connections. This change is only accepted when the state remains a good solution.
+
+### Simulated annealing
+Runs the hillclimber algorithm on a given district,
+where changes have been made to make it a simulatedannealing algorithm. Temperature changes linearly and probability is equal to 2**(old - new)/temperature.
+
+### Beam search
+Beam Search works by selecting the best N (Beam) states
+and pruning the rest.
+
+### Greedy
+Greedy in this case implies choosing the battery with the most leftover capacity.
+Here, a good solution is not guaranteed, since it is not given a battery still has leftover capacity.
+
+### Depth first
+A depth first algorithm that goes through each possible
+configuration of houses being assigned to batteries. Prunes the branches where the sum of the output
+of each house assigned to a battery exceeds the capacity of that
+battery.
+
+### Breadth first
+This subclass inherits its properties from the DepthFirst class
+Instead of the next state being chosen from a stack, it is
+picked from a queue
+
+### Closest
+This is more of a heuristic, where each house is connected to the by Manhattan distance closest battery. This algorithm will can be
+run again until a solution has been found where the maximum capacity
+of each battery has not been exceeded.
+
+
 ## Experiment
 In /experiments/, tuning experiments can be conducted by running the script functions in /simulatedannealing/, /beamsearch/ and /hillclimber/.
 
@@ -72,16 +115,19 @@ After creating an instance of this class by specifying the district number, \
 the amount of runs and the largest allowed beam. The run_tuning() method can be executed \
 after which the results will be written to a csv and the best result will be stored as a .json file
 
+### Timed experiment
+The file time_scripts.py contains a script to run different algorithms for a certain amount of time. 
+In this script, the algorithm will be run continuously for 2700 seconds. The costs of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
+This file can be used to compare the different algorithms. However, this timed experiment can be called via python3 main.py, by
+indicating 'experiments' as method and then 'timed'. This being able to run it via main has however made the elements 
+within time_scripts.py slower. The results in results_timed.md have therefore been run straight from the root for optimal
+comparison.
 
-
-### Timed experments
-
-A timed experiment can be ran using:
+A timed experiment can be ran by using:
 
         python3 time_scripts.py <method>
 
-where the method can be one of closest, beamsearch, hillclimber, simulated or depthfirst
-In this script, the algortihm will be run continuously for 2700 seconds. The cost of each state will be written to a csv file in the /output/ folder and the amount of runs will be printed in the terminal window.
+where the method can be one of closest, beamsearch, hillclimber, simulated, randomcap or depthfirst
 
 ## Tests
 To run tests, run the following code:
@@ -94,6 +140,7 @@ Specify the directory to be tested. The following directories contain tests:
     - /modules
 
 Example:
+
         python3 -m pytest code/modules/
 
 # Authors

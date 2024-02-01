@@ -34,6 +34,7 @@ Functions:
 
 Usage:  import code.helpers.helpers as hlp
 """
+
 # General packages imported
 from os import listdir, walk
 from os.path import isdir
@@ -65,7 +66,7 @@ from code.modules.district import District
 from experiments.beamsearch.beamsearch_script import BeamSearchTuning
 from experiments.hillclimber.hill_climb_experiment import run_hillclimber_experiments
 from experiments.simulatedannealing.simulatedannealing_experiment import run_simulatedannealing_experiments
-from code.timed.time_scripts import run_time_script
+from experiments.timed.time_scripts import run_time_script
 
 
 def load_JSON_output(filename: str) -> list:
@@ -107,6 +108,7 @@ def print_helpmsg_methods():
             none
             prints help messages
     """
+
     # General methods: help, load, format and exit
     # \u001b[32m gives color GREEN in terminal
     print("\n\u001b[32mGeneral Methods:\u001b[0m")
@@ -136,12 +138,14 @@ N (beam) states are kept at every iteration.\t(Manhattan Distance) ")
 
 def print_possibilities(possibilities: list[str]) -> None:
     """ Print possible files from output/JSON/"""
+
     print("\n\u001b[32mPossible Load Files:\u001b[0m")
     for index, file in enumerate(possibilities):
         print(f"{index+1}.  {file}")
 
 def print_dictkeys(min_dictkey: int, max_dictkey) -> None:
     """ Print dictionary keys from Beam Search .json output """
+
     print(f"\n\u001b[32mPossible DictKeys: \u001b[0m {min_dictkey} - {max_dictkey}")
 
 
@@ -163,6 +167,7 @@ def get_method_input() -> str:
         depthfirst:             State space is searched, going into a state full depth first.
         breadthfirst:           State space is searched, going over states full breadth first.
     """
+
     method = ""
     # Keep asking user for valid input
     while not method:
@@ -187,7 +192,9 @@ def get_method_input() -> str:
 def get_district_input() -> int:
     """ Get input for district.
     A district between 1 and 3 can be chosen.
-    Data can be found in data/"""
+    Data can be found in data/
+    """
+
     district = 0
     # Keep asking user for valid input
     while not district:
@@ -202,7 +209,9 @@ def get_district_input() -> int:
     return int(district)
 
 def get_runs_input() -> int:
-    """ Get input for amount of runs."""
+    """ Get input for amount of runs.
+    """
+
     runs = 0
     # Keep asking user for valid input
     while not runs:
@@ -221,6 +230,7 @@ def get_beam_input():
     """ Get input for beam for Beam Search.
     Beam defines how many states are saved after every iteration.
     Code for Beam Search can be found in code/algorithms/beam_search.py"""
+
     beam = 0
     # Keep asking user for valid input
     while not beam:
@@ -250,8 +260,10 @@ def get_max_runs_input():
             runs = 0
     return int(runs)
 
+
 def get_max_depth_input(house_count: int) -> int:
     """ Get input for maximum depth for Depth First Search."""
+
     depth = 0
     while not depth:
         depth = input("\n\u001b[33mMax depth:\u001b[0m ")
@@ -268,6 +280,7 @@ def get_max_depth_input(house_count: int) -> int:
             depth = 0
     return int(depth)
 
+
 def get_dictkey_input(dictkeys: list[int]) -> str:
     """ Get input from user for dictkey.
     Params:
@@ -275,6 +288,7 @@ def get_dictkey_input(dictkeys: list[int]) -> str:
     Returns:
         selected dictkey string
     """
+
     if dictkeys:
         # Define dictkey and max and min values in dictkeys
         dictkey = 0
@@ -296,6 +310,7 @@ def get_dictkey_input(dictkeys: list[int]) -> str:
 
     return dictkey
 
+
 def get_file_input(possibilities: list[str]) -> str:
     """ Get input for the desired file to be loaded.
     Files need to be in output/JSON/
@@ -304,6 +319,7 @@ def get_file_input(possibilities: list[str]) -> str:
     Returns:
         filename string
     """
+
     file = ""
 
     # Keep asking user
@@ -330,6 +346,7 @@ def get_file_input(possibilities: list[str]) -> str:
     else:
         return file
 
+
 def load_method(json_data: list) -> list:
     """ Select correct way of loading data from .json file
     from output/JSON/ for plotting.
@@ -338,6 +355,7 @@ def load_method(json_data: list) -> list:
     Returns:
         list with data from .json
     """
+
     data = []
     # If JSON data is directly avaliable
     if len(json_data) == 6 and isinstance(json_data, list):
@@ -353,8 +371,8 @@ def load_method(json_data: list) -> list:
 
 def combine_method(json_data: list, file: str) -> list:
     """ Combine cables in output/JSON/ .json.
-    combine() is tried N (runs) times. combine() comes
-    code/algorithms/combine_cables.py.
+        combine() is tried N (runs) times. combine() comes
+        code/algorithms/combine_cables.py.
     Params:
         json_data   (list): List with JSON data, loaded from output/JSON/
         file        (str): File where the JSON came from
@@ -362,6 +380,7 @@ def combine_method(json_data: list, file: str) -> list:
         list with data where cables are combined more efficiently.
         prints the amount of dictkeys if dictionary is found.
     """
+
     # Get input for runs and prepare filename for .json output
     data = []
     runs = get_runs_input()
@@ -390,7 +409,13 @@ def combine_method(json_data: list, file: str) -> list:
 
     return data
 
+
 def get_experiment_input():
+    """ get experiment input from user
+    Returns:
+        (str) experiment that user wants to run
+    """
+
     experiment_input = ""
     while not experiment_input:
         experiment_input = input("\n\u001b[33mExperiment Method:\u001b[0m ")
@@ -403,31 +428,37 @@ def get_experiment_input():
 
 
 def get_algorithm_input():
+    """ get algorithm input from user
+    Returns:
+        (str) algorithm that user wants to run experiment on
+    """
+
     algorithm_input = ""
     while not algorithm_input:
         algorithm_input = input("\n\u001b[33mAlgorithm Method:\u001b[0m ")
         if algorithm_input not in {"closest", "beamsearch",\
-                                    "random", "hillclimber", \
-                                    "simulated", "depthfirst"}:
+                                    "hillclimber", "simulated", "depthfirst", "randomcap"}:
             print("Please choose between:")
-            print("closest\n", "beamsearch\n", "random\n", "hillclimber\n", "simulated\n", "depthfirst")
+            print("closest\n", "beamsearch\n" "hillclimber\n", "simulated\n",
+                  "depthfirst\n", "randomcap\n")
+>>>>>>> 851a8c6345f6b3d0c22d1ce629db090528e75ca6
             algorithm_input = ""
 
     return algorithm_input
 
 
 def run_experiment(district_number: int):
+    """ run experiment of given type on given algorithm
+    Returns:
+        none
+    """
+
     selected_experiment = get_experiment_input()
     district = District(district_number, "costs-own")
 
-    spinner = Halo(text='Running method', spinner='dots')
-    spinner.start()
-
     if selected_experiment == "beamsearch":
-        spinner.stop()
         max_beam = get_beam_input()
         runs = get_runs_input()
-        spinner.start()
         beam = BeamSearchTuning(district_number, runs, max_beam)
         beam.run_tuning()
     elif selected_experiment == "hillclimber":
@@ -447,6 +478,7 @@ def run_general_method(method: str) -> list:
         data, a list of data to be used for plotting and saving.
         prints possibilities for files in output/JSON/
     """
+
     data = []
     # If format is chosen, load data from format
     if method == "format":
@@ -500,6 +532,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
     Returns:
         data            (list): List with one or more district output (through .return_output())
     """
+
     # Start time for measuring run time
     start_time = time()
 
@@ -517,6 +550,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         not taking the capacity into account. Instead of a random walk,
         we now implement the shortest Manhattan distance.
         """
+
         for _ in range(runs):
             district_copy = deepcopy(district)
             data.append(run_random_assignment(district_copy, method))
@@ -527,9 +561,11 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         not taking the capacity into account. Instead of a random walk,
         we now implement the shortest Manhattan distance.
         """
+
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_random_assignment_with_capacity(district_copy, method))
+            output = run_random_assignment_with_capacity(district_copy, method)
+            data.append(output.return_output())
 
     elif method == "greedmanh":
         """
@@ -538,9 +574,10 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         The path of the cable is created using the shortest Manhattan distance
         from the house towards the battery.
         """
+
         for _ in range(runs):
             district_copy = deepcopy(district)
-            data.append(run_greedy_assignment_shortest_walk(district_copy, method))
+            data.append(run_greedy_assignment_shortest_walk(district_copy))
 
     elif method == "hillclimber":
         """
@@ -552,6 +589,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         is still valid and the cost is lowered.
         Give integer of number of iterations in command line before indicating district number.
         """
+
         hillclimb = HillClimber(district)
         data.append(hillclimb.run_hill_climber(district, runs, 1000).return_output())
 
@@ -567,6 +605,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         chosen house is connected to all batteries with enough capacity. A number
         of best states are then kept according to the beam
         """
+
         # Stop spinner, because interference with input()
         spinner.stop()
 
@@ -589,6 +628,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         an invalid solution, and will be run again until it either finds a
         valid solution or the max_runs has been reached.
         """
+
         # Stop spinner, because interference with input()
         spinner.stop()
 
@@ -612,6 +652,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         and 5 batteries would too long to reasonably complete, so specifying a
         max depth or running a smaller district is advised
         """
+
         # Stop spinner, because interference with input()
         spinner.stop()
 
@@ -634,6 +675,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
         as long as depthfirst at minimum, so the districts and depth should be
         chosen with similar consideration.
         """
+
         # Stop spinner, because interference with input()
         spinner.stop()
 
@@ -659,6 +701,7 @@ def run_algo_method(method: str, district_number: int, runs: int) -> list:
 
 def plot_data(data, method: str, runs: int = 1, district_number: str = "Graph") -> None:
     """ Determine how data should be plotted and plot."""
+
     # Data error, when no data.
     if not data:
         print("Data Error.")
