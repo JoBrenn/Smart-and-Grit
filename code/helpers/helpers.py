@@ -441,7 +441,6 @@ def get_algorithm_input():
             print("Please choose between:")
             print("closest\n", "beamsearch\n" "hillclimber\n", "simulated\n",
                   "depthfirst\n", "randomcap\n")
->>>>>>> 851a8c6345f6b3d0c22d1ce629db090528e75ca6
             algorithm_input = ""
 
     return algorithm_input
